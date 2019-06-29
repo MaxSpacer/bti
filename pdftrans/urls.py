@@ -13,16 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+from . import views
+from django.views.generic import DetailView
+from .models import Order
+app_name = 'pdftrans'
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('get-order-info/', include('pdftrans.urls')),
+    path('<int:pk>/', DetailView.as_view(model=Order,template_name = 'pdftrans/order_detail.html')),
+    path('pdf/<int:pk>/', views.OrderPdfView, name='order_pdf_view_n'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
