@@ -4,7 +4,9 @@
     <h1>{{ order.customer_adress }}</h1>
     <h1>{{ order.customer_name }}</h1>
     <a class="nav-link active" href="{% url 'pdftrans:order_pdf_view_n' order.id %}">загрузить</a>
-
+    {% load qr_code %}
+                    <strong><code>{% qr_from_text "Hello World!" size="T" image_format="svg" %}</code></strong>
+<img src= alt="">
 </div>
 
 {% endblock %}

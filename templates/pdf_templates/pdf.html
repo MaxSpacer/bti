@@ -1,20 +1,21 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
         <title></title>
     </head>
     <body>
-        <div class="">
+        <div class="col-6">
+            <img src="{{ order.image_2.url }}" alt="World!">
 
-            {{order.id}}
         </div>
         <p style="page-break-before: always" ></p>
-        <div class="">
+        <div class="col-6">
+            <img src="{{ order.qrcode.url }}" alt="Event QR code" />
             <p>{{order.customer_adress}}</p>
             <h3>{{order.customer_adress}}</h3>
             {{order.customer_name}}
-            {{order.image_2}}
 
         </div>
     </body>

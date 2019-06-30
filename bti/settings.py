@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'weasyprint',
-    'pdftrans',
+    'django_weasyprint',
+    'pdftrans.apps.PdftransConfig',
+    'qr_code',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_prod')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static','media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STATICFILES_DIRS = (
 os.path.join(BASE_DIR, 'static', 'media'),
