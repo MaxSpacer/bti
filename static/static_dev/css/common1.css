@@ -941,7 +941,7 @@ input[type=text], input[type=password], textarea, select {
 
 .footer {
 	position: absolute;
-	bottom: -40px; left: 0; right: 0;
+	bottom: -38px; left: 0; right: 0;
 	padding: 0 18px; /* = .pageContent padding */
 }
 .ny .footer {
