@@ -1,7 +1,17 @@
-@import 'bootstrap.min.css';
+/* @import 'bootstrap.min.css'; */
 /* @import 'static/fonts/GothamPro/stylesheet.css'; */
 /* @import 'font_style.css'; */
 .pageBackground {
+    /* position: static;
+    top: 0;
+    left: 0;
+    right: 0;*/
+    height: 157px;
+    z-index: 1;
+    min-width: 1108px;
+    background: #e4e4e4 url("../img/header-regular.png") top center no-repeat;
+}
+/* .pageBackground {
     position: static;
     top: 0;
     left: 0;
@@ -10,7 +20,7 @@
     z-index: 1;
     min-width: 1108px;
     background: #e4e4e4 url("../img/header-regular.png") top center no-repeat;
-}
+} */
 h3{
     color: red;
 }
