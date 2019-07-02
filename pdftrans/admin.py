@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Order, Adress
 
-class AdressInline(admin.TabularInline):
+class AdressInline(admin.StackedInline):
     model = Adress# Register your models here.
 
 class OrderAdmin(admin.ModelAdmin):

@@ -72,6 +72,7 @@ class Order(models.Model):
 
 class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, null=True, default=None, verbose_name = 'статус заказа')
+    rayon = models.CharField(verbose_name="Этаж", max_length=64, blank=False, null=True)
     subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=False, null=True)
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=False, null=True)
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=False, null=True)
@@ -82,5 +83,6 @@ class Adress(models.Model):
     house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=False, null=True)
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=False, null=True)
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=False, null=True)
-    corpus_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=False, null=True)
+    apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=False, null=True)
+    flow_number = models.CharField(verbose_name="Этаж", max_length=64, blank=False, null=True)
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=False, null=True)
