@@ -1,4 +1,19 @@
 @font-face {
+    font-family: "Ascon";
+    font-style: normal;
+    /* url('/static/fonts/Gothampro-master/GothamPro/GothamPro.eot?') format('eot'), */
+        /* url('/static/fonts/Gothampro-master/GothamPro/GothamPro.otf')  format('opentype'), */
+        /* url('/static/fonts/Gothampro-master/GothamPro/GothamPro.woff') format('woff'), */
+         src: url('/static/fonts/ascon.ttf') format('truetype');
+         src: url('/fonts/ascon.ttf') format('truetype');
+         src: url('ascon.ttf') format('truetype');
+         /* src: url('/static/fonts/ascon.ttf')  format('truetype');
+         src: url('/static/fonts/ascon.ttf')  format('truetype'); */
+         src: url('{% static "fonts/ascon.ttf" %}') format('truetype');
+         src: url({% static 'fonts/ascon.ttf' %}) format('truetype');
+        /* url('/static/fonts/Gothampro-master/GothamPro/GothamPro.svg#GothamPro') format('svg'); */
+}
+/* @font-face {
     font-family: 'GothamPro';
     src: url('/static/fonts/Gothampro-master/GothamPro/GothamPro.eot?') format('eot'),
         url('/static/fonts/Gothampro-master/GothamPro/GothamPro.otf')  format('opentype'),
@@ -37,4 +52,4 @@
         url('/static/fonts/Gothampro-master/GothamPro-Light/GothamPro-Light.woff') format('woff'),
         url('/static/fonts/Gothampro-master/GothamPro-Light/GothamPro-Light.ttf')  format('truetype'),
         url('/static/fonts/Gothampro-master/GothamPro-Light/GothamPro-Light.svg#GothamPro') format('svg');
-}
+} */

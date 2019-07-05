@@ -1,4 +1,4 @@
-
+from weasyprint import CSS
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from .models import Order
@@ -15,7 +15,11 @@ class OrderView(DetailView):
 
 class OrderPrintView(WeasyTemplateResponseMixin, OrderView):
     pdf_stylesheets = [
+        settings.STATIC_ROOT + '/css/bootstrap.min.css',
+        # settings.STATIC_ROOT + '/css/font_style.css',
         settings.STATIC_ROOT + '/css/styles.css',
+
+
     ]
     pdf_attachment = False
     pdf_filename = 'foo.pdf'

@@ -1,7 +1,9 @@
-@import 'bootstrap.min.css';
+/* @import 'bootstrap.min.css'; */
+/* @import 'font_style.css'; */
 /* @import 'static/fonts/GothamPro/stylesheet.css'; */
 /* @import 'font_style.css'; */
-.pageBackground {
+
+/* .pageBackground {
     position: static;
     top: 0;
     left: 0;
@@ -10,14 +12,75 @@
     z-index: 1;
     min-width: 1108px;
     background: #e4e4e4 url("../img/header-regular.png") top center no-repeat;
-}
-h3{
-    color: red;
-}
-body{
+} */
 
-    /* font-family: 'GothamPro-Bold'; */
-    /* font-family: 'GothamPro Light'; */
-    /* font-family: 'GothamProNarrow-Medium'; */
-    /* font-family: 'GothamPro-Light'; */
+.table-bordered td{
+    border: 1px solid black !important;
 }
+.table-bordered th{
+    border: 0px  black !important;
+
+}
+.l{
+    width: 25%;
+}
+.cl{
+    font-size: 0.7rem;
+}
+
+@page :nth(2){
+    margin: 7mm 7mm 7mm 20mm;
+    /* background-color: green; */
+    border: 1px solid;
+}
+.page2, .page2 th{
+
+    font-weight: lighter;
+    font-style: italic;
+    font-size: 120%;
+}
+.table-page2{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+.table-page2 td{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.top-block{
+    position: absolute;
+    top: 4%;
+    left:50%;
+    transform: translate(-50%);
+    width: 87%;
+    font-size: 120%
+}
+.floor{
+    display: block;
+    position: absolute;
+    top: 14%;
+    left:50%;
+    transform: translate(-50%);
+    width: 80%;
+}
+.legenda_img{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 470px;
+}
+.schema_img {
+    /* border: 1px solid ; */
+    position: absolute;
+    top: 20%;  /* position the top  edge of the element at the middle of the parent */
+    right:20%;
+    max-height: 400px;
+    max-width: 400px;
+}
+.schema_img > img{
+      width: auto;
+      height : auto;
+      max-height: 100%;
+      max-width: 100%;
+    }

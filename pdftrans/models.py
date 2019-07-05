@@ -56,7 +56,7 @@ class Order(models.Model):
         self.order_number = v
 
     def __str__(self):
-        return "Ордер № %s %s" % (self.id, self.customer_adress)
+        return "Ордер № %s %s" % (self.id, self.order_number)
 
     class Meta:
         verbose_name = 'Заказ'
@@ -72,17 +72,32 @@ class Order(models.Model):
 
 class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, null=True, default=None, verbose_name = 'статус заказа')
-    rayon = models.CharField(verbose_name="Этаж", max_length=64, blank=False, null=True)
-    subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=False, null=True)
-    rayon = models.CharField(verbose_name="Район", max_length=64, blank=False, null=True)
-    mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=False, null=True)
-    mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=False, null=True)
-    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, blank=False, null=True)
-    city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=False, null=True)
-    street = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, blank=False, null=True)
-    house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=False, null=True)
-    corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=False, null=True)
-    build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=False, null=True)
-    apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=False, null=True)
-    flow_number = models.CharField(verbose_name="Этаж", max_length=64, blank=False, null=True)
-    another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=False, null=True)
+    # rayon = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=True)
+    subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=False)
+    rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False)
+    mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False)
+    mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False)
+    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, blank=True, null=False)
+    city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=True, null=False)
+    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, blank=True, null=False)
+    street = models.CharField(verbose_name="название улицы (проспекта, переулка и т. д.)", max_length=64, blank=True, null=False)
+    house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=True, null=False)
+    corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False)
+    litera = models.CharField(verbose_name="Литера", max_length=64, blank=True, null=False)
+    build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False)
+    apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=True, null=False)
+    floor_number = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
+    another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False,default=None)
+
+    def __str__(self):
+        if self.corpus_number:
+            corpus_str = ", корпус %s" % (self.corpus_number)
+        else: corpus_str = ""
+        if self.build_number:
+            build_str = ", строение %s" % (self.build_number)
+        else: build_str = ""
+        return "%s %s, %s %s, дом %s%s%s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str)
+
+    class Meta:
+        verbose_name = 'Адрес'
+        verbose_name_plural = 'Адреc'
