@@ -1,18 +1,3 @@
-/* @import 'bootstrap.min.css'; */
-/* @import 'font_style.css'; */
-/* @import 'static/fonts/GothamPro/stylesheet.css'; */
-/* @import 'font_style.css'; */
-
-/* .pageBackground {
-    position: static;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 157px;
-    z-index: 1;
-    min-width: 1108px;
-    background: #e4e4e4 url("../img/header-regular.png") top center no-repeat;
-} */
 
 .table-bordered td{
     border: 1px solid black !important;
@@ -21,7 +6,6 @@
 }
 .table-bordered th{
     border: 0px  black !important;
-
 }
 .l{
     width: 25%;
@@ -29,14 +13,11 @@
 .cl{
     font-size: 0.7rem;
 }
-
 @page :nth(2){
     margin: 7mm 7mm 7mm 20mm;
-    /* background-color: green; */
     border: 1px solid;
 }
 .page2, .page2 th{
-
     font-weight: lighter;
     font-style: italic;
     font-size: 120%;
@@ -73,7 +54,6 @@
     width: 470px;
 }
 .schema_img {
-    /* border: 1px solid ; */
     position: absolute;
     top: 20%;  /* position the top  edge of the element at the middle of the parent */
     right:20%;
@@ -86,3 +66,19 @@
       max-height: 100%;
       max-width: 100%;
     }
+.qr-code{
+    width: 170px;
+    height: 170px;
+}
+.page3-top{
+    font-size: 1.4rem;
+}
+.explication-block{
+    margin-top: 6%;
+}
+.forbar-code{
+    margin-left: -50px;
+    width: 523px;
+    height: 60px;
+    overflow: hidden;
+}

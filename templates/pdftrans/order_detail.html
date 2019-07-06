@@ -1,12 +1,6 @@
 {% extends "wrapper.html" %}
 {% block content %}
 {% load static %}
-
-
-
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
     <div class="pageBackground"></div>
     <div class="pageCenter pageCenter__footerCollapsed">
@@ -53,7 +47,7 @@
                 <td class="txtBold"><label>Тип документа</label></td><td><span>ТПЖП</span></td></tr><tr><td class="txtBold"><label>Адрес объекта</label></td><td><span>{{ order.customer_adress }}</span></td></tr><tr><td class="txtBold"><label>Список объектов</label></td><td><span>Кв. № 104</span></td></tr>
                     <tr>
                         <td colspan="2">
-                            <a href="{% url 'pdftrans:order_pdf_view_n' order.id %}" class=" popupLink" target="_blank" id="getOrderFile">Загрузить файл</a>
+                            <a href="{% url 'pdftrans:order_pdf_view_n' order.id %}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
                 </td>
                 </tr>
                 </table>
@@ -62,8 +56,6 @@
                     </div>
                 </div>
                 <div class="footer">
-
-
             <div class="footerTexts">
                 <script>
           var a= new Date();
@@ -123,6 +115,4 @@ fbq('track', 'PageView');
 <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=685104235204727&amp;ev=PageView&amp;noscript=1">
 </noscript>
-
-
 {% endblock content %}

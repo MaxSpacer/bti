@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
-        <div class="page" style="margin-top:30%;">
+        <div class="page" style="margin-top:15%;">
             <div class="text-center pb-0 mb-0">
-                <p class="mb-5"><a name="bookmark0"></a><span class="font3" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</span></p>
-                <sub class="" style="font-size:1rem;">на</sub>
+                <h5 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h5>
+                <sub class="" style="font-size:1.2rem;">на</sub>
                 <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="padding:250px;">Помещение</span>
                 <p class="pb-4 pt-0 mt-0 font-weight-light cl"><span>(вид объекта учета)</span></p>
                 <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="">квартира</span>
                 <p class="mt-0 pt-0 cl"><span class="font0 font-weight-light" >(наименование объекта учета)</span></p>
                 <p class="mt-5 pt-3"><span class="font3 pb-0 mb-0 mt-5" style="">Адрес (местоположение) объекта:</span></p>
-            </div>
-
             <table class="table-bordered w-100 mb-4" border="1">
                 <tr class="">
                     <th class="l"></th>
@@ -142,7 +140,6 @@
                 </table>
             <div class="row justify-content-between px-3" style="margin-top:22%;">
                 <p class="mt-3"><span class="font2">Начальник отделения</span></p>
-                <!-- <div> -->
                 <table class="d-block">
                     <tr>
                         <td class="font0 px-5" style=" ">
@@ -156,10 +153,8 @@
                 <table class="d-block">
                     <tr>
                         <td class="font0 px-5 mt-5" style=" ">{{order.customer_name}}</td>
-
                     </tr>
                     <tr>
-                        <!-- <td class="font0 px-5 mt-5" style=" "></td> -->
                         <td class="font0 border-top border-dark px-5 mt-5" style=" ">Фамилия И.О.</td>
                     </tr>
                 </table>
@@ -175,7 +170,6 @@
                     <div class="">
                         <div class="">
                             {{order.adress}}
-                            <!-- город Москва, Полярная улица, дом 5, корпус 1 -->
                         </div>
                         <div class="">квартира № {{order.adress.apart_number}}</div>
                     </div>
@@ -215,12 +209,66 @@
                 </table>
             </div>
             <p style="page-break-after: always"></p>
-            <img src="{{ order.image_2.url }}" alt="World!">
-            <div class="col-6">
-            <img src="{{ order.qrcode.url }}" alt="Event QR code" />
-            <p>{{order.customer_adress}}</p>
-            <h3>{{order.customer_adress}}</h3>
-            {{order.customer_name}}
+            <div class="page3 text-center">
+                <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
+                    <div class="ml-5 d-flex flex-column justify-content-center page3-top">
+                        <div>ГБУ Московское городское бюро технической инвентаризации</div>
+                        <div>Адрес:  125009, г. Москва, Малый Гнездниковский пер.,  9, стр.7</div>
+                        <div>Телефон:  (495) 629-02-80, (495) 629-44-33</div>
+                    </div>
+                    <div class="">
+                        <img class="qr-code" src="{{ order.qrcode.url }}" alt="">
+                    </div>
+                </div>
+                <div class="explication-block">
+                    <h5 class="text-uppercase p-3 m-4" style="font-weight:bold;">
+                      ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
+                    </h5>
+                    <div class="text-left">
+                        <div class="">
+                            Адрес (иное описание местоположения):
+                        </div>
+                        <div class="">
+                            {{order.adress}}
+                        </div>
+                        <div class="">
+                            Квартира № {{order.adress.apart_number}}
+                        </div>
+                    </div>
+                </div>
+                <div class="explications-table w-100 my-5">
+                    <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt="">
+                    <h5 class="font-weight-bold text-left ml-3">
+                        Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
+                    </h5>
+                </div>
+                <div class="my-5 py-5">
+                    <div class="">
+                        <span>
+                            Экспликация на 1 стр.
+                        </span>
+                        <span class="px-5 mx-5">
 
-    <!-- </body> -->
-<!-- </html> -->
+                        </span>
+                        <span>
+                            {{ order.customer_data|date:"d.m.Y" }}
+                        </span>
+                    </div>
+                    <div class="">
+                        <span>
+                            Исполнитель
+                        </span>
+                        <span class="">
+                            _________________________________
+                        </span>
+                        <span>
+                            {{ order.engineer_name }}
+                        </span>
+                    </div>
+                </div>
+                <div class="text-left forbar-code p-0">
+                    <img class="bar-code m-0 p-0" src="{{ order.barcode.url }}" alt="">
+                </div>
+            </div>
+
+            <p style="page-break-after: always"></p>
