@@ -14,7 +14,7 @@ from barcode.writer import ImageWriter
 class Order(models.Model):
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
     customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
-    object_list = models.CharField(verbose_name="cписок объектов", max_length=64, blank=False, null=True)
+    # object_list = models.CharField(verbose_name="cписок объектов", max_length=64, blank=False, null=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False)
     image = models.ImageField('схема помещения',upload_to='schema_images/')
     image_2 = models.ImageField('таблица экспликации',upload_to='explications_images/')
