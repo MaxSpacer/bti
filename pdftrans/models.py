@@ -20,7 +20,7 @@ class Order(models.Model):
     image_2 = models.ImageField('таблица экспликации',upload_to='explications_images/')
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
-    order_number = models.IntegerField(blank=True, null=True, default = 0)
+    order_number = models.BigIntegerField(blank=True, null=True, default = 0)
     is_active = models.BooleanField('активен?',default=True)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
@@ -56,7 +56,7 @@ class Order(models.Model):
         self.order_number = v
 
     def __str__(self):
-        return "Ордер № %s" % (self.order_number)
+        return "Ордер № %s %s" % (self.id, self.order_number)
 
     class Meta:
         verbose_name = 'Заказ'
