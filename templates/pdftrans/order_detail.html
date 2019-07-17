@@ -26,8 +26,8 @@
                             <label>Номер заявления</label>
                         </td>
                     <td>
-                        <span> </span>
-                        <span> {{ order.order_number }}</span>
+                        <span></span>
+                        <span>&nbsp{{ order.order_number }}</span>
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +44,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="txtBold"><label>Тип документа</label></td><td><span>ТПЖП</span></td></tr><tr><td class="txtBold"><label>Адрес объекта</label></td><td><span>{{ order.customer_adress }}</span></td></tr><tr><td class="txtBold"><label>Список объектов</label></td><td><span>Кв. № 104</span></td></tr>
+                <td class="txtBold"><label>Тип документа</label></td><td><span>ТПЖП</span></td></tr><tr><td class="txtBold"><label>Адрес объекта</label></td><td><span>{{order.adress}}</span></td></tr><tr><td class="txtBold"><label>Список объектов</label></td><td><span>Кв. № {{order.adress.apart_number}}</span></td></tr>
                     <tr>
                         <td colspan="2">
                             <a href="{% url 'pdftrans:order_pdf_view_n' order.id %}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
