@@ -56,7 +56,7 @@ class Order(models.Model):
         self.order_number = v
 
     def __str__(self):
-        return "Ордер № %s %s" % (self.id, self.order_number)
+        return "Ордер № %s" % (self.order_number)
 
     class Meta:
         verbose_name = 'Заказ'
