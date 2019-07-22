@@ -17,15 +17,17 @@
     margin: 7mm 7mm 7mm 20mm;
     border: 1px solid;
 }
+
 .page2, .page2 th{
-    font-weight: lighter;
+    /* font-family: Ascon; */
+    /* font-weight: lighter;
     font-style: italic;
-    font-size: 120%;
+    font-size: 120%; */ */
 }
 .table-page2{
     position: absolute;
-    bottom: 0px;
-    right: 0px;
+    bottom: 40px;
+    right: 10px;
 }
 .table-page2 td{
     padding-left: 5px;
@@ -42,43 +44,57 @@
 .floor{
     display: block;
     position: absolute;
-    top: 14%;
+    top: 16%;
     left:50%;
     transform: translate(-50%);
     width: 80%;
 }
 .legenda_img{
     position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 470px;
+    left: 15px;
+    top: 85%;
+    width: 400px;
 }
 .schema_img {
     position: absolute;
-    top: 20%;  /* position the top  edge of the element at the middle of the parent */
-    right:20%;
-    max-height: 400px;
-    max-width: 400px;
+    top: 21%;  /* position the top  edge of the element at the middle of the parent */
+    width: 93%;
+    height: 900px;
+    /* background-color: green; */
+    right: 1rem;
 }
 .schema_img > img{
-      width: auto;
-      height : auto;
       max-height: 100%;
       max-width: 100%;
     }
 .qr-code{
-    width: 170px;
-    height: 170px;
+    width: 130px;
+    height: 130px;
 }
 .page3-top{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+}
+.page3, .page{
+    font-family: serif ;
+}
+.page3-footer{
+    margin-top: 20%;
 }
 .explication-block{
-    margin-top: 6%;
+    margin-top: 10%;
 }
 .forbar-code{
+    bottom: 30px;
     margin-left: -50px;
     width: 523px;
     height: 60px;
     overflow: hidden;
+    position: absolute;
+}
+.order_number{
+    font-family: monospace;
+    position: absolute;
+    bottom: 9px;
+    left: 10%;
+    letter-spacing: 10px;
 }

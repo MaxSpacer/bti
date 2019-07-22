@@ -126,7 +126,7 @@ STATICFILES_DIRS = (
 os.path.join(BASE_DIR, 'static', 'media'),
 os.path.join(BASE_DIR, 'static', 'static_dev'),
 )
-#uncomment
+# uncomment
 try:
     from .settings_prod import *
 except:

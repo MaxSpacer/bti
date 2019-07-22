@@ -1,19 +1,30 @@
 {% load static %}
 <!DOCTYPE html>
 <head>
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <style type="text/css" media="screen, print">
+    @font-face {
+            font-family: "Ascon";
+            src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
+    }
+    .page2, .page2 th{
+        font-family: "Ascon";
+        font-style: oblique;
+    }
+    </style>
 </head>
-        <div class="page" style="margin-top:15%;">
-            <div class="text-center pb-0 mb-0">
+<body>
+
+        <div class="page" style="margin-top:35%;">
+            <div class="text-center">
                 <h5 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h5>
-                <sub class="" style="font-size:1.2rem;">на</sub>
-                <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="padding:250px;">Помещение</span>
+                <sub class="mt-5" style="font-size:1.2rem;">на</sub>
+                <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0">Помещение</span>
                 <p class="pb-4 pt-0 mt-0 font-weight-light cl"><span>(вид объекта учета)</span></p>
                 <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="">квартира</span>
                 <p class="mt-0 pt-0 cl"><span class="font0 font-weight-light" >(наименование объекта учета)</span></p>
-                <p class="mt-5 pt-3"><span class="font3 pb-0 mb-0 mt-5" style="">Адрес (местоположение) объекта:</span></p>
-            <table class="table-bordered w-100 mb-4" border="1">
+                <h5 class="mt-5 mb-0 pt-3"><span class="font3 pb-0  mt-5" style="">Адрес (местоположение) объекта:</span></h5>
+            <table class="table-bordered w-100 mb-4 text-left" border="1">
                 <tr class="">
                     <th class="l"></th>
                     <th class="l"></th>
@@ -165,28 +176,32 @@
                 <p class="w-100" style="font-weight:bold; font-size:1.2rem; margin-left:230px;"><span class="font2 font-weight-bold ">М.П.</span></p>
             </div>
             </div>
-            <p style="page-break-before: always"></p>
+            </div>
+<p style="page-break-before: always"></p>
             <div class="page2 text-center">
-                <div class="top-block border border-dark p-3">
-                    <div class="text-uppercase ">ПЛАН ПОМЕЩЕНИЯ</div>
+                <div class="top-block ">
+                    <div class="border border-dark p-3">
+                        <div class="text-uppercase ">ПЛАН ПОМЕЩЕНИЯ</div>
 
-                    <div class="float-left">расположенного по адресу:</div>
-                    <div class="">
+                        <div class="float-left">расположенного по адресу:</div>
                         <div class="">
-                            {{order.adress}}
+                            <div class="text">
+                                {{order.adress}}
+                            </div>
+                            <div class="">квартира № {{order.adress.apart_number}}</div>
                         </div>
-                        <div class="">квартира № {{order.adress.apart_number}}</div>
                     </div>
+                    <div class="text-uppercase p-3">этаж {{ order.adress.floor_number }}</div>
                 </div>
-                <div class="text-uppercase floor">этаж {{ order.adress.floor_number }}</div>
+                <!-- <p>Русский текст и схема булок</p> -->
                 <div class="schema_img">
-                    <img class="image-fluid" src="{{ order.image.url }}" alt="Event QR code" />
+                    <img class="image-fluid" src="{{ order.image.url }}" alt="schema_img" />
 
                 </div>
                 <img class="image-fluid legenda_img" src="{% static 'img/legenda.png' %}" alt="Event QR code" />
                 <table class="table-bordered table-page2 text-center">
                   <tr style="border: 1px solid black;">
-                    <th class="px-2" colspan="4" >Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</th>
+                    <th class="px-2 font-weight-lighter" colspan="4">Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</th>
                   </tr>
                   <tr>
                     <td colspan="3"></td>
@@ -201,18 +216,18 @@
                   <tr>
                     <td>Проверил</td>
                     <td>Панин В.Э.</td>
-                    <td><span class="px-5"></span></td>
+                    <td><span class="px-1"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
                     <td>Принял</td>
                     <td>Панин В.Э.</td>
-                    <td><span class="px-5"></span></td>
+                    <td><span class="px-4"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                 </table>
             </div>
-            <p style="page-break-after: always"></p>
+<p style="page-break-after: always"></p>
             <div class="page3 text-center">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
@@ -225,14 +240,14 @@
                     </div>
                 </div>
                 <div class="explication-block">
-                    <h5 class="text-uppercase p-3 m-4" style="font-weight:bold;">
+                    <h5 class="text-uppercase mb-2" style="font-weight:bold;">
                       ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
                     </h5>
-                    <div class="text-left">
+                    <div class="text-left ml-2" style="font-size:1.2rem">
                         <div class="">
                             Адрес (иное описание местоположения):
                         </div>
-                        <div class="">
+                        <div class="font-weight-bolder">
                             {{order.adress}}
                         </div>
                         <div class="">
@@ -240,15 +255,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="explications-table w-100 my-5">
+                <div class="explications-table w-100 mb-5">
                     <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt="">
                     <h5 class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </h5>
                 </div>
-                <div class="my-5 py-5">
+                <div class="py-3 page3-footer">
                     <div class="">
-                        <span>
+                        <span class="ml-0">
                             Экспликация на 1 стр.
                         </span>
                         <span class="px-5 mx-5">
@@ -263,7 +278,7 @@
                             Исполнитель
                         </span>
                         <span class="">
-                            _________________________________
+                            ___________________________
                         </span>
                         <span>
                             {{ order.engineer_name }}
@@ -273,6 +288,8 @@
                 <div class="text-left forbar-code p-0">
                     <img class="bar-code m-0 p-0" src="{{ order.barcode.url }}" alt="">
                 </div>
+                <div class="order_number">
+                    {{order.order_number}}
+                </div>
             </div>
-
-            <p style="page-break-after: always"></p>
+</body>
