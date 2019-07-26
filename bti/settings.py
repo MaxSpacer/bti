@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weasyprint',
     'django_weasyprint',
-    'pdftrans',
+    'pdftrans.apps.PdftransConfig',
     'qr_code',
 ]
 
@@ -127,7 +127,7 @@ os.path.join(BASE_DIR, 'static', 'media'),
 os.path.join(BASE_DIR, 'static', 'static_dev'),
 )
 # uncomment
-try:
-    from .settings_prod import *
-except:
-    pass
+# try:
+#     from .settings_prod import *
+# except:
+#     pass

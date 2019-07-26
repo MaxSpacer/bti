@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.files import File
 from barcode import generate
 from barcode.writer import ImageWriter
-
+from .choices import *
 
 
 class Order(models.Model):
@@ -77,9 +77,9 @@ class Adress(models.Model):
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False)
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False)
     mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False)
-    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, blank=True, null=False)
+    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, choices=RELEVANCE_CHOICES, default=1)
     city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=True, null=False)
-    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, blank=True, null=False)
+    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, choices=GEO_TYPE_CHOICES, default=1)
     street = models.CharField(verbose_name="название улицы (проспекта, переулка и т. д.)", max_length=64, blank=True, null=False)
     house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=True, null=False)
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False)
@@ -87,6 +87,7 @@ class Adress(models.Model):
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False)
     apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=True, null=False)
     floor_number = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
+    height_item = models.IntegerField(verbose_name="Высота помешения", blank=True, null=True)
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False,default=None)
 
     def __str__(self):
@@ -101,3 +102,42 @@ class Adress(models.Model):
     class Meta:
         verbose_name = 'Адрес'
         verbose_name_plural = 'Адреc'
+
+
+class ExplicationListItem(models.Model):
+    order_list = models.ForeignKey(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='g')
+    appart_number_item = models.CharField(verbose_name="№№ комнат", max_length=3, blank=True, null=False)
+    appart_name_item = models.CharField(verbose_name="Характеристики комнат и помещений", max_length=64, blank=True, null=True)
+    square_total_item = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего-", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_general_item = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_advanced_item = models.DecimalField(verbose_name="Площадь вспом., кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_logdi_item = models.DecimalField(verbose_name="Площадь лоджий, кв.м", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_balkon_item = models.DecimalField(verbose_name="Площадь балконов, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_another_item = models.DecimalField(verbose_name="Площадь прочих, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
+    # is_active = models.BooleanField('активен?',default=True)
+    created = models.DateTimeField(auto_now_add=True , auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+
+    # def __str__(self):
+    #     return "%s" % self.order_list
+
+    class Meta:
+        verbose_name = 'ряд таблицы экспликации'
+        verbose_name_plural = 'Таблица экспликации'
+
+
+class ExplicationSquareTotal(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='g')
+    square_total_summa = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего- Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_general_summa = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_advanced_summa = models.DecimalField(verbose_name="Площадь вспом., кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_logdi_summa = models.DecimalField(verbose_name="Площадь лоджий, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_balkon_summa = models.DecimalField(verbose_name="Площадь балконов, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_another_summa = models.DecimalField(verbose_name="Площадь прочих, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Общая площадь помещений'
+        verbose_name_plural = 'Общие площади помещений'
+
+    def __str__(self):
+        return "%s" % self.order
