@@ -7,6 +7,8 @@ class ExplicationListItemInline(admin.TabularInline):
     model = ExplicationListItem# Register your models here.
 class ExplicationSquareTotalInline(admin.TabularInline):
     model = ExplicationSquareTotal# Register your models here.
+    readonly_fields = [field.name for field in ExplicationSquareTotal._meta.fields]
+    # can_delete = False
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.fields]

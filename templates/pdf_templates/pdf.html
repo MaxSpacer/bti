@@ -183,7 +183,6 @@
                 <div class="top-block ">
                     <div class="border border-dark p-3">
                         <div class="text-uppercase plan-size-font font-weight-lighter">ПЛАН ПОМЕЩЕНИЯ</div>
-
                         <div class="float-left">расположенного по адресу:</div>
                         <div class="mr-auto">
                             <div class="text">
@@ -194,10 +193,8 @@
                     </div>
                     <div class="text-uppercase p-3">этаж {{ order.adress.floor_number }}</div>
                 </div>
-                <!-- <p>Русский текст и схема булок</p> -->
-                <div class="schema_img">
-                    <img class="image-fluid" src="{{ order.image.url }}" alt="schema_img" />
-
+                <div class="schema_img" >
+                    <img class="image-fluid" src="{{ order.image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
                 </div>
                 <img class="image-fluid legenda_img" src="{% static 'img/legenda.png' %}" alt="Event QR code" />
                 <table class="table-bordered table-page2 text-center">

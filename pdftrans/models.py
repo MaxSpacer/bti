@@ -9,7 +9,7 @@ from django.core.files import File
 from barcode import generate
 from barcode.writer import ImageWriter
 from .choices import *
-
+from django.core.validators import MaxValueValidator
 
 class Order(models.Model):
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
@@ -19,6 +19,7 @@ class Order(models.Model):
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     order_number = models.BigIntegerField(blank=True, null=True, default = 0)
+    width_image_schema = models.IntegerField('Размер схемы %',blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
     is_active = models.BooleanField('активен?',default=True)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
@@ -133,4 +134,4 @@ class ExplicationSquareTotal(models.Model):
         verbose_name_plural = 'Общие площади помещений'
 
     def __str__(self):
-        return "Итоги к %s" % self.order
+        return "Итоговые площади к %s" % self.order
