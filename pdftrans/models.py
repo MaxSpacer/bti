@@ -84,7 +84,7 @@ class Adress(models.Model):
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False)
     apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=True, null=False)
     floor_number = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
-    height_item = models.DecimalField(verbose_name="Высота помешения", max_digits=5, decimal_places=1, blank=True, null=True)
+    height_item = models.IntegerField(verbose_name="Высота помешения", blank=True, null=True)
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False,default=None)
 
     def __str__(self):
