@@ -7,14 +7,15 @@
             font-family: "Ascon";
             src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
     }
-    .page2, .page2 th{
+    .page2{
         font-family: "Ascon";
         font-style: oblique;
+        font-size: 140%;
+        font-weight: 100;
     }
     </style>
 </head>
 <body>
-
         <div class="page" style="margin-top:35%;">
             <div class="text-center">
                 <h5 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h5>
@@ -181,10 +182,10 @@
             <div class="page2 text-center">
                 <div class="top-block ">
                     <div class="border border-dark p-3">
-                        <div class="text-uppercase ">ПЛАН ПОМЕЩЕНИЯ</div>
+                        <div class="text-uppercase plan-size-font font-weight-lighter">ПЛАН ПОМЕЩЕНИЯ</div>
 
                         <div class="float-left">расположенного по адресу:</div>
-                        <div class="">
+                        <div class="mr-auto">
                             <div class="text">
                                 {{order.adress}}
                             </div>
@@ -201,7 +202,7 @@
                 <img class="image-fluid legenda_img" src="{% static 'img/legenda.png' %}" alt="Event QR code" />
                 <table class="table-bordered table-page2 text-center">
                   <tr style="border: 1px solid black;">
-                    <th class="px-2 font-weight-lighter" colspan="4">Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</th>
+                    <td class="px-5 py-2" colspan="4">Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
                     <td colspan="3"></td>
@@ -240,7 +241,7 @@
                     </div>
                 </div>
                 <div class="explication-block">
-                    <h5 class="text-uppercase mb-2" style="font-weight:bold;">
+                    <h5 class="text-uppercase mb-3" style="font-weight:bold;">
                       ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
                     </h5>
                     <div class="text-left ml-2" style="font-size:1.2rem">

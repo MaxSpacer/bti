@@ -14,10 +14,8 @@ from .choices import *
 class Order(models.Model):
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
     customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
-    # object_list = models.CharField(verbose_name="cписок объектов", max_length=64, blank=False, null=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False)
     image = models.ImageField('схема помещения',upload_to='schema_images/')
-    image_2 = models.ImageField('таблица экспликации',upload_to='explications_images/')
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     order_number = models.BigIntegerField(blank=True, null=True, default = 0)
@@ -72,7 +70,6 @@ class Order(models.Model):
 
 class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, null=True, default=None, verbose_name = 'статус заказа')
-    # rayon = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=True)
     subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=False)
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False)
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False)

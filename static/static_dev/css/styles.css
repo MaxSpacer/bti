@@ -17,12 +17,18 @@
     margin: 7mm 7mm 7mm 20mm;
     border: 1px solid;
 }
-
-.page2, .page2 th{
+.page2{
+    font-stretch: ultra-condensed;
+    letter-spacing: -0.05em;
+    line-height: 98%;
+}
+.plan-size-font {
+    font-size: 120%;
     /* font-family: Ascon; */
-    /* font-weight: lighter;
+    font-weight: lighter;
     font-style: italic;
-    font-size: 120%; */ */
+    /* font-size: 120%; */
+    padding-bottom: 3px;
 }
 .table-page2{
     position: absolute;
@@ -39,7 +45,6 @@
     left:50%;
     transform: translate(-50%);
     width: 87%;
-    font-size: 120%
 }
 .floor{
     display: block;
@@ -53,14 +58,13 @@
     position: absolute;
     left: 15px;
     top: 85%;
-    width: 400px;
+    width: 430px;
 }
 .schema_img {
     position: absolute;
     top: 21%;  /* position the top  edge of the element at the middle of the parent */
     width: 93%;
-    height: 900px;
-    /* background-color: green; */
+    height: 600px;
     right: 1rem;
 }
 .schema_img > img{
