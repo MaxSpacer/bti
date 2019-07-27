@@ -114,12 +114,8 @@ class ExplicationListItem(models.Model):
     square_logdi_item = models.DecimalField(verbose_name="Площадь лоджий, кв.м", max_digits=5, decimal_places=1, blank=True, null=True)
     square_balkon_item = models.DecimalField(verbose_name="Площадь балконов, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
     square_another_item = models.DecimalField(verbose_name="Площадь прочих, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
-    # is_active = models.BooleanField('активен?',default=True)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
-
-    # def __str__(self):
-    #     return "%s" % self.order_list
 
     class Meta:
         verbose_name = 'ряд таблицы экспликации'
@@ -127,17 +123,17 @@ class ExplicationListItem(models.Model):
 
 
 class ExplicationSquareTotal(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='g')
-    square_total_summa = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего- Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_general_summa = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_advanced_summa = models.DecimalField(verbose_name="Площадь вспом., кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_logdi_summa = models.DecimalField(verbose_name="Площадь лоджий, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_balkon_summa = models.DecimalField(verbose_name="Площадь балконов, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_another_summa = models.DecimalField(verbose_name="Площадь прочих, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True)
+    order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None)
+    square_total_summa = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего- Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
+    square_general_summa = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
+    square_advanced_summa = models.DecimalField(verbose_name="Площадь вспом., кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
+    square_logdi_summa = models.DecimalField(verbose_name="Площадь лоджий, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
+    square_balkon_summa = models.DecimalField(verbose_name="Площадь балконов, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
+    square_another_summa = models.DecimalField(verbose_name="Площадь прочих, кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
 
     class Meta:
         verbose_name = 'Общая площадь помещений'
         verbose_name_plural = 'Общие площади помещений'
 
     def __str__(self):
-        return "%s" % self.order
+        return "Итоги к %s" % self.order
