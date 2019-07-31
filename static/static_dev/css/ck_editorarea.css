@@ -1,0 +1,90 @@
+.materialText,
+.newsShortText,
+.newsFullText {
+
+	font-size: 13px;
+}
+.materialText sub,
+.newsShortText sub,
+.newsFullText sub {
+	font-size: 11px;
+	line-height: 0;
+}
+
+.materialText p, .materialText ul, .materialText ol,
+.newsShortText p, .newsShortText ul, .newsShortText ol,
+.newsFullText p, .newsFullText ul, .newsFullText ol,
+ul.sectionList,
+ul.materialList {
+	margin: 10px 0;
+	line-height: 1.4;
+}
+.materialText li,
+.newsShortText li,
+.newsFullText li,
+ul.sectionList li,
+ul.materialList li {
+	margin: 5px 0;
+}
+
+ul.sectionList h3 {
+	font-size: inherit;
+	margin: 0;
+}
+ul.materialList .materialListItemTitle {
+	font-weight: bold;
+}
+
+.materialText table,
+.newsShortText table,
+.newsFullText table {
+	padding: 0;
+	width: 100%;
+	margin-bottom: 10px;
+	display: block;
+}
+/* отключение действия атрибутов <table> */
+.materialText table, .materialText th, .materialText td,
+.newsShortText table, .newsShortText th, .newsShortText td,
+.newsFullText table, .newsFullText th, .newsFullText td {
+	border: none;
+	border-spacing: 0;
+}
+.materialText th,
+.newsShortText th,
+.newsFullText th {
+	font-weight: normal;
+	font-size: 14px;
+	padding: 6px 7px;
+	background: #ADC0D8;
+	color: #fff;
+}
+.materialText th:last-child,
+.newsShortText th:last-child,
+.newsFullText th:last-child {
+	border-right: none;
+}
+.materialText td,
+.newsShortText td,
+.newsFullText td {
+	padding: 3px 5px;
+	vertical-align: middle;
+}
+.selectedSubheader
+{
+	color: #fff;
+	background-color: #3E48A7;
+	padding: 5px 20px;
+	border-radius: 20px 0 0 20px;
+	margin-right: -20px;
+}
+
+/* Редактор сообщения в переписке по заявке в бэкофисе
+---------------------------------------------------------------------------- */
+
+.userRequestMessageEditor {
+	font-size: 12px;
+}
+.userRequestMessageEditor p {
+	margin: 5px 0;
+}

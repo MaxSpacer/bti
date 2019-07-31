@@ -98,7 +98,7 @@
 .order_number{
     font-family: monospace;
     position: absolute;
-    bottom: 9px;
-    left: 10%;
-    letter-spacing: 10px;
+    bottom: 40px;
+    right: 4%;
+    letter-spacing: 13px;
 }

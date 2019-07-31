@@ -941,7 +941,9 @@ input[type=text], input[type=password], textarea, select {
 
 .footer {
 	position: absolute;
-	bottom: -38px; left: 0; right: 0;
+	bottom: 0px;
+    left: 0;
+     right: 0;
 	padding: 0 18px; /* = .pageContent padding */
 }
 .ny .footer {
@@ -968,7 +970,9 @@ input[type=text], input[type=password], textarea, select {
 	vertical-align: middle;
 	height: 6px;
 	width: 11px;
-	background: url('../img/updown.png');
+	/* background: url('../img/updown.png'); */
+	background: url("/static/img/updown.png");
+
 	background-position: 0 -6px;
 	margin-left: 4px;
 }
@@ -996,10 +1000,10 @@ input[type=text], input[type=password], textarea, select {
 	cursor: pointer;
 }
 .footerBanners > .left {
-	background: url('../img/gallery-left_footer.png') 0 0 no-repeat;
+	background: url('/static/img/gallery-left_footer.png') 0 0 no-repeat;
 }
 .footerBanners > .right {
-	background: url('../img/gallery-right_footer.png') 0 0 no-repeat;
+	background: url('/static/img/gallery-right_footer.png') 0 0 no-repeat;
 }
 
 .footerBanners > .viewport {

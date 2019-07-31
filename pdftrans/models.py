@@ -12,20 +12,21 @@ from .choices import *
 from django.core.validators import MaxValueValidator
 
 class Order(models.Model):
-    engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
-    customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
+    order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False)
+    doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=DOC_TYPE_CHOICES, default=2)
     image = models.ImageField('схема помещения',upload_to='schema_images/')
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
-    order_number = models.BigIntegerField(blank=True, null=True, default = 0)
     width_image_schema = models.IntegerField('Размер схемы %',blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
+    engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
+    customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
     is_active = models.BooleanField('активен?',default=True)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
 
     def generate_qr_bar_code(self):
-        v = str(random.randint(1000000000000, 9999999999999))
+        v = str(random.randint(1000000000, 9999999999))
         bar_file_name = "bar_%s" % v
         qr_file_name = "qr_%s.png" % v
         barcode_full_path = os.path.join(settings.MEDIA_ROOT, 'barcode', bar_file_name)
@@ -33,8 +34,8 @@ class Order(models.Model):
         qrcode_full_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qr_file_name)
         qrcode_path_for_bd = "qrcode/%s" % qr_file_name
 
-        EAN = barcode.get_barcode_class('ean13')
-        ean = EAN(v, writer=ImageWriter())
+        ISBN = barcode.get_barcode_class('isbn10')
+        ean = ISBN(v, writer=ImageWriter())
         print(ean)
         ean.save(barcode_full_path)
 
@@ -95,7 +96,7 @@ class Adress(models.Model):
         if self.build_number:
             build_str = ", строение %s" % (self.build_number)
         else: build_str = ""
-        return "%s %s, %s %s, дом %s%s%s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str)
+        return "%s %s, %s %s, дом %s%s%s, квартира %s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str, self.apart_number)
 
     class Meta:
         verbose_name = 'Адрес'
