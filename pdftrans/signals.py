@@ -2,15 +2,15 @@
 from decimal import Decimal
 from .models import Order, ExplicationListItem, ExplicationSquareTotal
 from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
+# from django.core.mail import send_mail, BadHeaderError
+# from django.http import HttpResponse, HttpResponseRedirect
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-# from orders.models import
 from importlib import import_module
 from django.conf import settings
+
 
 @receiver(post_save, sender=ExplicationListItem)
 def update_explication_square_total_on_create(sender, instance, created, **kwargs):

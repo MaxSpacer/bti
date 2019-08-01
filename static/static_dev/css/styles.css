@@ -13,7 +13,7 @@
 .cl{
     font-size: 0.7rem;
 }
-@page :nth(2){
+@page :nth(1){
     margin: 7mm 7mm 7mm 20mm;
     border: 1px solid;
 }
@@ -85,7 +85,7 @@
     margin-top: 20%;
 }
 .explication-block{
-    margin-top: 10%;
+    margin-top: 13%;
 }
 .forbar-code{
     bottom: 30px;

@@ -117,17 +117,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_prod')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_dev')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 STATICFILES_DIRS = (
 os.path.join(BASE_DIR, 'static', 'media'),
-os.path.join(BASE_DIR, 'static', 'static_dev'),
+os.path.join(BASE_DIR, 'static', 'static_dv'),
 )
 # uncomment
-try:
-    from .settings_prod import *
-except:
-    pass
+# try:
+#     from .settings_prod import *
+# except:
+#     pass
