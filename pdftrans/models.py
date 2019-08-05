@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import os
 import qrcode
@@ -10,6 +11,21 @@ from barcode import generate
 from barcode.writer import ImageWriter
 from .choices import *
 from django.core.validators import MaxValueValidator
+
+
+class SpecAppartListItem(models.Model):
+    spec_appart_text = models.CharField(verbose_name="Хар-ка помещения", max_length=64, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True , auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.spec_appart_text
+
+    class Meta:
+        # app_label = 'auth'
+        verbose_name = 'хар-ка помещений'
+        verbose_name_plural = 'xар-ки помещений'
+
 
 class Order(models.Model):
     order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
@@ -96,7 +112,7 @@ class Adress(models.Model):
         if self.build_number:
             build_str = ", строение %s" % (self.build_number)
         else: build_str = ""
-        return "%s %s, %s %s, дом %s%s%s, квартира %s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str, self.apart_number)
+        return "%s %s, %s %s, дом %s%s%s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str)
 
     class Meta:
         verbose_name = 'Адрес'
@@ -119,6 +135,13 @@ class ExplicationListItem(models.Model):
     class Meta:
         verbose_name = 'ряд таблицы экспликации'
         verbose_name_plural = 'Таблица экспликации'
+
+    def __init__(self,  *args, **kwargs):
+        def get_menu_choices():
+            SPECS_APPART_CHOICES = [(str(e.spec_appart_text), e.spec_appart_text) for e in SpecAppartListItem.objects.all()]
+            return SPECS_APPART_CHOICES
+        self._meta.get_field('appart_name_item').choices = get_menu_choices()
+        super(ExplicationListItem, self).__init__(*args, **kwargs)
 
 
 class ExplicationSquareTotal(models.Model):

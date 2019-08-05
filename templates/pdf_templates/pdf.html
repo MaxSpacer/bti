@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load format_filters %}
 <!DOCTYPE html>
 <head>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
@@ -336,7 +336,7 @@
                     <img class="bar-code m-0 p-0" src="{{ order.barcode.url }}" alt="">
                 </div>
                 <div class="order_number">
-                    {{order.order_number}}
+                    {{order.order_number|intspace}}
                 </div>
             </div>
 </body>
