@@ -42,7 +42,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
 
     def generate_qr_bar_code(self):
-        v = str(random.randint(1000000000, 9999999999))
+        v = str(random.randint(1000000000, 2147483645))
         bar_file_name = "bar_%s" % v
         qr_file_name = "qr_%s.png" % v
         barcode_full_path = os.path.join(settings.MEDIA_ROOT, 'barcode', bar_file_name)
@@ -71,12 +71,13 @@ class Order(models.Model):
         self.barcode = (barcode_path_for_bd)
         self.order_number = v
 
-    def __str__(self):
-        return "Ордер № %s %s" % (self.id, self.order_number)
-
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+    def __str__(self):
+        return "Ордер № %s %s" % (self.id, self.order_number)
+
 
     def save(self, *args, **kwargs):
         if self.order_number:
