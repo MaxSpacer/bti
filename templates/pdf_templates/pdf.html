@@ -1,5 +1,7 @@
 {% load static %}
 {% load format_filters %}
+{% load l10n %}
+
 <!DOCTYPE html>
 <head>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
@@ -189,10 +191,19 @@
                             <div class="text">
                                 {{order.adress}}
                             </div>
-                            <div class="">квартира № {{order.adress.apart_number}}</div>
+                            <div class="text-lowercase">
+                                {% with order.explicationlistitem_set.all|first as appart %}
+                                {{ appart.apart_number }}
+                                {% endwith %}
+                            </div>
                         </div>
                     </div>
-                    <div class="text-uppercase p-3">этаж {{ order.adress.floor_number }}</div>
+                    <div class="text-uppercase p-3">
+                        этаж
+                        {% with order.explicationlistitem_set.all|first as floor %}
+                        {{ floor.floor_number }}
+                        {% endwith %}
+                    </div>
                 </div>
                 <div class="schema_img" >
                     <img class="image-fluid" src="{{ order.image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
@@ -250,7 +261,9 @@
                             {{ order.adress }}
                         </p>
                         <p class="">
-                            Квартира № {{ order.adress.apart_number }}
+                            {% with order.explicationlistitem_set.all|first as appart %}
+                            {{ appart.apart_number }}
+                            {% endwith %}
                         </p>
                     </div>
                 </div>
@@ -280,7 +293,7 @@
                       </tr>
                       {% for items in order.explicationlistitem_set.all%}
                       <tr>
-                          <td>{{ order.adress.floor_number }}</td>
+                          <td>{{ items.floor_number }}</td>
                           <td>{{ items.appart_number_item }}</td>
                           <td>{{ items.appart_name_item }}</td>
                           <td>{{ items.square_total_item|default_if_none:"" }}</td>
@@ -289,18 +302,28 @@
                           <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
                           <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
                           <td>{{ items.square_another_item|default_if_none:"" }}</td>
-                          <td>{{ order.adress.height_item }}</td>
+                          <td>{{ items.height_item|default_if_none:"" }}</td>
                       </tr>
                       {% endfor %}
                       <tr>
                           <td colspan="3">Итого по квартире</td>
-                          <td>{{order.explicationsquaretotal.square_total_summa}}</td>
-                          <td>{{order.explicationsquaretotal.square_general_summa}}</td>
-                          <td>{{order.explicationsquaretotal.square_advanced_summa}}</td>
-                          <td>{{order.explicationsquaretotal.square_logdi_summa}}</td>
-                          <td>{{order.explicationsquaretotal.square_balkon_summa}}</td>
-                          <td>{{order.explicationsquaretotal.square_another_summa}}</td>
+                          <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_general_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td>
                           <td></td>
+                      </tr>
+                      <tr>
+                          <td colspan="3">Общая площадь ( с летними )</td>
+                          <td>{{order.explicationsquaretotal.square_total_summa_global|unlocalize}}</td>
+                          <td colspan="6"></td>
+                          <!-- <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
+                          <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td> -->
+                          <!-- <td></td> -->
                       </tr>
                     </table>
                     <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->

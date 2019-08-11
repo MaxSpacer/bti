@@ -29,15 +29,19 @@ class SpecAppartListItem(models.Model):
 
 class Order(models.Model):
     order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
+    uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False)
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=DOC_TYPE_CHOICES, default=2)
-    image = models.ImageField('схема помещения',upload_to='schema_images/')
+    image = models.ImageField('схема помещения', upload_to='schema_images/', blank=True, null=True)
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %',blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
     customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
+    # floor_number_order = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
+    # height_item_order = models.CharField(verbose_name="Высота помешения", max_length=5, blank=True, null=True)
     is_active = models.BooleanField('активен?',default=True)
+    is_update = models.BooleanField('обновлен?',default=False)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
 
@@ -78,12 +82,12 @@ class Order(models.Model):
     def __str__(self):
         return "Ордер № %s %s" % (self.id, self.order_number)
 
-
     def save(self, *args, **kwargs):
         if self.order_number:
             pass
         else:
             self.generate_qr_bar_code()
+            # self.export_table_pdf()
         super(Order, self).save(*args, **kwargs)
 
 
@@ -101,11 +105,8 @@ class Adress(models.Model):
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False)
     litera = models.CharField(verbose_name="Литера", max_length=64, blank=True, null=False)
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False)
-    apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=True, null=False)
-    floor_number = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
-    height_item = models.IntegerField(verbose_name="Высота помешения", blank=True, null=True)
-    another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False,default=None)
-
+    another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=True, default=None)
+    # floor_number_adress = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
     def __str__(self):
         if self.corpus_number:
             corpus_str = ", корпус %s" % (self.corpus_number)
@@ -124,12 +125,15 @@ class ExplicationListItem(models.Model):
     order_list = models.ForeignKey(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='g')
     appart_number_item = models.CharField(verbose_name="№№ комнат", max_length=3, blank=True, null=False)
     appart_name_item = models.CharField(verbose_name="Характеристики комнат и помещений", max_length=64, blank=True, null=True)
-    square_total_item = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего-", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_general_item = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_advanced_item = models.DecimalField(verbose_name="Площадь вспом., кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_logdi_item = models.DecimalField(verbose_name="Площадь лоджий, кв.м", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_balkon_item = models.DecimalField(verbose_name="Площадь балконов, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
-    square_another_item = models.DecimalField(verbose_name="Площадь прочих, кв.м.", max_digits=5, decimal_places=1, blank=True, null=True)
+    square_total_item = models.CharField(verbose_name="Площадь общая, кв.м. -Всего-", max_length=5, blank=True, null=True)
+    square_general_item = models.CharField(verbose_name="Площадь основная (жилая), кв.м.", max_length=5, blank=True, null=True)
+    square_advanced_item = models.CharField(verbose_name="Площадь вспом., кв.м.", max_length=5, blank=True, null=True)
+    square_logdi_item = models.CharField(verbose_name="Площадь лоджий, кв.м", max_length=5, blank=True, null=True)
+    square_balkon_item = models.CharField(verbose_name="Площадь балконов, кв.м.", max_length=5, blank=True, null=True)
+    square_another_item = models.CharField(verbose_name="Площадь прочих, кв.м.", max_length=5, blank=True, null=True)
+    floor_number = models.CharField(verbose_name="Этаж", max_length=64, blank=True, null=False)
+    height_item = models.CharField(verbose_name="Высота помешения", max_length=5, blank=True, null=True)
+    apart_number = models.CharField(verbose_name="Номер помещения (квартиры)", max_length=64, blank=True, null=False)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
     updated = models.DateTimeField(auto_now_add=False , auto_now=True)
 
@@ -147,6 +151,7 @@ class ExplicationListItem(models.Model):
 
 class ExplicationSquareTotal(models.Model):
     order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None)
+    square_total_summa_global = models.DecimalField(verbose_name="Общая площадь ( с летними ):", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
     square_total_summa = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего- Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
     square_general_summa = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
     square_advanced_summa = models.DecimalField(verbose_name="Площадь вспом., кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
