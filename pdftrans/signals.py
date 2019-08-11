@@ -14,6 +14,7 @@ from importlib import import_module
 from django.conf import settings
 from django.core import serializers
 import camelot
+import fitz
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
@@ -104,4 +105,24 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 )
     print (tables[0].parsing_report)
     print (tables[0].df)
+    doc = fitz.open(instance.uploaded_pdf.path)
+    print('--------------doc--------------')
+    print(doc)
+    for i in range(len(doc)):
+        for img in doc.getPageImageList(i):
+            xref = img[0]
+            print(xref)
+            pix = fitz.Pixmap(doc, xref)
+            if pix.n < 5:       # this is GRAY or RGB
+                pix.writePNG("p%s-%s.png" % (i, xref))
+            else:               # CMYK: convert to RGB first
+                pix1 = fitz.Pixmap(fitz.csRGB, pix)
+                pix1.writePNG("p%s-%s.png" % (i, xref))
+                pix1 = None
+            pix = None
     pass
+
+# def export_img_pdf(sender, instance, created, **kwargs):
+
+
+    # pass
