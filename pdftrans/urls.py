@@ -22,5 +22,6 @@ app_name = 'pdftrans'
 urlpatterns = [
     path('<int:pk>/', DetailView.as_view(model=Order,template_name = 'pdftrans/order_detail.html'), name='order_detail_n'),
     path('pdf/<int:pk>/', views.OrderPrintView.as_view(), name='order_pdf_view_n'),
+    path('fullpdf/<int:pk>/', views.OrderPrintFullView.as_view(), name='order_full_pdf_view_n'),
     path('qr/<int:referer_id>/', views.OrderRedirectView, name='order_redirect_view_n'),
 ]

@@ -4,7 +4,7 @@ import os
 import json as JSON
 from django.conf import settings
 from decimal import Decimal
-from .models import Order, ExplicationListItem, ExplicationSquareTotal, Adress
+from .models import *
 from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -18,18 +18,10 @@ import fitz
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
-    tables = camelot.read_pdf(instance.uploaded_pdf.path, flavor='stream', row_tol=9)
-    # print("---table2-----")
-    # tables2 = camelot.read_pdf(instance.uploaded_pdf.path, flavor='stream', table_areas=['100,720,500,700'],column_tol = 100)
-    # csv_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_table.csv')
-    # json = tables2[0].to_csv(csv_table)
-    # print (tables2[0].parsing_report)
-    # print (tables2[0].df)
-    # print("---table2end-----")
+    uploaded_pdf_url = instance.uploaded_pdf.path
+    tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9)
     json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
-    # csv_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.csv')
     json = tables[0].to_json(json_table)
-    # json = tables[0].to_csv(csv_table)
     if json_table:
         with open(json_table, 'r') as f:
             print("------------data-------------------")
@@ -38,10 +30,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
             i = 0
             data.pop()
             for x in data:
-                # print(x)
                 if i == 0:
                     local_appart = x["1"]
-                # if i > 4:
                 if i > 4 and x['0'] != '':
                     ExplicationListItem.objects.create(
                     order_list = instance,
@@ -58,7 +48,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     apart_number = local_appart
                     )
                 i += 1
-            print('-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
+            # print('-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
             explication_list_items = ExplicationListItem.objects.filter(order_list=instance)
             def string_to_correct_decimal(string):
                 result = Decimal(string.strip(" '"))
@@ -90,7 +80,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 if items.square_another_item:
                     square_another_sum += string_to_correct_decimal(items.square_another_item)
                     # print(square_another_sum)
-
                 v, created = ExplicationSquareTotal.objects.update_or_create(
                 order=instance,
                 defaults={
@@ -103,26 +92,25 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 'square_total_summa_global': square_total_sum + square_logdi_sum + square_balkon_sum + square_another_sum
                 },
                 )
-    print (tables[0].parsing_report)
-    print (tables[0].df)
-    doc = fitz.open(instance.uploaded_pdf.path)
-    print('--------------doc--------------')
-    print(doc)
+    # print (tables[0].parsing_report)
+    # print (tables[0].df)
+    # print('--------------doc--------------')
+    doc = fitz.open(uploaded_pdf_url)
+    path_img_scheme = "%s-%s.png" % (uploaded_pdf_url, instance.order_number)
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
             xref = img[0]
             print(xref)
             pix = fitz.Pixmap(doc, xref)
             if pix.n < 5:       # this is GRAY or RGB
-                pix.writePNG("p%s-%s.png" % (i, xref))
+                pix.writePNG(path_img_scheme)
             else:               # CMYK: convert to RGB first
                 pix1 = fitz.Pixmap(fitz.csRGB, pix)
-                pix1.writePNG("p%s-%s.png" % (i, xref))
+                pix1.writePNG(path_img_scheme)
                 pix1 = None
             pix = None
+            order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
+            v, created = OrderImage.objects.update_or_create(
+            order_fk=instance,
+            defaults={'order_image': path_img_scheme})
     pass
-
-# def export_img_pdf(sender, instance, created, **kwargs):
-
-
-    # pass

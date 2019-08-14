@@ -1,12 +1,17 @@
 from django.contrib import admin
-from .models import Order, Adress, ExplicationListItem, ExplicationSquareTotal, SpecAppartListItem
+from .models import *
 
+class OrderImageInline(admin.TabularInline):
+    model = OrderImage# Register your models here.
+    readonly_fields = [field.name for field in OrderImage._meta.fields]
+    max_num = 1
 
 class AdressInline(admin.StackedInline):
     model = Adress# Register your models here.
 
 class ExplicationListItemInline(admin.TabularInline):
     model = ExplicationListItem# Register your models here.
+    readonly_fields = [field.name for field in ExplicationListItem._meta.fields]
 
 class ExplicationSquareTotalInline(admin.TabularInline):
     model = ExplicationSquareTotal# Register your models here.
@@ -15,9 +20,5 @@ class ExplicationSquareTotalInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.fields]
     readonly_fields = ('barcode','qrcode','order_number')
-    inlines = [AdressInline,ExplicationListItemInline,ExplicationSquareTotalInline]
+    inlines = [AdressInline, OrderImageInline, ExplicationSquareTotalInline, ExplicationListItemInline]
 admin.site.register(Order, OrderAdmin)
-
-class SpecAppartListItemAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in SpecAppartListItem._meta.fields]
-admin.site.register(SpecAppartListItem, SpecAppartListItemAdmin)

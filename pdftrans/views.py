@@ -12,14 +12,27 @@ class OrderView(DetailView):
     model = Order
     template_name = 'pdf_templates/pdf.html'
 
-
 class OrderPrintView(WeasyTemplateResponseMixin, OrderView):
     pdf_stylesheets = [
         settings.STATIC_ROOT + '/css/bootstrap.min.css',
         settings.STATIC_ROOT + '/css/styles.css',
     ]
     pdf_attachment = False
-    pdf_filename = 'foo.pdf'
+    pdf_filename = 'doc.pdf'
+
+
+class OrderFullView(DetailView):
+    model = Order
+    template_name = 'pdf_templates/pdf_full.html'
+
+class OrderPrintFullView(WeasyTemplateResponseMixin, OrderFullView):
+    pdf_stylesheets = [
+        settings.STATIC_ROOT + '/css/bootstrap.min.css',
+        settings.STATIC_ROOT + '/css/styles2.css',
+    ]
+    pdf_attachment = False
+    pdf_filename = 'documents.pdf'
+
 
 def OrderRedirectView(request, referer_id):
     order_instance = get_object_or_404(Order,order_number=referer_id)
