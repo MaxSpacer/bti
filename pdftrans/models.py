@@ -9,7 +9,6 @@ from django.conf import settings
 from django.core.files import File
 from barcode import generate
 from barcode.writer import ImageWriter
-from .choices import *
 from django.core.validators import MaxValueValidator
 from django.contrib.sites.models import Site
 from django.utils import timezone
