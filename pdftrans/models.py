@@ -106,7 +106,7 @@ class Order(models.Model):
 
 class OrderImage(models.Model):
     order_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Ордер')
-    # order_image = models.ImageField('схема помещения', blank=True, null=True, max_length=250)
+    order_image = models.ImageField('схема помещения', blank=True, null=True, max_length=250)
     fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
