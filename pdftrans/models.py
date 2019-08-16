@@ -26,13 +26,13 @@ def get_type_object_choices():
     # return TYPE_OBJECT_CHOICES
 # self._meta.get_field('type_object').choices = get_type_object_choices()
 # self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
-
+    pass
 def get_name_object_choices():
     # NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
     # return NAME_OBJECT_CHOICES
 # self._meta.get_field('name_object').choices = get_name_object_choices()
 # self._meta.get_field('name_object').default = NameObject.objects.filter().first()
-
+    pass
 class Order(models.Model):
     order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True)
