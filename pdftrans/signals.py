@@ -29,38 +29,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
     csv = address[0].to_csv(csv_address_f)
     if csv_address_f:
         with open(csv_address_f, 'r', encoding='utf-8') as f:
-            print("------------data-------------------")
-            total_dict = {
-            'город': '',
-            'деревня': '',
-            'село': '',
-            'поселок': '',
-            'поселение': '',
-            'переулок': '',
-            'микрорайон': '',
-            'проспект': '',
-            'село': '',
-            'проезд': '',
-            'шоссе': '',
-            'площадь': '',
-            'улица': '',
-            'дом': '',
-            'корпус': '',
-            'строение': '',
-            'литера': ''
-            }
-            def func(string_value):
-                for key, value in total_dict.items():
-                    if key in string_value:
-                        total_val = string_value.split()
-                        print('total_val')
-                        print(total_val)
-
-                        total_val.remove(key)
-                        total_val = total_val[0]
-                        total_dict.update({key: total_val})
-                        print(total_dict)
-                pass
             row_read = CSV.reader(f)
             for row in row_read:
                 pp = (row[0].strip(" '")).split(":")
@@ -68,28 +36,79 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 print('adress_item_list')
                 print(adress_item_list)
             i = 0
+            total_list = []
             for item in adress_item_list:
-                func(adress_item_list[i])
-                # v, created = Adress.objects.update_or_create(
-                # order=instance,
-                # defaults={
-                # 'subject_rf':square_general_sum,
-                # 'rayon':square_advanced_sum,
-                # 'mun_type':square_logdi_sum,
-                # 'mun_name':square_balkon_sum,
-                # 'city_type':square_another_sum,
-                # 'city_name': square_total_sum,
-                # 'street_type':square_total_sum,
-                # 'street':square_general_sum,
-                # 'micro_rayon':square_advanced_sum,
-                # 'house_number':square_logdi_sum,
-                # 'corpus_number':square_balkon_sum,
-                # 'litera':square_another_sum
-                # },
-                # )
+                total_val = adress_item_list[i].split()
+                k = ''
+                v = ''
+                for word in total_val:
+                    if word[0].isupper() or word[0].isdigit():
+                        v = word
+                    else:
+                        k = word
+                total_list.append([k, v])
                 i+=1
+            print('total_list')
+            print(total_list)
+            total_dict = {
+                'city_type':'',
+                'city_name': '',
+                'street_type':'',
+                'street':'',
+                'micro_rayon':'',
+                'house_number':'',
+                'corpus_number':'',
+                'litera':''
+            }
+            for item in total_list:
+                if item[0] == 'город' or item[0] == 'поселение' or item[0] == 'деревня' or item[0] == 'поселок':
+                    k = 'city_type'
+                    v = item[0]
+                    total_dict.update({k: v})
+                    k = 'city_name'
+                    v = item[1]
+                    total_dict.update({k: v})
 
-            # print(instance.adress)
+                elif item[0] == 'улица' or item[0] == 'переулок' or item[0] == 'проспект' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь':
+                    k = 'street_type'
+                    v = item[0]
+                    total_dict.update({k: v})
+                    k = 'street'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+                elif item[0] == 'микрорайон':
+                    k = 'micro_rayon'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+                elif item[0] == 'дом':
+                    k = 'house_number'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+                elif item[0] == 'корпус':
+                    k = 'corpus_number'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+                elif item[0] == 'litera':
+                    k = 'litera'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+                elif item[0] == 'строение':
+                    k = 'build_number'
+                    v = item[1]
+                    total_dict.update({k: v})
+
+            print('total_dict')
+            print(total_dict)
+                # func(adress_item_list[i])
+            v, created = Adress.objects.update_or_create(
+            order=instance,
+            defaults=total_dict,
+            )
 
     tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9)
     json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')

@@ -15,14 +15,31 @@ from django.contrib.sites.models import Site
 from django.utils import timezone
 from settings_pdftrans.models import *
 
+def get_doc_type_choices():
+    DOC_TYPE_CHOICES = [(str(e.docs_type), e.docs_type) for e in DocType.objects.all()]
+    return DOC_TYPE_CHOICES
+# self._meta.get_field('doc_type').choices = get_doc_type_choices()
+# self._meta.get_field('doc_type').default = DocType.objects.filter().first()
+
+def get_type_object_choices():
+    TYPE_OBJECT_CHOICES = [(str(e.objects_type), e.objects_type) for e in TypeObject.objects.all()]
+    return TYPE_OBJECT_CHOICES
+# self._meta.get_field('type_object').choices = get_type_object_choices()
+# self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
+
+def get_name_object_choices():
+    NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
+    return NAME_OBJECT_CHOICES
+# self._meta.get_field('name_object').choices = get_name_object_choices()
+# self._meta.get_field('name_object').default = NameObject.objects.filter().first()
 
 class Order(models.Model):
     order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
-    doc_type = models.CharField(verbose_name="Тип документа", max_length=64)
-    type_object = models.CharField(verbose_name="вид объекта учета", max_length=64)
-    name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64)
+    doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices())
+    type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices())
+    name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices())
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
@@ -69,23 +86,10 @@ class Order(models.Model):
         return "Ордер № %s %s" % (self.id, self.order_number)
 
     def __init__(self,  *args, **kwargs):
-
-        def get_doc_type_choices():
-            DOC_TYPE_CHOICES = [(str(e.docs_type), e.docs_type) for e in DocType.objects.all()]
-            return DOC_TYPE_CHOICES
-        self._meta.get_field('doc_type').choices = get_doc_type_choices()
         self._meta.get_field('doc_type').default = DocType.objects.filter().first()
 
-        def get_type_object_choices():
-            TYPE_OBJECT_CHOICES = [(str(e.objects_type), e.objects_type) for e in TypeObject.objects.all()]
-            return TYPE_OBJECT_CHOICES
-        self._meta.get_field('type_object').choices = get_type_object_choices()
         self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
 
-        def get_name_object_choices():
-            NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
-            return NAME_OBJECT_CHOICES
-        self._meta.get_field('name_object').choices = get_name_object_choices()
         self._meta.get_field('name_object').default = NameObject.objects.filter().first()
 
         super(Order, self).__init__(*args, **kwargs)
@@ -99,7 +103,7 @@ class Order(models.Model):
 
 
 class OrderImage(models.Model):
-    order_fk = models.ForeignKey(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='Ордер')
+    order_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Ордер')
     order_image = models.ImageField('схема помещения', blank=True, null=True)
     fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -114,7 +118,7 @@ class OrderImage(models.Model):
 
 
 class Adress(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, null=True, default=None, verbose_name = 'статус заказа')
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'статус заказа')
     subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=False, default = 'Москва')
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False, default = '')
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False, default = '')
@@ -143,7 +147,7 @@ class Adress(models.Model):
         if self.litera:
             lit = ", литера %s" % (self.litera)
         else: lit = ""
-        return "%s %s %s, %s %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.street_type, self.house_number, corpus_str, build_str, lit)
+        return "%s %s%s, %s %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.street_type, self.house_number, corpus_str, build_str, lit)
 
     class Meta:
         verbose_name = 'Адрес'
@@ -151,7 +155,7 @@ class Adress(models.Model):
 
 
 class ExplicationListItem(models.Model):
-    order_list = models.ForeignKey(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='g')
+    order_list = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='g')
     appart_number_item = models.CharField(verbose_name="№№ комнат", max_length=3, blank=True, null=False)
     appart_name_item = models.CharField(verbose_name="Характеристики комнат и помещений", max_length=64, blank=True, null=True)
     square_total_item = models.CharField(verbose_name="Площадь общая, кв.м. -Всего-", max_length=5, blank=True, null=True)
@@ -173,7 +177,7 @@ class ExplicationListItem(models.Model):
 
 
 class ExplicationSquareTotal(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, blank=True, null=True, default=None)
     square_total_summa_global = models.DecimalField(verbose_name="Общая площадь ( с летними ):", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
     square_total_summa = models.DecimalField(verbose_name="Площадь общая, кв.м. -Всего- Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
     square_general_summa = models.DecimalField(verbose_name="Площадь основная (жилая), кв.м. Итого:", max_digits=5, decimal_places=1, blank=True, null=True, default=0.0)
