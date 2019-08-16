@@ -1,9 +1,13 @@
 from django.contrib import admin
 from .models import *
+from django.utils.html import format_html
+
 
 class OrderImageInline(admin.TabularInline):
     model = OrderImage# Register your models here.
-    readonly_fields = [field.name for field in OrderImage._meta.fields]
+    def full_pdf_url(self, obj):
+        return format_html("<a href='{url}'>{url}</a>", url=obj.fullpdf_url_staff)
+    readonly_fields = ['full_pdf_url', 'fullpdf_url_staff', 'order_image',]
     max_num = 1
 
 class AdressInline(admin.StackedInline):
@@ -20,5 +24,5 @@ class ExplicationSquareTotalInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.fields]
     readonly_fields = ('barcode','qrcode','order_number')
-    inlines = [AdressInline, OrderImageInline, ExplicationSquareTotalInline, ExplicationListItemInline]
+    inlines = [OrderImageInline, AdressInline, ExplicationSquareTotalInline, ExplicationListItemInline]
 admin.site.register(Order, OrderAdmin)

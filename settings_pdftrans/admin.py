@@ -13,3 +13,7 @@ admin.site.register(TypeObject, TypeObjectAdmin)
 class NameObjectAdmin(admin.ModelAdmin):
     list_display = [field.name for field in NameObject._meta.fields]
 admin.site.register(NameObject, NameObjectAdmin)
+
+class ProtocolTypeAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in ProtocolType._meta.fields]
+admin.site.register(ProtocolType, ProtocolTypeAdmin)

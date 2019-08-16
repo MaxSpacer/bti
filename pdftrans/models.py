@@ -25,11 +25,11 @@ class Order(models.Model):
     name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64)
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
-    width_image_schema = models.IntegerField('Размер схемы %',blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
+    width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
     customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
-    created = models.DateTimeField(auto_now_add=True , auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def generate_qr_bar_code(self):
         v = str(random.randint(1000000000, 2147483645))
@@ -101,6 +101,7 @@ class Order(models.Model):
 class OrderImage(models.Model):
     order_fk = models.ForeignKey(Order, on_delete=models.SET_DEFAULT, blank=True, null=True, default=None, verbose_name='Ордер')
     order_image = models.ImageField('схема помещения', blank=True, null=True)
+    fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -118,10 +119,11 @@ class Adress(models.Model):
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False, default = '')
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False, default = '')
     mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False, default = '')
-    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, choices=RELEVANCE_CHOICES, default=1)
+    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, default='')
     city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=True, null=False, default = 'Москва')
-    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, choices=GEO_TYPE_CHOICES, default=1)
+    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, default='')
     street = models.CharField(verbose_name="название улицы (проспекта, переулка и т. д.)", max_length=64, blank=True, null=False, default = '')
+    micro_rayon = models.CharField(verbose_name="микрорайон", max_length=64, blank=True, null=False, default = '')
     house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=True, null=False, default = '')
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False, default = '')
     litera = models.CharField(verbose_name="Литера", max_length=64, blank=True, null=False, default = '')
@@ -135,7 +137,13 @@ class Adress(models.Model):
         if self.build_number:
             build_str = ", строение %s" % (self.build_number)
         else: build_str = ""
-        return "%s %s, %s %s, дом %s%s%s" % (self.city_type, self.city_name, self.street, self.street_type, self.house_number, corpus_str, build_str)
+        if self.micro_rayon:
+            micro_ray = ", микрорайон %s" % (self.micro_rayon)
+        else: micro_ray = ""
+        if self.litera:
+            lit = ", литера %s" % (self.litera)
+        else: lit = ""
+        return "%s %s %s, %s %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.street_type, self.house_number, corpus_str, build_str, lit)
 
     class Meta:
         verbose_name = 'Адрес'

@@ -2,6 +2,7 @@
 
 import os
 import json as JSON
+import csv as CSV
 from django.conf import settings
 from decimal import Decimal
 from .models import *
@@ -15,10 +16,81 @@ from django.conf import settings
 from django.core import serializers
 import camelot
 import fitz
+from django.urls import reverse_lazy
+# from io import StringIO
+
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
+
+    address = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['170,720,780,700'])
+    csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
+    csv = address[0].to_csv(csv_address_f)
+    if csv_address_f:
+        with open(csv_address_f, 'r', encoding='utf-8') as f:
+            print("------------data-------------------")
+            total_dict = {
+            'город': '',
+            'деревня': '',
+            'село': '',
+            'поселок': '',
+            'поселение': '',
+            'переулок': '',
+            'микрорайон': '',
+            'проспект': '',
+            'село': '',
+            'проезд': '',
+            'шоссе': '',
+            'площадь': '',
+            'улица': '',
+            'дом': '',
+            'корпус': '',
+            'строение': '',
+            'литера': ''
+            }
+            def func(string_value):
+                for key, value in total_dict.items():
+                    if key in string_value:
+                        total_val = string_value.split()
+                        print('total_val')
+                        print(total_val)
+
+                        total_val.remove(key)
+                        total_val = total_val[0]
+                        total_dict.update({key: total_val})
+                        print(total_dict)
+                pass
+            row_read = CSV.reader(f)
+            for row in row_read:
+                pp = (row[0].strip(" '")).split(":")
+                adress_item_list = pp[1].split(",")
+                print('adress_item_list')
+                print(adress_item_list)
+            i = 0
+            for item in adress_item_list:
+                func(adress_item_list[i])
+                # v, created = Adress.objects.update_or_create(
+                # order=instance,
+                # defaults={
+                # 'subject_rf':square_general_sum,
+                # 'rayon':square_advanced_sum,
+                # 'mun_type':square_logdi_sum,
+                # 'mun_name':square_balkon_sum,
+                # 'city_type':square_another_sum,
+                # 'city_name': square_total_sum,
+                # 'street_type':square_total_sum,
+                # 'street':square_general_sum,
+                # 'micro_rayon':square_advanced_sum,
+                # 'house_number':square_logdi_sum,
+                # 'corpus_number':square_balkon_sum,
+                # 'litera':square_another_sum
+                # },
+                # )
+                i+=1
+
+            # print(instance.adress)
+
     tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9)
     json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
     json = tables[0].to_json(json_table)
@@ -95,8 +167,11 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # print (tables[0].parsing_report)
     # print (tables[0].df)
     # print('--------------doc--------------')
-    doc = fitz.open(uploaded_pdf_url)
     path_img_scheme = "%s-%s.png" % (uploaded_pdf_url, instance.order_number)
+    protocol = Site.objects.get_current().protocoltype
+    current_site = Site.objects.get_current().domain
+    path_full_pdf = "%s%s%s" % (protocol, current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    doc = fitz.open(uploaded_pdf_url)
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
             xref = img[0]
@@ -112,5 +187,9 @@ def export_data_pdf(sender, instance, created, **kwargs):
             order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
             v, created = OrderImage.objects.update_or_create(
             order_fk=instance,
-            defaults={'order_image': path_img_scheme})
+            defaults={'order_image': path_img_scheme, 'fullpdf_url_staff': path_full_pdf }
+            )
+    # print('instance.adress')
+    # print(instance.adress)
+
     pass
