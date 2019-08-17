@@ -186,7 +186,25 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # print (tables[0].parsing_report)
     # print (tables[0].df)
     # print('--------------doc--------------')
-    path_img_scheme = "%s-%s.png" % (uploaded_pdf_url, instance.order_number)
+    # H = uploaded_pdf_url.split('media')
+    # h = H[1]
+    # print('-----------h-----------')
+    # print(H)
+    # print(h)
+    # # h.replace("\\","/")
+    # print(h)
+    #
+    #
+    # path_img_scheme = os.path.join(settings.MEDIA_ROOT, h)
+    # print('path_img_scheme')
+    # print(path_img_scheme)
+    # 'uploaded_pdf/%Y/%m/%d/    relative_url = instance.uploaded_pdf.url
+    # ur = instance.uploaded_pdf.url
+    # ur.lstrip('/media/')
+    # print('ur')
+    # print(ur)
+    path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', 'schema_' + instance.order_number + '.png')
+    # path_img_scheme = "%s.png" % (uploaded_pdf_url)
     protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
     path_full_pdf = "%s%s%s" % (protocol, current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))

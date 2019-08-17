@@ -60,8 +60,8 @@ class ProtocolType(models.Model):
     def __init__(self,  *args, **kwargs):
         def get_name_object_choices():
             NAME_OBJECT_CHOICES = [
-            ('http','http://'),
-            ('https','https://'),
+            ('http://','http://'),
+            ('https://','https://'),
             ]
             return NAME_OBJECT_CHOICES
         self._meta.get_field('protocol_type').choices = get_name_object_choices()
