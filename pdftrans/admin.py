@@ -8,7 +8,7 @@ class OrderImageInline(admin.TabularInline):
     # def full_pdf_url(self, obj):
     #     return format_html("<a href='{url}'>{url}</a>", url=obj.fullpdf_url_staff)
     # readonly_fields = ['full_pdf_url', 'fullpdf_url_staff', 'order_image',]
-    # readonly_fields = ['full_pdf_url', 'fullpdf_url_staff', 'order_image',]
+    readonly_fields = ['fullpdf_url_staff', 'order_image']
     max_num = 1
 
 class AdressInline(admin.StackedInline):
