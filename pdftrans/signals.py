@@ -207,7 +207,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
     # path_img_scheme_bd = "%s.png" % (uploaded_pdf_url)
     path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name
-    protocol = Site.objects.get_current().protocoltype
+    # protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
     path_full_pdf = "%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
     doc = fitz.open(uploaded_pdf_url)
