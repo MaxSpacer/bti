@@ -1,4 +1,4 @@
-DEBUG = False
+# DEBUG = False
 ALLOWED_HOSTS = ['167.71.54.163', 'localhost', '127.0.0.1']
 
 #settings for db on server
