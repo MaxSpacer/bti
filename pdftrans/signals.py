@@ -203,8 +203,10 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # ur.lstrip('/media/')
     # print('ur')
     # print(ur)
-    path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', 'schema_' + instance.order_number + '.png')
-    # path_img_scheme = "%s.png" % (uploaded_pdf_url)
+    path_img_name = 'schema_' + instance.order_number + '.png'
+    path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
+    # path_img_scheme_bd = "%s.png" % (uploaded_pdf_url)
+    path_img_scheme_bd = "uploaded_pdf/schemes/" % path_img_name
     protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
     path_full_pdf = "%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
@@ -224,7 +226,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
             order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
             v, created = OrderImage.objects.update_or_create(
             order_fk=instance,
-            defaults={'order_image': path_img_scheme, 'fullpdf_url_staff': path_full_pdf }
+            defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
             )
     # print('instance.adress')
     # print(instance.adress)
