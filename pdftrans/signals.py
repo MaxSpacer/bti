@@ -6,13 +6,13 @@ import csv as CSV
 from django.conf import settings
 from decimal import Decimal
 from .models import *
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.template.loader import render_to_string
+# from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from importlib import import_module
-from django.conf import settings
+# from importlib import import_module
+# from django.conf import settings
 from django.core import serializers
 import camelot
 import fitz
@@ -207,7 +207,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # path_img_scheme = "%s.png" % (uploaded_pdf_url)
     protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
-    path_full_pdf = "%s%s%s" % (protocol, current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    path_full_pdf = "%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
     doc = fitz.open(uploaded_pdf_url)
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
