@@ -122,7 +122,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
             data.pop()
             for x in data:
                 if i == 0:
-                    local_appart = x["1"]
+                    loc_apa = x["1"].split()
+                    local_appart = loc_apa[2]
                 if i > 4 and x['0'] != '':
                     ExplicationListItem.objects.create(
                     order_list = instance,
@@ -203,7 +204,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # ur.lstrip('/media/')
     # print('ur')
     # print(ur)
-    path_img_name = 'schema_' + instance.order_number + '.png'
+    path_img_name = 'schema_' + str(instance.order_number) + '.png'
     path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
     # path_img_scheme_bd = "%s.png" % (uploaded_pdf_url)
     path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name

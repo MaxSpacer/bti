@@ -191,7 +191,7 @@
                             <div class="text">
                                 {{order.adress}}
                             </div>
-                            <div class="text-lowercase">
+                            <div class="text-lowercase">Квартира №
                                 {% with order.explicationlistitem_set.all|first as appart %}
                                 {{ appart.apart_number }}
                                 {% endwith %}
@@ -262,7 +262,7 @@
                         <p class="font-weight-bolder">
                             {{ order.adress }}
                         </p>
-                        <p class="">
+                        <p class="">Квартира № 
                             {% with order.explicationlistitem_set.all|first as appart %}
                             {{ appart.apart_number }}
                             {% endwith %}
@@ -293,7 +293,7 @@
                         <td>прочих</td>
                         <!-- <td></td> -->
                       </tr>
-                      {% for items in order.explicationlistitem_set.all%}
+                      {% for items in order.explicationlistitem_set.all|dictsort:"appart_number_item"%}
                       <tr>
                           <td>{{ items.floor_number }}</td>
                           <td>{{ items.appart_number_item }}</td>

@@ -17,27 +17,27 @@ from settings_pdftrans.models import *
 def get_doc_type_choices():
     DOC_TYPE_CHOICES = [(str(e.docs_type), e.docs_type) for e in DocType.objects.all()]
     return DOC_TYPE_CHOICES
-        
+
 def get_doc_type_default():
     default = DocType.objects.filter().first()
     return default
-    
+
 def get_type_object_choices():
     TYPE_OBJECT_CHOICES = [(str(e.objects_type), e.objects_type) for e in TypeObject.objects.all()]
     return TYPE_OBJECT_CHOICES
-    
+
 def get_type_object_default():
     default = TypeObject.objects.filter().first()
     return default
-    
+
 def get_name_object_choices():
     NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
     return NAME_OBJECT_CHOICES
-    
+
 def get_name_object_default():
     default = NameObject.objects.filter().first()
     return default
-    
+
 # self._meta.get_field('name_object').choices = get_name_object_choices()
 # self._meta.get_field('name_object').default = NameObject.objects.filter().first()
 
@@ -183,7 +183,6 @@ class ExplicationListItem(models.Model):
     class Meta:
         verbose_name = 'ряд таблицы экспликации'
         verbose_name_plural = 'Таблица экспликации'
-
 
 
 class ExplicationSquareTotal(models.Model):
