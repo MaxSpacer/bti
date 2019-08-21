@@ -76,7 +76,7 @@
             </tr>
             <tr>
                 <td class="txtBold"><label>Список объектов</label></td><td><span>
-                    квартира № 
+                    {{order.name_object}} № 
                     {% with order.explicationlistitem_set.all|first as appart %}
                         {{ appart.apart_number|lower }}
                     {% endwith %}</span></td></tr>
