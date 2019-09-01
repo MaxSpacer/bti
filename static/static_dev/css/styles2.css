@@ -14,7 +14,7 @@
     font-size: 0.7rem;
 }
 @page :nth(2){
-    margin: 7mm 7mm 7mm 20mm;
+    margin: 7mm 7mm 7mm 7mm;
     border: 1px solid;
 }
 .page2{
@@ -101,4 +101,6 @@
     bottom: 40px;
     right: 4%;
     letter-spacing: 13px;
+    font-size: 1.2rem;
+    font-weight: 800;
 }
