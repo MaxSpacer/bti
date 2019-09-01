@@ -26,17 +26,17 @@ def get_type_object_choices():
     TYPE_OBJECT_CHOICES = [(str(e.objects_type), e.objects_type) for e in TypeObject.objects.all()]
     return TYPE_OBJECT_CHOICES
 
-def get_type_object_default():
-    default = TypeObject.objects.filter().first()
-    return default
+# def get_type_object_default():
+#     default = TypeObject.objects.filter().first()
+#     return default
 
 def get_name_object_choices():
     NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
     return NAME_OBJECT_CHOICES
 
-def get_name_object_default():
-    default = NameObject.objects.filter().first()
-    return default
+# def get_name_object_default():
+#     default = NameObject.objects.filter().first()
+#     return default
 
 # self._meta.get_field('name_object').choices = get_name_object_choices()
 # self._meta.get_field('name_object').default = NameObject.objects.filter().first()
@@ -45,9 +45,9 @@ class Order(models.Model):
     order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True, max_length=250)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
-    doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=None)
-    type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=None)
-    name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices(), default=None)
+    doc_type = models.CharField(verbose_name="Тип документа", max_length=64,  default=None)
+    type_object = models.CharField(verbose_name="вид объекта учета", max_length=64,  default=None)
+    name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64,  default=None)
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=50)
