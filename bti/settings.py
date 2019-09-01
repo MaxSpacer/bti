@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'bti.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db1.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
     }
 }
 
@@ -128,6 +128,18 @@ STATICFILES_DIRS = (
 os.path.join(BASE_DIR, 'static', 'media'),
 os.path.join(BASE_DIR, 'static', 'static_dev'),
 )
+
+# -=EMAIL POSTS =-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = '1025'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "btireestrexpress@yandex.ru"
+EMAIL_HOST_PASSWORD = "Xx12345678"
+EMAIL_USE_SSL = True
+
+
 # uncomment
 try:
     from .settings_prod import *

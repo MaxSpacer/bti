@@ -11,13 +11,13 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 # from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-# from importlib import import_module
+from django.core.mail import send_mail, BadHeaderError
 # from django.conf import settings
 from django.core import serializers
 import camelot
 import fitz
 from django.urls import reverse_lazy
-# from io import StringIO
+from django.template.loader import render_to_string
 
 
 @receiver(post_save, sender=Order)
@@ -229,7 +229,33 @@ def export_data_pdf(sender, instance, created, **kwargs):
             order_fk=instance,
             defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
             )
-    # print('instance.adress')
-    # print(instance.adress)
 
+    print('current_site')
+    print(current_site)
+    print('path_full_pdf')
+    print(path_full_pdf)
+    path_full_pdf_for_email = 'http://' + path_full_pdf
+    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    print(path_full_link_site)
+    context = {
+	    'order_number': instance.order_number,
+	    'link_doc': path_full_pdf_for_email,
+	    'link_site': path_full_link_site,
+	}
+    subject = 'Оформлен БТИ Документ № doc-%s' % instance.order_number
+    html_message = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    plain_message = strip_tags(html_message)
+    from_email = 'btireestrexpress@yandex.ru'
+    to = 'btireestrexpress@yandex.ru'
+    if instance.is_emailed == False:
+        if subject and html_message and from_email:
+            try:
+                if send_mail(subject, plain_message, from_email, [to]):
+                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+                    instance.is_emailed = True
+            except BadHeaderError:
+                return print('Invalid header found in email %s' % instance.pk)
+            return print('email is sended %s' % instance.pk)
+        else:
+            return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass
