@@ -19,7 +19,9 @@ def get_doc_type_choices():
     return DOC_TYPE_CHOICES
 
 def get_doc_type_default():
-    default = DocType.objects.filter().first()
+    def_value = DocType.objects.filter().first()
+    default = str(def_value)
+
     return default
 
 def get_type_object_choices():
@@ -27,7 +29,9 @@ def get_type_object_choices():
     return TYPE_OBJECT_CHOICES
 
 def get_type_object_default():
-    default = TypeObject.objects.filter().first()
+    def_value = TypeObject.objects.filter().first()
+    default = str(def_value)
+
     return default
 
 def get_name_object_choices():
@@ -35,7 +39,9 @@ def get_name_object_choices():
     return NAME_OBJECT_CHOICES
 
 def get_name_object_default():
-    default = NameObject.objects.filter().first()
+    def_value = NameObject.objects.filter().first()
+    default = str(def_value)
+
     return default
 
 # self._meta.get_field('name_object').choices = get_name_object_choices()
