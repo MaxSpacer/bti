@@ -141,8 +141,8 @@ EMAIL_HOST_PASSWORD = "Xx12345678"
 EMAIL_USE_SSL = True
 
 
-# uncomment
-try:
-    from .settings_prod import *
-except:
-    pass
+# uncomment for deploy
+# try:
+#     from .settings_prod import *
+# except:
+#     pass

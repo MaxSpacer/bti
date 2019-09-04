@@ -6,27 +6,32 @@ import csv as CSV
 from django.conf import settings
 from decimal import Decimal
 from .models import *
-# from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-# from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.core.mail import send_mail, BadHeaderError
+# from django.core.mail import send_mail, BadHeaderError
+import requests
 # from django.conf import settings
 from django.core import serializers
 import camelot
 import fitz
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
+# import urllib.request
+from weasyprint import HTML, CSS
+from django_weasyprint.utils import django_url_fetcher
+from unidecode import unidecode
+from django.core.mail import EmailMultiAlternatives
+
 
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
-
-    address = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['170,720,780,700'])
+    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['170,720,780,700'])
     csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
-    csv = address[0].to_csv(csv_address_f)
+    csv = address_string[0].to_csv(csv_address_f)
     if csv_address_f:
         with open(csv_address_f, 'r', encoding='utf-8') as f:
             row_read = CSV.reader(f)
@@ -210,7 +215,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name
     # protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
-    path_full_pdf = "%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
     doc = fitz.open(uploaded_pdf_url)
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
@@ -229,33 +234,50 @@ def export_data_pdf(sender, instance, created, **kwargs):
             order_fk=instance,
             defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
             )
-
     print('current_site')
     print(current_site)
-    print('path_full_pdf')
-    print(path_full_pdf)
-    path_full_pdf_for_email = 'http://' + path_full_pdf
-    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    print(path_full_link_site)
-    context = {
-	    'order_number': instance.order_number,
-	    'link_doc': path_full_pdf_for_email,
-	    'link_site': path_full_link_site,
-	}
-    subject = 'Оформлен БТИ Документ № doc-%s' % instance.order_number
-    html_message = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    plain_message = strip_tags(html_message)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    if instance.is_emailed == False:
-        if subject and html_message and from_email:
-            try:
-                if send_mail(subject, plain_message, from_email, [to]):
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
-    pass
+
+    print('--------------------------------------------order')
+
+    # url_for_req = 'http://167.71.54.163' + str(reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': 3}))
+    # str_for_traslit = unidecode(total_dict["city_name"] + '_' + total_dict["street"] + '_d_' + total_dict["house_number"] +'_k_'+ local_appart + '.pdf')
+    # filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
+    # r = requests.get(url_for_req, stream=True)
+    # with open(filename, 'wb') as fd:
+    #     for chunk in r.iter_content(chunk_size=128):
+    #         fd.write(chunk)
+    #
+    # # sending email method -=send_mail=-
+    # path_full_pdf_for_email = 'http://' + str(path_full_pdf)
+    # path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # print(path_full_link_site)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf_for_email,
+    # 'link_site': path_full_link_site,
+    # }
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # msg.attach_file(filename)
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #                 if os.path.exists(filename):
+    #                     os.remove(filename)
+    #                     print("The file is removed")
+    #                 else:
+    #                     print("The file does not exist")
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # pass

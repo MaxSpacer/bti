@@ -2,16 +2,16 @@
 ALLOWED_HOSTS = ['167.71.54.163', 'localhost', '127.0.0.1']
 
 #settings for db on server
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bti_db6',
-        'USER': 'bti_db_user',
-        'PASSWORD': 'GoKxZ3&9',
-        'HOST': 'localhost',
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'bti_db6',
+#         'USER': 'bti_db_user',
+#         'PASSWORD': 'GoKxZ3&9',
+#         'HOST': 'localhost',
+#         'PORT': '',                      # Set to empty string for default.
+#     }
+# }
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = '1025'

@@ -13,9 +13,9 @@
 .cl{
     font-size: 0.7rem;
 }
-@page :nth(2){
-    margin: 7mm 7mm 7mm 7mm;
-    border: 1px solid;
+@page :nth(1){
+    margin: 9mm 9mm 9mm 9mm;
+    border: 2px solid;
 }
 .page2{
     font-stretch: ultra-condensed;
@@ -23,12 +23,12 @@
     line-height: 98%;
 }
 .plan-size-font {
-    font-size: 120%;
+    font-size: 150%;
     /* font-family: Ascon; */
     font-weight: lighter;
     font-style: italic;
     /* font-size: 120%; */
-    padding-bottom: 3px;
+    /* padding-bottom: 5px; */
 }
 .table-page2{
     position: absolute;
@@ -36,6 +36,7 @@
     right: 10px;
 }
 .table-page2 td{
+    padding-top: 2px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -82,13 +83,13 @@
     font-family: serif ;
 }
 .page3-footer{
-    margin-top: 20%;
+    margin-top: 18%;
 }
 .explication-block{
     margin-top: 13%;
 }
 .forbar-code{
-    bottom: 30px;
+    bottom: 25px;
     margin-left: -50px;
     width: 523px;
     height: 60px;
@@ -98,7 +99,7 @@
 .order_number{
     font-family: monospace;
     position: absolute;
-    bottom: 40px;
+    bottom: 35px;
     right: 4%;
     letter-spacing: 13px;
     font-size: 1.2rem;
