@@ -271,11 +271,11 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 if msg.send():
                     Order.objects.filter(pk=instance.pk).update(is_emailed=True)
                     instance.is_emailed = True
-                    if os.path.exists(filename):
-                        os.remove(filename)
-                        print("The file is removed")
-                    else:
-                        print("The file does not exist")
+                    # if os.path.exists(filename):
+                    #     os.remove(filename)
+                    #     print("The file is removed")
+                    # else:
+                    #     print("The file does not exist")
             except BadHeaderError:
                 return print('Invalid header found in email %s' % instance.pk)
             return print('email is sended %s' % instance.pk)
