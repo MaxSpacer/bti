@@ -244,7 +244,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     url_for_req = 'http://167.71.54.163/get-order-info/fullpdf/52/'
     str_for_traslit = unidecode(total_dict["city_name"] + '_' + total_dict["street"] + '_d_' + total_dict["house_number"] +'_k_'+ local_appart + '.pdf')
     filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
-    r = requests.get(url_for_req, stream=True)
+    r = requests.get('http://167.71.54.163/get-order-info/fullpdf/52/', stream=True)
     with open(filename, 'wb') as fd:
         for chunk in r.iter_content(chunk_size=128):
             fd.write(chunk)
