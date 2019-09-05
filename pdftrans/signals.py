@@ -249,7 +249,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
             fd.write(chunk)
 
     # sending email method -=send_mail=-
-    path_full_pdf_for_email = 'http://' + str(path_full_pdf)
+    path_full_pdf_for_email = str(path_full_pdf)
     path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
     print(path_full_link_site)
     context = {
