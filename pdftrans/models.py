@@ -48,7 +48,7 @@ def get_name_object_default():
 # self._meta.get_field('name_object').default = NameObject.objects.filter().first()
 
 class Order(models.Model):
-    order_number = models.PositiveIntegerField(blank=True, null=True, default = 0)
+    order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True, max_length=250)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())

@@ -15,7 +15,7 @@ class OrderView(DetailView):
 class OrderPrintView(WeasyTemplateResponseMixin, OrderView):
     pdf_stylesheets = [
         settings.STATIC_ROOT + '/css/bootstrap.min.css',
-        settings.STATIC_ROOT + '/css/styles3.css',
+        settings.STATIC_ROOT + '/css/styles.css',
     ]
     pdf_attachment = False
     pdf_filename = 'doc.pdf'
@@ -28,7 +28,7 @@ class OrderFullView(DetailView):
 class OrderPrintFullView(WeasyTemplateResponseMixin, OrderFullView):
     pdf_stylesheets = [
         settings.STATIC_ROOT + '/css/bootstrap.min.css',
-        settings.STATIC_ROOT + '/css/styles2.css',
+        settings.STATIC_ROOT + '/css/styles3.css',
     ]
     pdf_attachment = False
     pdf_filename = 'documents.pdf'

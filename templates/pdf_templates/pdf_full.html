@@ -202,7 +202,7 @@
                             <div class="text mb-1">
                                 {{order.adress}}
                             </div>
-                            <div class="text-lowercase mb-1" style="margin-left:-49px;">Квартира №
+                            <div class="text-lowercase mb-1" style="margin-left:-47px;">Квартира №
                                 {% with order.explicationlistitem_set.all|first as appart %}
                                 {{ appart.apart_number }}
                                 {% endwith %}
@@ -281,7 +281,7 @@
                     </div>
                 </div>
                 <div class="explications-table w-100 mb-5">
-                    <table class="explications-table-list tab table-bordered w-100">
+                    <table class="explications-table-list tab table-bordered w-100" style="font-size:1rem;">
                       <tr>
                         <td rowspan="3">Этаж</td>
                         <td rowspan="3">№№ комнат</td>
@@ -340,7 +340,7 @@
                       </tr>
                     </table>
                     <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
-                    <h5 class="font-weight-bold text-left ml-3">
+                    <h5 class="font-weight-bold text-left ml-3" style="font-size:0.9rem;">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </h5>
                 </div>
@@ -361,7 +361,7 @@
                             Исполнитель
                         </span>
                         <span class="">
-                            _______________________
+                            _________________________
                         </span>
                         <span>
                             {{ order.engineer_name }}

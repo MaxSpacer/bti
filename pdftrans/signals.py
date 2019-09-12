@@ -37,6 +37,10 @@ def export_data_pdf(sender, instance, created, **kwargs):
             row_read = CSV.reader(f)
             for row in row_read:
                 pp = (row[0].strip(" '")).split(":")
+                print('pp')
+                print(pp)
+                print(pp[0])
+                print(pp[1])
                 adress_item_list = pp[1].split(",")
                 print('adress_item_list')
                 print(adress_item_list)
@@ -115,9 +119,11 @@ def export_data_pdf(sender, instance, created, **kwargs):
             defaults=total_dict,
             )
 
-    tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9)
+    tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,690,780,100'])
     json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
+    json_table2 = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table2.csv')
     json = tables[0].to_json(json_table)
+    json1 = tables[0].to_csv(json_table2)
     if json_table:
         with open(json_table, 'r') as f:
             print("------------data-------------------")
@@ -238,48 +244,48 @@ def export_data_pdf(sender, instance, created, **kwargs):
     print(current_site)
 
     print('--------------------------------------------order')
-    urgl = str(reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
-    url_for = 'http://167.71.54.163'
-    # url_for_req = url_for + urgl
-    url_for_req = 'http://167.71.54.163/get-order-info/fullpdf/52/'
-    str_for_traslit = unidecode(total_dict["city_name"] + '_' + total_dict["street"] + '_d_' + total_dict["house_number"] +'_k_'+ local_appart + '.pdf')
-    filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
-    r = requests.get('http://167.71.54.163/get-order-info/fullpdf/52/', stream=True)
-    with open(filename, 'wb') as fd:
-        for chunk in r.iter_content(chunk_size=128):
-            fd.write(chunk)
-
-    # sending email method -=send_mail=-
-    path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    print(path_full_link_site)
-    context = {
-    'order_number': instance.order_number,
-    'link_doc': path_full_pdf_for_email,
-    'link_site': path_full_link_site,
-    }
-    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.attach_file(filename)
-    if instance.is_emailed == False:
-        if subject and html_content and from_email:
-            try:
-                if msg.send():
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-                    # if os.path.exists(filename):
-                    #     os.remove(filename)
-                    #     print("The file is removed")
-                    # else:
-                    #     print("The file does not exist")
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # urgl = str(reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    # url_for = 'http://167.71.54.163'
+    # # url_for_req = url_for + urgl
+    # url_for_req = 'http://167.71.54.163/get-order-info/fullpdf/52/'
+    # str_for_traslit = unidecode(total_dict["city_name"] + '_' + total_dict["street"] + '_d_' + total_dict["house_number"] +'_k_'+ local_appart + '.pdf')
+    # filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
+    # r = requests.get('http://167.71.54.163/get-order-info/fullpdf/52/', stream=True)
+    # with open(filename, 'wb') as fd:
+    #     for chunk in r.iter_content(chunk_size=128):
+    #         fd.write(chunk)
+    #
+    # # sending email method -=send_mail=-
+    # path_full_pdf_for_email = str(path_full_pdf)
+    # path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # print(path_full_link_site)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf_for_email,
+    # 'link_site': path_full_link_site,
+    # }
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # msg.attach_file(filename)
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #                 # if os.path.exists(filename):
+    #                 #     os.remove(filename)
+    #                 #     print("The file is removed")
+    #                 # else:
+    #                 #     print("The file does not exist")
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass
