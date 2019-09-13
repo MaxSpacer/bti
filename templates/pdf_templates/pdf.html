@@ -10,33 +10,43 @@
             font-family: "Ascon";
             src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
     }
+    body {
+        font-size: 1.6rem !important;
+    }
     .page2{
         font-family: "Ascon";
         font-style: oblique;
-        letter-spacing: 0.5px;
-        font-size: 120%;
-        /* font-weight: 100; */
+        letter-spacing: 0.4px;
+        font-size: 92%;
+    }
+    .page{
+        display: none;
     }
     body{
-            font-size: 120%;
     }
     </style>
 </head>
 <body>
-        <!-- <div class="page" style="margin-top:32%;">
+        <div class="page" style="margin-top:32%;">
             <div class="text-center">
-                <h5 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h5>
-                <sub class="mt-5" style="font-size:1.2rem;">на</sub>
-                <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="font-size:1.4rem;">{{order.type_object}}</span>
-                <p class="pb-4 pt-0 mt-0 cl"  style="font-size:0.9rem;"><span>(вид объекта учета)</span></p>
-                <span class="font3 border-bottom border-dark mx-5 px-5 pb-0 mb-0" style="font-size:1.4rem;">{{order.name_object}}</span>
-                <p class="mt-0 pt-0 cl">
-                    <span class="font0 "  style="font-size:0.9rem;" >
+                <h4 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h4>
+                <sub class="mt-5" style="font-size: 1.7rem;">на</sub>
+                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0" style="font-size:; padding-left: 130px; padding-right: 130px;">{{order.type_object}}</span>
+                <p class="pt-0 mt-0" style="font-size: 1.1rem; line-height:0.9rem;">
+                    <span>(вид объекта учета)</span>
+                </p>
+                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0" style="font-size:; padding-left: 130px; padding-right: 130px;">
+                    {{order.name_object}}
+                </span>
+                <p class="mt-0 pt-0" style="font-size: 1.2rem; line-height:0.9rem;">
+                    <span class="  "  style="font-size:;" >
                         (наименование объекта учета)
                     </span>
                 </p>
-                <h5 class="mt-5 mb-0 pt-3"><span class="font3 pb-0  mt-5" style="font-size:1.4rem;">Адрес (местоположение) объекта:</span></h5>
-            <table class="table-bordered w-100 mb-4 text-left" border="1">
+                <div class="mt-5 mb-0 pt-3 pb-0">
+                    Адрес (местоположение) объекта:
+                </div>
+            <table class="table-address table-bordered w-100 mb-4 mt-0 text-left" border="1">
                 <tr class="">
                     <th class="l"></th>
                     <th class="l"></th>
@@ -44,35 +54,35 @@
                 </tr>
                 <tr>
                     <td>
-                        <span class="font2">Субъект РФ</span>
+                        <span class=" ">Субъект РФ</span>
                     </td>
                     <td colspan="2">
-                        <span class="font2">{{order.adress.subject_rf}}</span>
+                        <span class=" ">{{order.adress.subject_rf}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="font2">Район</span>
+                        <span class=" ">Район</span>
                      </td>
                     <td colspan="2">
-                        <span class="font2">{{order.adress.rayon}}</span>
+                        <span class=" ">{{order.adress.rayon}}</span>
                     </td>
                 </tr>
                     <tr>
                         <td rowspan="2">
-                            <span class="font2">Муниципальное образование</span>
+                            <span class=" ">Муниципальное образование</span>
                         </td>
                         <td>
-                            <span class="font2">тип</span>
+                            <span class=" ">тип</span>
                          </td>
                         <td>
-                            <span class="font2"></span>
+                            <span class=" "></span>
 
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="font2">наименование</span>
+                            <span class=" ">наименование</span>
                          </td>
                         <td>
 
@@ -80,45 +90,45 @@
                     </tr>
                     <tr>
                         <td rowspan="2">
-                            <span class="font2">Населенный пункт</span>
+                            <span class=" ">Населенный пункт</span>
                         </td>
                         <td>
-                            <span class="font2">тип</span>
+                            <span class=" ">тип</span>
                          </td>
                          <td>
-                             <span class="font2">{{order.adress.city_type}}</span>
+                             <span class=" ">{{order.adress.city_type}}</span>
                          </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="font2">наименование</span>
+                            <span class=" ">наименование</span>
                         </td>
                         <td>
-                            <span class="font2">{{order.adress.city_name}}</span>
+                            <span class=" ">{{order.adress.city_name}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td rowspan="2">
-                            <span class="font2">Улица (проспект, переулок и т. д.)</span>
+                            <span class=" ">Улица (проспект, переулок и т. д.)</span>
                         </td>
                         <td>
-                            <span class="font2">тип</span>
+                            <span class=" ">тип</span>
                         </td>
                         <td>
-                            <span class="font2">{{order.adress.street_type}}</span>
+                            <span class=" ">{{order.adress.street_type}}</span>
                          </td>
                      </tr>
                     <tr>
                         <td>
-                            <span class="font2">наименование</span>
+                            <span class=" ">наименование</span>
                         </td>
                         <td>
-                            <span class="font2">{{order.adress.street}}</span>
+                            <span class=" ">{{order.adress.street}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="font2">Номер дома</span>
+                            <span class=" ">Номер дома</span>
                         </td>
                         <td colspan="2">
                                 <span class="font1">{{order.adress.house_number}}</span>
@@ -126,7 +136,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="font2">Номер корпуса</span>
+                                <span class=" ">Номер корпуса</span>
                             </td>
                             <td colspan="2">
                                 <span class="font1">{{order.adress.corpus_number}}</span>
@@ -134,7 +144,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="font2">Номер строения</span>
+                                <span class=" ">Номер строения</span>
                             </td>
                             <td colspan="2">
                                 {{order.adress.build_number}}
@@ -142,7 +152,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="font2">Литера</span>
+                                <span class=" ">Литера</span>
                             </td>
                             <td colspan="2">
                                 {{order.adress.litera}}
@@ -150,7 +160,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="font2">Номер помещения (квартиры)</span>
+                                <span class=" ">Номер помещения (квартиры)</span>
                             </td>
                             <td colspan="2">
                                 <span class="font1">
@@ -161,7 +171,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span class="font2">Иное описание местоположения</span>
+                                <span class=" ">Иное описание местоположения</span>
                             </td>
                             <td colspan="2">
                                 {{order.adress.another_places}}
@@ -169,47 +179,60 @@
                         </tr>
                 </table>
             <div class="row justify-content-between px-3" style="margin-top:18%;">
-                <p class="mt-3"><span class="font2">Начальник отделения</span></p>
+                <p class="mt-3"><span class=" ">Начальник отделения</span></p>
                 <table class="d-block">
                     <tr>
-                        <td class="font0 px-5" style=" ">
+                        <td class="  px-5" style=" ">
                             <span>&nbsp</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="font0 border-top border-dark px-5 mt-5" style=" ">(подпись)</td>
+                        <td class="border-top border-dark px-5 mt-5" style="font-size: 1.1rem;">(подпись)</td>
                     </tr>
                 </table>
                 <table class="d-block">
                     <tr>
-                        <td class="font0 px-5 mt-5" style=" ">{{order.customer_name}}</td>
+                        <td class="  px-5 mt-5" style=" ">{{order.customer_name}}</td>
                     </tr>
                     <tr>
-                        <td class="font0 border-top border-dark px-5 mt-5" style=" ">Фамилия И.О.</td>
+                        <td class="border-top border-dark px-5 mt-5" style="font-size: 1.1rem;">Фамилия И.О.</td>
                     </tr>
                 </table>
-                <p class="w-100" style="font-weight:bold; font-size:1.2rem; margin-left:230px;"><span class="font2 font-weight-bold ">М.П.</span></p>
+                <p class="w-100" style="font-weight:bold; font-size:1.2rem; margin-left:230px;"><span class="font-weight-bold" style="font-size: 1.4rem;">М.П.</span></p>
             </div>
             </div>
             </div>
-<p style="page-break-before: always"></p> -->
+<p style="page-break-before: always"></p>
             <div class="page2 text-center">
                 <div class="top-block ">
                     <div class="border border-dark p-3">
-                        <div class="text-uppercase plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div>
-                        <div class="float-left">расположенного по адресу:</div>
-                        <div class="mr-auto">
-                            <div class="text mb-1">
-                                {{order.adress}}
-                            </div>
-                            <div class="text-lowercase mb-1" style="margin-left:-49px;">Квартира №
-                                {% with order.explicationlistitem_set.all|first as appart %}
-                                {{ appart.apart_number }}
-                                {% endwith %}
-                            </div>
-                        </div>
+                        <table class="text-left w-100">
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="">расположенного по адресу:</div>
+                                </td>
+                                <td>
+                                    {{order.adress}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-lowercase">
+                                        Квартира №
+                                        {% with order.explicationlistitem_set.all|first as appart %}
+                                        {{ appart.apart_number }}
+                                        {% endwith %}
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="text-uppercase p-3 mt-3" style="font-size:120%;">
+                    <div class="text-uppercase p-3 mt-4" style="font-size:;">
                         этаж
                         {% with order.explicationlistitem_set.all|first as floor %}
                         {{ floor.floor_number }}
@@ -221,7 +244,35 @@
                     <img class="image-fluid" src="{{ item.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
                     {% endfor %}
                 </div>
-                <img class="image-fluid legenda_img" src="{% static 'img/legenda.png' %}" alt="Event QR code" />
+                <table class="legenda_tbl">
+                  <tr>
+                    <td class="tg-0pky text-center pb-2" colspan="2">Условные обозначения:</td>
+                  </tr>
+                  <tr>
+                    <td class="tg-0lax">
+                        <img class="image-fluid legenda_img" src="{% static 'img/legenda-1.png' %}" alt="Event QR code" />
+                    </td>
+                    <td class="tg-0lax">стена с окном и дверью</td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-2.png' %}" alt="Event QR code" />
+                      </td>
+                    <td class="tg-0lax">линейный размер</td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-4.png' %}" alt="Event QR code" />
+                      </td>
+                    <td class="tg-0lax">номер комнаты/площадь</td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" />
+                      </td>
+                    <td class="tg-0lax">номер помещения</td>
+                  </tr>
+                </table>
                 <table class="table-bordered table-page2 text-center">
                   <tr style="border: 1px solid black;">
                     <td class="px-5 py-2" colspan="4">Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</td>
@@ -251,7 +302,7 @@
                 </table>
             </div>
 <p style="page-break-after: always"></p>
-            <div class="page3 text-center">
+            <div class="page3 text-center" style="font-size: 1.3rem;">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
                         <div>ГБУ Московское городское бюро технической инвентаризации</div>
@@ -263,9 +314,9 @@
                     </div>
                 </div>
                 <div class="explication-block">
-                    <h5 class="text-uppercase mb-4" style="font-weight:bold;">
+                    <h4 class="text-uppercase mb-3" style="font-weight:bold;">
                       ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
-                    </h5>
+                    </h4>
                     <div class="text-left ml-2">
                         <p class="mb-2">
                             Адрес (иное описание местоположения):
@@ -281,7 +332,7 @@
                     </div>
                 </div>
                 <div class="explications-table w-100 mb-5">
-                    <table class="explications-table-list tab table-bordered w-100">
+                    <table class="table-bordered w-100" style="font-size: 1.2rem;">
                       <tr>
                         <td rowspan="3">Этаж</td>
                         <td rowspan="3">№№ комнат</td>
@@ -294,7 +345,6 @@
                         <td rowspan="2">Всего</td>
                         <td colspan="2">в том числе</td>
                         <td colspan="3">в т.ч.</td>
-                        <!-- <td></td> -->
                       </tr>
                       <tr>
                         <td>основная<br> (жилая)</td>
@@ -302,13 +352,12 @@
                         <td>основная</td>
                         <td>балконов</td>
                         <td>прочих</td>
-                        <!-- <td></td> -->
                       </tr>
                       {% for items in order.explicationlistitem_set.all|dictsort:"appart_number_item"%}
                       <tr>
                           <td>{{ items.floor_number }}</td>
                           <td>{{ items.appart_number_item }}</td>
-                          <td>{{ items.appart_name_item }}</td>
+                          <td class="text-nowrap">{{ items.appart_name_item }}</td>
                           <td>{{ items.square_total_item|default_if_none:"" }}</td>
                           <td>{{ items.square_general_item|default_if_none:"" }}</td>
                           <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
@@ -332,15 +381,9 @@
                           <td colspan="3">Общая площадь ( с летними )</td>
                           <td>{{order.explicationsquaretotal.square_total_summa_global|unlocalize}}</td>
                           <td colspan="6"></td>
-                          <!-- <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td> -->
-                          <!-- <td></td> -->
                       </tr>
                     </table>
-                    <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
-                    <h5 class="font-weight-bold text-left ml-3">
+                    <h5 class="font-weight-bold text-left ml-3" style="font-size:;">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </h5>
                 </div>
@@ -361,7 +404,7 @@
                             Исполнитель
                         </span>
                         <span class="">
-                            _______________________
+                            ______________________
                         </span>
                         <span>
                             {{ order.engineer_name }}

@@ -15,15 +15,15 @@ import requests
 # from django.conf import settings
 from django.core import serializers
 import camelot
-import fitz
+import sys, fitz
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
-# import urllib.request
-from weasyprint import HTML, CSS
-from django_weasyprint.utils import django_url_fetcher
 from unidecode import unidecode
+from weasyprint import HTML, CSS
+from weasyprint.fonts import FontConfiguration
+from django_weasyprint.utils import django_url_fetcher
 from django.core.mail import EmailMultiAlternatives
-
+from PIL import Image, ImageChops
 
 
 @receiver(post_save, sender=Order)
@@ -195,97 +195,66 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 'square_total_summa_global': square_total_sum + square_logdi_sum + square_balkon_sum + square_another_sum
                 },
                 )
-    # print (tables[0].parsing_report)
-    # print (tables[0].df)
-    # print('--------------doc--------------')
-    # H = uploaded_pdf_url.split('media')
-    # h = H[1]
-    # print('-----------h-----------')
-    # print(H)
-    # print(h)
-    # # h.replace("\\","/")
-    # print(h)
-    #
-    #
-    # path_img_scheme = os.path.join(settings.MEDIA_ROOT, h)
-    # print('path_img_scheme')
-    # print(path_img_scheme)
-    # 'uploaded_pdf/%Y/%m/%d/    relative_url = instance.uploaded_pdf.url
-    # ur = instance.uploaded_pdf.url
-    # ur.lstrip('/media/')
-    # print('ur')
-    # print(ur)
     path_img_name = 'schema_' + str(instance.order_number) + '.png'
     path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
-    # path_img_scheme_bd = "%s.png" % (uploaded_pdf_url)
     path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name
-    # protocol = Site.objects.get_current().protocoltype
     current_site = Site.objects.get_current().domain
     path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
     doc = fitz.open(uploaded_pdf_url)
-    for i in range(len(doc)):
-        for img in doc.getPageImageList(i):
-            xref = img[0]
-            print(xref)
-            pix = fitz.Pixmap(doc, xref)
-            if pix.n < 5:       # this is GRAY or RGB
-                pix.writePNG(path_img_scheme)
-            else:               # CMYK: convert to RGB first
-                pix1 = fitz.Pixmap(fitz.csRGB, pix)
-                pix1.writePNG(path_img_scheme)
-                pix1 = None
-            pix = None
+    i = 0
+    for page in doc:                            # iterate through the pages
+        if i == 1:
+            pix = page.getPixmap(alpha = False)     # render page to an image
+            pix.writePNG(path_img_scheme)    # store image as a PNG
+            def trim(im):
+                bg = Image.new(im.mode, im.size, im.getpixel((0,0)))
+                diff = ImageChops.difference(im, bg)
+                diff = ImageChops.add(diff, diff, 2.0, -100)
+                bbox = diff.getbbox()
+                if bbox:
+                    return im.crop(bbox)
+            im = Image.open(path_img_scheme)
+            im = trim(im)
+            im.save(path_img_scheme)
             order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
             v, created = OrderImage.objects.update_or_create(
             order_fk=instance,
             defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
             )
-    print('current_site')
-    print(current_site)
+        i+=1
 
-    print('--------------------------------------------order')
-    # urgl = str(reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
-    # url_for = 'http://167.71.54.163'
-    # # url_for_req = url_for + urgl
-    # url_for_req = 'http://167.71.54.163/get-order-info/fullpdf/52/'
-    # str_for_traslit = unidecode(total_dict["city_name"] + '_' + total_dict["street"] + '_d_' + total_dict["house_number"] +'_k_'+ local_appart + '.pdf')
-    # filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
-    # r = requests.get('http://167.71.54.163/get-order-info/fullpdf/52/', stream=True)
-    # with open(filename, 'wb') as fd:
-    #     for chunk in r.iter_content(chunk_size=128):
-    #         fd.write(chunk)
-    #
-    # # sending email method -=send_mail=-
-    # path_full_pdf_for_email = str(path_full_pdf)
-    # path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    # print(path_full_link_site)
-    # context = {
-    # 'order_number': instance.order_number,
-    # 'link_doc': path_full_pdf_for_email,
-    # 'link_site': path_full_link_site,
-    # }
-    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    # from_email = 'btireestrexpress@yandex.ru'
-    # to = 'btireestrexpress@yandex.ru'
-    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    # text_content = strip_tags(html_content)
-    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    # msg.attach_alternative(html_content, "text/html")
+    # sending email method -=send_mail=-
+    path_full_pdf_for_email = str(path_full_pdf)
+    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    print(path_full_link_site)
+    context = {
+    'order_number': instance.order_number,
+    'link_doc': path_full_pdf_for_email,
+    'link_site': path_full_link_site,
+    }
+    str_for_traslit = unidecode(str(instance.adress))
+    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    from_email = 'btireestrexpress@yandex.ru'
+    to = 'btireestrexpress@yandex.ru'
+    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    text_content = strip_tags(html_content)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
     # msg.attach_file(filename)
-    # if instance.is_emailed == False:
-    #     if subject and html_content and from_email:
-    #         try:
-    #             if msg.send():
-    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-    #                 instance.is_emailed = True
-    #                 # if os.path.exists(filename):
-    #                 #     os.remove(filename)
-    #                 #     print("The file is removed")
-    #                 # else:
-    #                 #     print("The file does not exist")
-    #         except BadHeaderError:
-    #             return print('Invalid header found in email %s' % instance.pk)
-    #         return print('email is sended %s' % instance.pk)
-    #     else:
-    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
+    if instance.is_emailed == False:
+        if subject and html_content and from_email:
+            try:
+                if msg.send():
+                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+                    instance.is_emailed = True
+                    # if os.path.exists(filename):
+                    #     os.remove(filename)
+                    #     print("The file is removed")
+                    # else:
+                    #     print("The file does not exist")
+            except BadHeaderError:
+                return print('Invalid header found in email %s' % instance.pk)
+            return print('email is sended %s' % instance.pk)
+        else:
+            return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass

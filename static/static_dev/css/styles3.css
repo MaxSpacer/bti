@@ -1,4 +1,8 @@
-
+/* @font-face {
+        font-family: "Ascon";
+        src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
+} */
+/* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
 .table-bordered td{
     border: 1px solid black !important;
     padding-left: 5px;
@@ -7,13 +11,17 @@
 .table-bordered th{
     border: 0px  black !important;
 }
-.l{
-    width: 25%;
-}
-.cl{
-    font-size: 0.7rem;
+.table-address td{
+    font-size: 1.2rem;
+    /* background-color: green; */
+    /* padding: 0; */
+    /* padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0;
+    padding-bottom: 0; */
 }
 @page :nth(2){
+    font-family: "Ascon";
     margin: 9mm 9mm 9mm 9mm;
     border: 2px solid;
 }
@@ -27,8 +35,6 @@
     /* font-family: Ascon; */
     font-weight: lighter;
     font-style: italic;
-    /* font-size: 120%; */
-    /* padding-bottom: 5px; */
 }
 .table-page2{
     position: absolute;
@@ -56,14 +62,21 @@
     width: 80%;
 }
 .legenda_img{
+    width: 150px;
+}
+.legenda_tbl{
     position: absolute;
-    left: 15px;
-    top: 85%;
-    width: 430px;
+    left: 4%;
+    bottom: 2%;
+    width: 420px;
+}
+.legenda_tbl td{
+    text-align: left;
+    /* padding-top: 7px; */
 }
 .schema_img {
     position: absolute;
-    top: 21%;  /* position the top  edge of the element at the middle of the parent */
+    top: 25%;  /* position the top  edge of the element at the middle of the parent */
     width: 93%;
     height: 800px;
     right: 1rem;
@@ -77,7 +90,7 @@
     height: 130px;
 }
 .page3-top{
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
 }
 .page3, .page{
     font-family: serif ;
@@ -86,7 +99,7 @@
     margin-top: 18%;
 }
 .explication-block{
-    margin-top: 13%;
+    margin-top: 10%;
 }
 .forbar-code{
     bottom: 25px;
@@ -102,6 +115,6 @@
     bottom: 35px;
     right: 4%;
     letter-spacing: 13px;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
     font-weight: 800;
 }
