@@ -5,8 +5,8 @@
 /* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
 .table-bordered td{
     border: 1px solid black !important;
-    padding-left: 5px;
-    padding-right: 7px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 .table-bordered th{
     border: 0px  black !important;
@@ -25,6 +25,10 @@
     margin: 9mm 9mm 9mm 9mm;
     border: 2px solid;
 }
+/* @page :nth(1){
+    margin: 9mm 9mm 9mm 9mm;
+    border: 2px solid;
+} */
 .page2{
     font-stretch: ultra-condensed;
     letter-spacing: -0.05em;
@@ -96,25 +100,25 @@
     font-family: serif ;
 }
 .page3-footer{
-    margin-top: 18%;
+    margin-top: 22%;
 }
 .explication-block{
     margin-top: 10%;
 }
 .forbar-code{
-    bottom: 25px;
+    bottom: -10px;
     margin-left: -50px;
     width: 523px;
-    height: 60px;
+    height: 50px;
     overflow: hidden;
     position: absolute;
 }
 .order_number{
     font-family: monospace;
     position: absolute;
-    bottom: 35px;
-    right: 4%;
-    letter-spacing: 13px;
-    /* font-size: 1.2rem; */
+    bottom: -10px;
+    right: 1%;
+    letter-spacing: 9px;
+    font-size: 1.6rem;
     font-weight: 800;
 }

@@ -10,9 +10,8 @@ from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils.html import strip_tags
-# from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import BadHeaderError
 import requests
-# from django.conf import settings
 from django.core import serializers
 import camelot
 import sys, fitz
@@ -224,37 +223,31 @@ def export_data_pdf(sender, instance, created, **kwargs):
         i+=1
 
     # sending email method -=send_mail=-
-    path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    print(path_full_link_site)
-    context = {
-    'order_number': instance.order_number,
-    'link_doc': path_full_pdf_for_email,
-    'link_site': path_full_link_site,
-    }
-    str_for_traslit = unidecode(str(instance.adress))
-    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    # msg.attach_file(filename)
-    if instance.is_emailed == False:
-        if subject and html_content and from_email:
-            try:
-                if msg.send():
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-                    # if os.path.exists(filename):
-                    #     os.remove(filename)
-                    #     print("The file is removed")
-                    # else:
-                    #     print("The file does not exist")
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # path_full_pdf_for_email = str(path_full_pdf)
+    # path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # print(path_full_link_site)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf_for_email,
+    # 'link_site': path_full_link_site,
+    # }
+    # str_for_traslit = unidecode(str(instance.adress))
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass
