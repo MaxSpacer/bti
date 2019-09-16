@@ -1,0 +1,49 @@
+/* Popup
+-------------------------------------------------------------------------------- */
+.popupBody {
+	height: auto;
+	width: auto;
+	background: White;
+}
+#popupClose {
+    *background: #156a99;
+    *height: 26px;
+}
+#popupClose span {
+    color: white;
+    font-size: 25px;
+    padding-right: 6px;
+    position: relative;
+    top: -2px;
+}
+#popupLogo {
+    float: left;
+    height: 40px;
+    padding: 0 8px;
+    margin-top: 0;
+}
+#popupHeader {
+    background: #156a99;
+    background: linear-gradient(to bottom, #2697CF, #105784);
+    height: 26px;
+    margin: 0 0 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    color: white;
+	font: bold 14px arial;
+    line-height: 26px;
+}
+#popupPageContent {
+    padding: 0 10px 10px;
+    clear: both;
+}
+
+/* ñòèëè äëÿ HTML popup */
+.popup #popupClose span 
+{
+	color: Black;
+}
+.popup #popupClose 
+{
+	height: 22px;
+	margin-top: -7px;
+}
