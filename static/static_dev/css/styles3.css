@@ -11,15 +11,18 @@
 .table-bordered th{
     border: 0px  black !important;
 }
-table {table-layout: fixed;}
+/* table {table-layout: fixed;} */
 .table-address td{
-    font-size: 1.1rem;
+    /* font-size: 1.2rem; */
     /* background-color: green; */
     /* padding: 0; */
     /* padding-left: 2px;
     padding-right: 2px;
     padding-top: 0;
     padding-bottom: 0; */
+}
+.table-address {
+    table-layout: fixed;
 }
 @page :nth(2){
     font-family: "Ascon";
@@ -122,4 +125,15 @@ table {table-layout: fixed;}
     letter-spacing: 9px;
     font-size: 1.6rem;
     font-weight: 800;
+}
+/* uniqtabletd */
+.uniqtabletd {
+    /* background-color: green; */
+    padding-left: 65px;
+    padding-right: 65px;
+}
+.uniqtabletd1 {
+    /* background-color: green; */
+    font-size: 0.8rem; line-height: 95%;
+
 }

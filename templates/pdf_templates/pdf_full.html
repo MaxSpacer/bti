@@ -10,44 +10,73 @@
             font-family: "Ascon";
             src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
     }
-
     body {
-        font-size: 1.6rem !important;
+        font-size: 1.2rem !important;
     }
     .page2{
         font-family: "Ascon";
         font-style: oblique;
         letter-spacing: 0.4px;
-        font-size: 92%;
-        /* font-weight: 100; */
-    }
-    body{
-            /* font-size: 120%; */
     }
     </style>
 </head>
 <body>
         <div class="page" style="margin-top:40%;">
             <div class="text-center">
-                <h4 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h4>
-                <sub class="mt-5" style="font-size: 1.7rem;">на</sub>
-                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0" style="font-size:; padding-left: 130px; padding-right: 130px;">{{order.type_object}}</span>
-                <p class="pt-0 mt-0" style="font-size: 1.1rem; line-height:0.9rem;">
+                <h5 class="mb-5" style="font-weight:bold;">ПЛАН И ЭКСПЛИКАЦИЯ ПОМЕЩЕНИЯ</h5>
+                <table class="mx-auto">
+                  <tr style="line-height: 98%;">
+                    <td class="pr-5">на</td>
+                    <td class="border-bottom border-dark uniqtabletd">
+                        <span class="">{{order.type_object}}
+                        </span>
+                    </td>
+                    <td class="pl-5">&nbsp&nbsp</td>
+                  </tr>
+                  <tr  class="uniqtabletd1">
+                    <td class=""></td>
+                    <td colspan="">(вид объекта учета)</td>
+                    <td class="pl-5">&nbsp&nbsp</td>
+                  </tr>
+                  <tr>
+                      <td class=""></td>
+                      <td class="" colspan="">&nbsp</td>
+                      <td class="pl-5">&nbsp&nbsp</td>
+                  </tr>
+                  <tr style="line-height: 98%;">
+                    <td class=""></td>
+                    <td class="border-bottom border-dark uniqtabletd">
+                        <span class="">{{order.name_object}}
+                        </span>
+                    </td>
+                    <td class="pl-5">&nbsp&nbsp</td>
+                  </tr>
+                  <tr  class="uniqtabletd1">
+                    <td class=""></td>
+                    <td colspan="">(наименование объекта учета)</td>
+                    <td class="pl-5">&nbsp&nbsp</td>
+                  </tr>
+                </table>
+                <!-- <sub class="mt-5" style="font-size: 1.5rem;">на</sub>
+                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0 px-5">
+
+                </span>
+                <p class="pt-0 mt-0" style="font-size: 0.9rem; line-height:0.9rem;">
                     <span>(вид объекта учета)</span>
                 </p>
-                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0" style="font-size:; padding-left: 130px; padding-right: 130px;">
-                    {{order.name_object}}
+                <span class="font3 border-bottom border-dark mx-5 pb-0 mb-0 px-5">
+
                 </span>
-                <p class="mt-0 pt-0" style="font-size: 1.2rem; line-height:0.9rem;">
+                <p class="mt-0 pt-0" style="font-size: 0.9rem; line-height:0.9rem;">
                     <span class="  "  style="font-size:;" >
                         (наименование объекта учета)
                     </span>
-                </p>
-                <div class="mt-5 mb-0 pt-3 pb-0">
+                </p> -->
+                <h5 class="mt-5 mb-0 pt-3 pb-0">
                     Адрес (местоположение) объекта:
                     <!-- <span class="font3 pb-0 mt-5" style="font-size:;">
                 </span> -->
-                </div>
+                </h5>
             <table class="table-address table-bordered w-100 mb-4 mt-0 text-left" border="1">
                 <tr class="">
                     <th class="l"></th>
@@ -200,7 +229,11 @@
                         <td class="border-top border-dark px-5 mt-5" style="font-size: 1.1rem;">Фамилия И.О.</td>
                     </tr>
                 </table>
-                <p class="w-100" style="font-weight:bold; font-size:1.2rem; margin-left:230px;"><span class="font-weight-bold" style="font-size: 1.4rem;">М.П.</span></p>
+                <div class="d-block w-50 font-weight-bold ml-5" >
+                    <span style="font-size:1.2rem;">
+                        М.П.
+                    </span>
+                </div>
             </div>
             </div>
             </div>
@@ -304,7 +337,7 @@
                 </table>
             </div>
 <p style="page-break-after: always"></p>
-            <div class="page3 text-center" style="font-size: 1.3rem;">
+            <div class="page3 text-center" style="">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
                         <div>ГБУ Московское городское бюро технической инвентаризации</div>
@@ -316,9 +349,9 @@
                     </div>
                 </div>
                 <div class="explication-block">
-                    <h4 class="text-uppercase mb-3" style="font-weight:bold;">
+                    <h5 class="text-uppercase mb-3" style="font-weight:bold;">
                       ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
-                    </h4>
+                    </h5>
                     <div class="text-left ml-2">
                         <p class="mb-2">
                             Адрес (иное описание местоположения):
@@ -393,7 +426,7 @@
                       </tr>
                     </table>
                     <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
-                    <h5 class="font-weight-bold text-left ml-3" style="font-size:;">
+                    <h5 class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </h5>
                 </div>
@@ -414,7 +447,7 @@
                             Исполнитель
                         </span>
                         <span class="">
-                            ______________________
+                            _______________________
                         </span>
                         <span>
                             {{ order.engineer_name }}
