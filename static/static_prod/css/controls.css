@@ -1,0 +1,817 @@
+/*	CajButton
+-------------------------------------------------------------------------------- */
+.imageSubmit,
+.imageSubmitDisabled {
+	white-space: nowrap;
+	padding-right: 10px;
+}
+/* высота кнопки */
+.imageSubmit input,
+.imageSubmitDisabled input {
+	float: none;
+	height: 20px;
+	overflow: visible;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+/* ширина дверей */
+.imageSubmitLeft,
+.imageSubmitRight {
+	width: 8px;
+}
+/* картинки enabled-кнопки */
+.imageSubmitLeft {
+	background: url(../img/b_left.gif) no-repeat;
+}
+.imageSubmitRight {
+	background: url(../img/b_right.gif) no-repeat;
+}
+.imageSubmitContent {
+	background: url(../img/b.gif) repeat-x;
+}
+/* картинки disabled-кнопки */
+.imageSubmitDisabled .imageSubmitLeft {
+	background: url(../img/b_left_disabled.gif) no-repeat;
+}
+.imageSubmitDisabled .imageSubmitRight {
+	background: url(../img/b_right_disabled.gif) no-repeat;
+}
+.imageSubmitDisabled .imageSubmitContent {
+	background: url(../img/b_disabled.gif) repeat-x;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.imageTitledSubmit {
+	padding-left: 20px;
+	overflow: visible;
+	border: none;
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-color: #FFF;
+}
+
+.button, .buttonDisabled { display:inline-block; height:24px; vertical-align:top; padding:0; }
+.button input, .buttonDisabled input { padding:0 10px; margin:0; display:inline-block; height:23px; background:none; border:0; font:bold 11px Arial, Helvetica, sans-serif; color:#fff; }
+
+.button { background:url('../img/input-text.gif') 0 0 no-repeat; cursor:pointer; }
+.buttonDisabled { background:url('../img/input-text_disabled.gif') 0 0 no-repeat; cursor:default; }
+
+.button input { background:url('../img/input-text.gif') 100% 100% no-repeat; cursor:pointer; }
+.buttonDisabled input { background:url('../img/input-text_disabled.gif') 100% 100% no-repeat; cursor:default; }
+
+input:active, 
+input:focus,
+select:active, 
+a:active,
+a:focus
+{
+	outline: none;
+}
+
+/* BaseList
+-------------------------------------------------------------------------------- */
+.listWithToolbar
+{
+	width: 100%;
+}
+.listTable th
+{
+	/* отключение перевода строк между названием колонки и картинкой направления сортировки */
+	white-space: nowrap;
+}
+/* Отступы ссылки на новый элемент и пейджера */
+.FilterPage
+{
+	padding-bottom: 10px;
+}
+.ControlValues
+{
+	margin-bottom: 10px;
+}
+.listAddNewItem
+{
+	padding-bottom: 10px;
+}
+.pagerMenu
+{
+	margin-bottom: 10px;
+}
+.pagerMenu a, .pagerMenu span 
+{
+	margin: 0 1em 0 0;
+}
+.listTable 
+{
+	margin-bottom: 10px;
+}
+h5.listCaption
+{
+	margin-bottom: 10px;
+}
+
+.listTable.selectable tr:hover
+{
+	cursor: pointer;
+	background-color: #EFEFEF;
+}
+.listTable.selectable tr.tableHeaderRow:hover
+{
+	cursor: auto !important;
+	background-color: #FFF;
+}
+.listTable tr.selected
+{
+	background-color: #DADADA !important;
+}
+
+/* LinkObjectControl
+-------------------------------------------------------------------------------- */
+.linkObjectControlContainer
+{
+	white-space: nowrap;
+}
+.linkObjectControlContainer .textControlWrapper
+{
+	display: inline-block;
+	position: relative;
+}
+.linkObjectControlContainer .textControlWrapper ul.hint
+{
+	background-color: #efefef;
+	border: 1px solid #999;
+	position: absolute;
+	z-index: 10;
+	list-style: none;
+	margin: 0;
+	min-width: 120px;
+}
+.linkObjectControlContainer .textControlWrapper ul.hint li
+{
+	cursor: pointer;
+	padding: 2px 5px;
+}
+.linkObjectControlContainer .textControlWrapper ul.hint li.selected
+{
+	background-color: #ccc;
+}
+.linkObjectControlContainer img
+{
+	cursor: pointer;
+	/* чтобы контрол не занимал по высоте больше, т.к. картинки везде одинаковые, сделано здесь */
+	vertical-align: bottom;
+}
+
+/* DateTimeControl
+-------------------------------------------------------------------------------- */
+.dateTimeControlWrap
+{
+	white-space: nowrap;
+}
+.dateTimeControl
+{
+	width: 65px;
+}
+.dateTimeControlCalendarImg {
+	vertical-align:bottom;
+	margin:-2px auto;
+	border:none;
+}
+
+/* Spin Control
+-------------------------------------------------------------------------------- */
+.spinControlContainer
+{
+	white-space: nowrap;
+}
+.spinControlContainer span .inc, .spinControlContainer span .dec 
+{
+	display: inline-block;
+	width: 18px;
+	height: 17px;
+}
+.spinControlContainer span .inc
+{
+	background-image: url( '../img/inc.gif');
+}
+.spinControlContainer span .dec
+{
+	background-image: url( '../img/dec.gif');
+}
+
+/* ClientMultiSelectControl
+-------------------------------------------------------------------------------- */
+.clientMultiSelectControl img
+{
+	cursor: pointer;
+}
+
+.textControlWrapper
+{
+	margin: 0;
+	padding: 0;
+}
+
+/* MultiSelect в режиме clientWithCheckboxes
+-------------------------------------------------------------------------------- */
+.multiSelectControl
+{
+	position: relative;
+}
+.multiSelectControl .optionsContainer
+{
+	display: none;
+	position: absolute;
+	z-index: 100;
+	background: #efefef;
+	box-shadow: 0px 0px 7px 1px #999;
+	padding: 10px;
+}
+.multiSelectControl input[type='text']
+{
+	cursor: pointer;
+	text-decoration: underline;
+}
+/* FileControl
+-------------------------------------------------------------------------------- */
+div.fakeFileInput  { width:325px; }
+
+div.fakeFileInput {
+	position: relative;
+	height: 20px;
+	border: none;
+	margin-bottom: 3px;
+}
+
+.fakeFileInput .fileContainer{
+	z-index: 2;
+	position: absolute;
+	right: 0;
+	height: 20px;
+	width: 100%;
+	overflow: hidden;
+}
+
+div.fakeFileInput input.fakeFileInput_file {
+	position: absolute;
+	right: 0;
+	z-index: 2;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	height: 20px;
+	font-size: 50px;
+}
+
+.fakeFileInput .fakeFileInput_file { cursor:pointer; }
+
+div.fakeFileInput input.fakeFileInput_input {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.fakeFileInput_input { width:240px; }
+
+.fakeFileInput .button, .fakeFileInput .hover {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+div.fakeFileInput .imageSubmit {
+	position: absolute;
+	top: 0;	
+	left: 250px;
+}
+
+.fakeFileInput_link
+{
+	padding-top:3px;
+}
+/* VideoFileControl
+-------------------------------------------------------------------------------- */
+.videoFileControlPreviewFrameTime label { padding-right: 4px; }
+
+/* ImageCropper
+-------------------------------------------------------------------------------- */
+#imageHolder {
+	position: relative;
+	background-repeat: no-repeat;
+}
+#icCroppingArea {
+}
+#icDragbar {
+	background: url(../img/ic_dragbar.gif) 0 0 no-repeat;
+	cursor: move;
+}
+
+/*	TreeControl
+-------------------------------------------------------------------------------- */
+.tree {
+	padding: 9px;
+}
+.tree input[type='checkbox'] {
+	height: 14px;
+	width: 14px;
+	vertical-align: bottom;
+}
+.tree ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.tree ul ul {
+	padding: 0 0 0 18px;
+	background: url('../img/tree_shifter_vertical.gif') 0 0 repeat-y;
+}
+.tree li:last-child > ul {
+	background: none;
+}
+.tree li {
+	line-height: 0;
+}
+.tree li > a, .tree li > span {
+	padding-left: 2px;
+	vertical-align: middle;
+}
+.tree li > a > img {
+	/* иконка добавления в BaseTreeEditor */
+	vertical-align: middle;
+	padding-bottom: 2px;
+}
+.treeItemMenu {
+	padding-left: 3px;
+}
+.treeItemMenu img {
+	vertical-align: top;
+	padding: 2px 1px 0;
+}
+
+.tree_shifter, .tree_shifter_bottom, .tree_plus, .tree_plus_bottom, .tree_minus, .tree_minus_bottom {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background-repeat: no-repeat;
+}
+.treeItemWithMenu > .tree_shifter, .treeItemWithMenu > .tree_shifter_bottom, .treeItemWithMenu > .tree_plus,
+.treeItemWithMenu > .tree_plus_bottom, .treeItemWithMenu > .tree_minus, .treeItemWithMenu > .tree_minus_bottom {
+	height: 24px;
+	background-position: 0 0;
+}
+.tree_shifter { background-image: url('../img/tree_shifter.gif'); }
+.tree_shifter_bottom { background-image: url('../img/tree_shifter_bottom.gif'); }
+.tree_plus { background-image: url('../img/tree_plus.gif'); cursor: pointer; }
+.tree_plus_bottom { background-image: url('../img/tree_plus_bottom.gif'); cursor: pointer; }
+.tree_minus { background-image: url('../img/tree_minus.gif'); cursor: pointer; }
+.tree_minus_bottom { background-image: url('../img/tree_minus_bottom.gif'); cursor: pointer; }
+.treeSelectStyleActive .treeItemLabel {
+  background-color: #EFEFEF;
+  border: 1px solid #AAA;
+  display: inline-block;
+  line-height: 18px;
+  padding: 0 4px;
+}
+.tree #add-child {
+	position: relative;
+	top: 2px;
+}
+
+*html .treeEditorTree,
+*html #popupPage {
+	height: 1%;
+}
+.control
+{
+	padding: 0 0 0 3px;
+}
+/*	ColorPicker
+-------------------------------------------------------------------------------- */
+.colorPicker { white-space: nowrap; }
+.colorPicker * { vertical-align: middle; }
+.colorPicker .picker, .colorPicker img { margin: 1px; }
+.colorPicker .picker
+{
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+}
+.colorPicker .picker.empty { background: url('../img/colorPicker.GIF'); }
+/* list .............................. */
+.colorPicker ul
+{
+	display: none;
+	position: absolute;
+	width: auto;
+	z-index: 1000000;
+	margin: 0;
+	padding: 0;
+	
+	border: 1px solid #AAA;
+	background-color: #EEE;
+	
+	list-style-type: none;
+}
+.colorPicker ul li
+{
+	margin: 1px;
+	padding: 0;
+	
+	cursor: pointer;
+}
+.colorPicker ul li div
+{
+	padding: 0 5px;
+	margin-left: 20px;
+	line-height: 20px;
+	
+	border-left: 1px solid #EEE;
+	
+	color: #000;
+	background-color: #FFF;
+}
+/* table .............................. */
+.colorPicker table
+{
+	display: none;
+	position: absolute;
+	width: auto;
+	
+	border: 1px solid #AAA;
+	background-color: #CCC;
+}
+.colorPicker table td
+{
+	width: 20px;
+	height: 20px;
+	
+	border: 1px solid #FFF;
+	cursor: pointer;
+}
+.colorPicker table td.blankColorCell
+{
+	border: 1px solid #CCC;
+	cursor: default;
+}
+.radioControl {
+	white-space: nowrap;
+}
+
+/* CAPTCHA 
+-------------------------------------------------------------------------------- */
+div.captchaImageContainer
+{
+	position: relative;
+	height: 60px;
+	padding-bottom: 5px;
+}
+
+.captchaImageContainer span
+{
+	position: absolute;
+	top: 20px;
+	left: 205px;
+}
+
+.required {
+	background:url(../img/bg_required.gif) no-repeat top right;
+	padding-right:10px !important;
+}
+
+/*	Misc
+-------------------------------------------------------------------------------- */
+.formControlsTable td, .formControlsTable th
+{
+	padding: 0 5px 5px 0;
+	vertical-align: middle;
+}
+
+.formControlsTable td .imageFileControlUpload
+{
+	vertical-align: top;
+}
+
+.selectOptionHighlighted 
+{
+	background-color: #EEF4F9;
+}
+
+.OneRowControlsGroup td
+{
+	padding-right: 10px;
+}
+
+/* сворачиваемая группа */
+.optionalControlsTrigger {
+	cursor: pointer;
+}
+.optionalControlsTrigger td {
+	padding-left: 20px !important;
+	background: url('../img/optional_opened.gif') left center no-repeat;
+	padding-top: 2px !important;
+}
+.optionalControlsTrigger.collapsed td {
+	background-image: url('../img/optional_closed.gif');
+}
+.optionalControlsTrigger span {
+	border-bottom: dashed 1px;
+	vertical-align: middle;
+	zoom: 1;
+}
+
+/*	arrayPropertyEditor
+-------------------------------------------------------------------------------- */
+.arrayPropertyEditor th {
+	border-bottom: 1px solid #EFEFEF;
+}
+.arrayPropertyEditor > tbody > tr > td {
+	padding: 5px 2px;
+	border-bottom: 1px solid #EFEFEF;
+}
+.arrayPropertyEditor td.editorCaptionCell {
+	border-bottom: none;
+}
+/* строка таблицы, после котрой переместится выбранная */
+.arrayPropertyEditor tr.arrayPropertyEditorMoveAfter > td 
+{
+	padding-bottom: 3px;
+	border-bottom: 3px solid #FFAB10;
+	cursor: pointer;
+}
+.editorOrderControlsCell
+{
+	white-space: nowrap;
+}
+.editorOrderControlsCell img {
+	padding: 0 1px;
+}
+.editorAddRemoveButtonCell .apeRemoveLink
+{
+	vertical-align: bottom;
+	display: inline-block;
+	padding-left: 20px;
+	background: url('../img/-.gif') no-repeat;
+	height: 20px;
+}
+/* PredefinedListControl
+-------------------------------------------------------------------------------- */
+.predefined-list-control .list td { margin: 0; padding: 0; }
+.predefined-list-control .list img { vertical-align: middle; }
+.predefined-list-control .imgup,
+.predefined-list-control .imgremove { padding-left: 3px; }
+
+/* Popup
+-------------------------------------------------------------------------------- */
+#popupClose { float: right; }
+#popupClose span { font-size: 20px; font-weight: bold; cursor: pointer; }
+
+/* тень для скриптовых попапов */
+.popupBg {
+	position: fixed;
+	z-index: 14;
+	top: 0;
+	left: 0;
+	background: #000;
+	opacity: 0.3;
+}
+/* скриптовый попап */
+.popup {
+	position: fixed;
+	z-index: 100;
+	background: #fff;
+	padding: 10px;
+	display: none;
+}
+/* Стиль крестика закрытия, который показывается снаружи */
+.popupIframeOuterClose
+{
+	font-size: 20px;
+	position: absolute;
+	font-weight: bold;
+	cursor: pointer;
+	z-index: 1000;
+	display: none;
+}
+
+/* стиль для контрола, на который повещен onclick */
+.txtLink 
+{
+	text-decoration: underline;
+	cursor: pointer;
+	padding-bottom: 2px;
+}
+
+.textControlDisabled
+{
+	background-color: #F6F5F4;
+}
+
+/* Error */
+.errorclass {
+	border: 2px solid #A90F02;
+	padding: 2px;
+}
+.selectValidationErrorContainer {
+	border:2px solid #A90F02;
+	padding:3px 0;
+}
+.errorCheckboxClass {
+	border: 2px solid #A90F02;
+	padding: 0 2px 2px;
+	margin: 1px;
+}
+.errorCheckboxClass input,
+.errorCheckboxClass label.forCheckbox
+{
+	vertical-align: middle;
+}
+
+input.with-hint,
+textarea.with-hint
+{
+	color: Silver;
+}
+
+.listAddNewItem a
+{
+	padding-right: 20px;
+	float: left;
+}
+
+tr.tableRowMoveAfter > td
+{
+	border-bottom: solid 3px red !important;
+}
+
+/*стили, необходимые для DropZone (зоны для переноса файлов в контрол мышкой)*/
+.imageFileControl
+{
+	position:relative;
+}
+
+.dropZone {
+	color: #555;
+	font-size: 15px;
+	text-align: center;
+	vertical-align: middle;
+	
+	height:20px;
+	
+	background: #eee;
+	border: 1px solid #ccc;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+   
+}
+
+.dropZone.hover {
+	background: #ddd;
+	border-color: #aaa;
+	position:absolute;
+	top:0;
+	height:100%;
+	left:0;
+	width:100%;
+	z-index:5;
+}
+
+.dropZone.drop {
+	background: #afa;
+	border-color: #0f0;
+}
+
+.dropZone.error {
+	background: #faa;
+	border-color: #f00;
+}
+
+.imageFileControl.drag-hover,
+.fileControlUpload.drag-hover
+{
+	min-height: 80px;
+}
+
+.fileControlUpload
+{
+	position: relative;
+}
+
+.imageFileControl .fileControlUpload
+{
+	position:static;
+}
+
+.catalogPath .onclickLink,
+.catalogValuesList .onclickLink
+{
+	cursor: pointer;
+}
+
+/*слайдер диапазона значений*/
+.not-selectable
+{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.slider-wrapper
+{
+	line-height: 0;
+	font-size: 0;
+	padding-top: 5px;
+	position: relative;
+	width: 100%;
+	height: 16px;
+	margin: 0 auto;
+}
+
+.slider
+{
+	height: 6px;
+	display: inline-block;
+}
+
+.slider-left, .slider-right
+{
+	background-color: #C6C8CC;
+}
+
+.slider-center
+{
+	background-color: #D1E6EE;
+	width: 100%;
+}
+
+.slider-from, .slider-to
+{
+	position: absolute;
+	top: 0;
+	width: 15px;
+	height: 16px;
+	background-color: #30B7E9;
+	cursor: pointer;
+}
+
+.slider-from
+{
+	left:0;
+}
+
+.slider-to
+{
+	right:0;
+}
+
+.slider-from
+{
+	border-radius: 2px 8px 8px 2px;
+}
+
+.slider-to
+{
+	border-radius: 8px 2px 2px 8px;
+}
+
+.popupIframeBg
+{
+	position: absolute;	
+	z-index: 14;
+	background-color: #000;
+	background-image: none;
+	opacity: 0.3;
+}
+
+/* CHECKBOX SELECTOR */
+.checkboxSelector
+{
+	position: relative;
+}
+.checkboxSelector .checkboxList
+{
+	left: 0;
+	border-radius: 5px;
+	background-color: #FFF;
+	position: absolute;
+	margin-top: 4px;
+	z-index: 100;
+	padding: 10px;
+	box-shadow: 0px 0px 7px 1px #999;
+}
+.checkboxSelector .checkboxList ul
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.checkboxSelector .checkboxList ul li
+{
+	padding: 2px 0;
+}
+.checkboxSelector .checkboxList ul li:last-child
+{
+	border-bottom: none;
+}
