@@ -6,7 +6,6 @@ import csv as CSV
 from django.conf import settings
 from decimal import Decimal
 from .models import *
-from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils.html import strip_tags
