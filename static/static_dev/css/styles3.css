@@ -19,6 +19,7 @@
     padding-left: 8px;
     line-height: 98%;
     white-space: nowrap;
+    border: 1.5px solid !important;
     /* font-size: 1.2rem; */
     /* background-color: green; */
     /* padding: 0; */
@@ -28,6 +29,7 @@
     padding-bottom: 0; */
 }
 .table-address {
+    /* border: 1.5px solid !important; */
     table-layout: fixed;
 }
 @page :nth(2){
