@@ -4,10 +4,10 @@
 } */
 /* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
 .myborder{
-    border: 2px solid black !important;
+    border: 1.5px solid black !important;
     }
 .table-bordered td{
-    border: 2px solid black !important;
+    border: 1.5px solid black !important;
     padding-left: 2px;
     padding-right: 2px;
 }
@@ -33,7 +33,7 @@
 @page :nth(2){
     font-family: "Ascon";
     margin: 9mm 9mm 9mm 9mm;
-    border: 2px solid;
+    border: 3px solid;
 }
 /* @page :nth(1){
     margin: 9mm 9mm 9mm 9mm;
@@ -45,9 +45,9 @@
     line-height: 98%;
 }
 .plan-size-font {
-    font-size: 150%;
+    font-size: 165%;
     /* font-family: Ascon; */
-    font-weight: 500;
+    font-weight: 700;
     font-style: italic;
 }
 .table-page2{
