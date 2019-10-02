@@ -3,8 +3,11 @@
         src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
 } */
 /* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
+.myborder{
+    border: 2px solid black !important;
+    }
 .table-bordered td{
-    border: 1px solid black !important;
+    border: 2px solid black !important;
     padding-left: 2px;
     padding-right: 2px;
 }
@@ -44,7 +47,7 @@
 .plan-size-font {
     font-size: 150%;
     /* font-family: Ascon; */
-    font-weight: lighter;
+    font-weight: 500;
     font-style: italic;
 }
 .table-page2{
@@ -80,6 +83,7 @@
     left: 4%;
     bottom: 2%;
     width: 420px;
+    font-weight: 500;
 }
 .legenda_tbl td{
     text-align: left;
