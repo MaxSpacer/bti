@@ -13,6 +13,9 @@
 }
 /* table {table-layout: fixed;} */
 .table-address td{
+    padding-left: 8px;
+    line-height: 98%;
+    white-space: nowrap;
     /* font-size: 1.2rem; */
     /* background-color: green; */
     /* padding: 0; */
@@ -124,16 +127,17 @@
     right: 1%;
     letter-spacing: 9px;
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 400;
 }
 /* uniqtabletd */
 .uniqtabletd {
     /* background-color: green; */
     padding-left: 65px;
     padding-right: 65px;
+    font-size: 1.5rem;
 }
 .uniqtabletd1 {
     /* background-color: green; */
-    font-size: 0.8rem; line-height: 95%;
+    font-size: 1rem; line-height: 95%;
 
 }

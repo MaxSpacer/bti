@@ -17,7 +17,7 @@
             src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
     }
     body {
-        font-size: 1.45rem !important;
+        font-size: 1.4rem !important;
     }
     .page2{
         font-family: "Ascon";
@@ -84,11 +84,11 @@
                         (наименование объекта учета)
                     </span>
                 </p> -->
-                <h5 class="mt-5 mb-0 pt-3 pb-0">
+                <h4 class="mt-5 mb-0 pt-3 pb-0" style="font-weight:normal; letter-spacing: 1.5px;">
                     Адрес (местоположение) объекта:
                     <!-- <span class="font3 pb-0 mt-5" style="font-size:;">
                 </span> -->
-                </h5>
+                </h4>
             <table class="table-address table-bordered w-100 mb-4 mt-0 text-left" border="1">
                 <tr class="">
                     <th class="l"></th>
@@ -221,7 +221,7 @@
                             </td>
                         </tr>
                 </table>
-            <div class="row justify-content-between px-3" style="margin-top:12%;">
+            <div class="row justify-content-between px-3" style="margin-top:22%;">
                 <p class="mt-3"><span class=" ">Начальник отделения</span></p>
                 <table class="d-block">
                     <tr>
@@ -329,21 +329,21 @@
                     <td>1:100</td>
                   </tr>
                   <tr>
-                    <td>Исполнил</td>
+                    <td class="text-left pl-2">Исполнил</td>
                     <td>Клименко М.В.</td>
                     <td><span class=""></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
-                    <td>Проверил</td>
+                    <td class="text-left pl-2">Проверил</td>
                     <td>Панин В.Э.</td>
                     <td><span class="px-1"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
-                    <td>Принял</td>
+                    <td class="text-left pl-2">Принял</td>
                     <td>Панин В.Э.</td>
-                    <td><span class="px-4"></span></td>
+                    <td><span class="px-3"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                 </table>
