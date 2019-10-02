@@ -45,7 +45,7 @@
     line-height: 98%;
 }
 .plan-size-font {
-    font-size: 165%;
+    /* font-size: 165%; */
     /* font-family: Ascon; */
     font-weight: 600;
     font-style: italic;
@@ -136,12 +136,14 @@
 /* uniqtabletd */
 .uniqtabletd {
     /* background-color: green; */
-    padding-left: 65px;
-    padding-right: 65px;
-    font-size: 1.5rem;
+    padding-left: 110px;
+    padding-right: 110px;
+    font-size: 1.6rem;
+    font-weight: 500;
 }
 .uniqtabletd1 {
     /* background-color: green; */
     font-size: 1rem; line-height: 95%;
+    font-weight: 500;
 
 }
