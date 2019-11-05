@@ -45,14 +45,19 @@ def export_data_pdf(sender, instance, created, **kwargs):
             i = 0
             total_list = []
             for item in adress_item_list:
-                total_val = adress_item_list[i].split()
                 k = ''
                 v = ''
+                total_val = adress_item_list[i].split()
+                print('total_val---------------------------------')
+                print(total_val)
                 for word in total_val:
                     if word[0].isupper() or word[0].isdigit():
                         v = word
                     else:
                         k = word
+                if i == 1:
+                    v = adress_item_list[i].strip()
+
                 total_list.append([k, v])
                 i+=1
             print('total_list')
@@ -76,7 +81,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     v = item[1]
                     total_dict.update({k: v})
 
-                elif item[0] == 'улица' or item[0] == 'переулок' or item[0] == 'проспект' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь':
+                elif item[0] == 'улица' or item[0] == 'ул.' or item[0] == 'переулок' or item[0] == 'пер.' or item[0] == 'проспект' or item[0] == 'просп.' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь' or item[0] == 'наб.' or item[0] == 'набережная' or item[0] == 'бульвар' or item[0] == 'бул.':
                     k = 'street_type'
                     v = item[0]
                     total_dict.update({k: v})

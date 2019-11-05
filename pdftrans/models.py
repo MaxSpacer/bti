@@ -103,14 +103,9 @@ class Order(models.Model):
         return "Ордер № %s %s" % (self.id, self.order_number)
 
     def __init__(self,  *args, **kwargs):
-
         self._meta.get_field('doc_type').default = DocType.objects.filter().first()
-
         self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
-
         self._meta.get_field('name_object').default = NameObject.objects.filter().first()
-
-
         super(Order, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
@@ -166,7 +161,7 @@ class Adress(models.Model):
         if self.litera:
             lit = ", литера %s" % (self.litera)
         else: lit = ""
-        return "%s %s%s, %s %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.street_type, self.house_number, corpus_str, build_str, lit)
+        return "%s %s%s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.house_number, corpus_str, build_str, lit)
 
     class Meta:
         verbose_name = 'Адрес'
