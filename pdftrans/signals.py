@@ -27,7 +27,8 @@ from PIL import Image, ImageChops
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
-    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['170,720,780,700'])
+    # address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,780,680'])
+    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,680'])
     csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
     csv = address_string[0].to_csv(csv_address_f)
     if csv_address_f:
@@ -35,21 +36,36 @@ def export_data_pdf(sender, instance, created, **kwargs):
             row_read = CSV.reader(f)
             for row in row_read:
                 pp = (row[0].strip(" '")).split(":")
-                print('pp')
-                print(pp)
-                print(pp[0])
-                print(pp[1])
-                adress_item_list = pp[1].split(",")
-                print('adress_item_list')
-                print(adress_item_list)
+                if 'Квартира' in pp[0]:
+                    hh = [int(s) for s in pp[0].split() if s.isdigit()]
+                    global_appartment = hh[0]
+                    print(global_appartment)
+                else:
+
+                # pp1 = (row[1].strip(" "))
+
+                    # for word in pp[0]:
+                    #     print(word)
+
+                    # print('all ok')
+                    # print(pp[0])
+                    # print(hh)
+                    print('pp')
+                    print(pp)
+                    # print(pp1)
+                    # print(pp[0])
+                    print(pp[1])
+                    adress_item_list = pp[1].split(",")
+                    print('adress_item_list')
+                    print(adress_item_list)
             i = 0
             total_list = []
             for item in adress_item_list:
                 k = ''
                 v = ''
                 total_val = adress_item_list[i].split()
-                print('total_val---------------------------------')
-                print(total_val)
+                # print('total_val')
+                # print(total_val)
                 for word in total_val:
                     if word[0].isupper() or word[0].isdigit():
                         v = word
@@ -135,9 +151,9 @@ def export_data_pdf(sender, instance, created, **kwargs):
             i = 0
             data.pop()
             for x in data:
-                if i == 0:
-                    loc_apa = x["1"].split()
-                    local_appart = loc_apa[2]
+                # if i == 0:
+                #     loc_apa = x["1"].split()
+                #     local_appart = loc_apa[2]
                 if i > 4 and x['0'] != '':
                     ExplicationListItem.objects.create(
                     order_list = instance,
@@ -151,7 +167,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     square_balkon_item = x['7'],
                     square_another_item = x['8'],
                     height_item = x['9'],
-                    apart_number = local_appart
+                    apart_number = global_appartment
                     )
                 i += 1
             # print('-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
