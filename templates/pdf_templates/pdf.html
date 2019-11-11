@@ -17,7 +17,7 @@
             src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
     }
     body {
-        font-size: 1.2rem !important;
+        font-size: 1.4rem !important;
     }
     .page2{
         font-family: "Ascon";
@@ -27,21 +27,21 @@
     .page, .page3{
         font-family: "Times New Roman";
         /* font-style: ; */
-        /* letter-spacing: 0.4px; */
+        letter-spacing: auto;
     }
+    h4{font-weight: 800;}
     </style>
 </head>
 <body>
-
-<!-- <p style="page-break-before: always"></p> -->
             <div class="page2 text-center">
                 <div class="top-block ">
-                    <div class="border border-dark p-3">
+                    <div class="myborder p-3">
                         <table class="text-left w-100">
                             <tr>
                                 <td></td>
                                 <td>
-                                    <div class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div>
+                                    <h3 class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</h3>
+                                    <!-- <div class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div> -->
                                 </td>
                             </tr>
                             <tr>
@@ -113,21 +113,21 @@
                     <td>1:100</td>
                   </tr>
                   <tr>
-                    <td>Исполнил</td>
+                    <td class="text-left pl-2">Исполнил</td>
                     <td>Клименко М.В.</td>
                     <td><span class=""></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
-                    <td>Проверил</td>
+                    <td class="text-left pl-2">Проверил</td>
                     <td>Панин В.Э.</td>
                     <td><span class="px-1"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
-                    <td>Принял</td>
+                    <td class="text-left pl-2">Принял</td>
                     <td>Панин В.Э.</td>
-                    <td><span class="px-4"></span></td>
+                    <td><span class="px-3"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                 </table>
@@ -145,9 +145,9 @@
                     </div>
                 </div>
                 <div class="explication-block">
-                    <h5 class="text-uppercase mb-3" style="font-weight:bold;">
+                    <h3 class="text-uppercase mb-3" style="font-weight:bold;">
                       ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
-                    </h5>
+                    </h3>
                     <div class="text-left ml-2">
                         <p class="mb-2">
                             Адрес (иное описание местоположения):
@@ -222,13 +222,13 @@
                       </tr>
                     </table>
                     <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
-                    <h5 class="font-weight-bold text-left ml-3">
+                    <p class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
-                    </h5>
+                    </p>
                 </div>
                 <div class="py-3 page3-footer mb-5">
                     <div class="mb-2">
-                        <span class="ml-0">
+                        <span class="">
                             Экспликация на 1 стр.
                         </span>
                         <span class="px-5 mx-5">
@@ -242,8 +242,8 @@
                         <span>
                             Исполнитель
                         </span>
-                        <span class="">
-                            _______________________
+                        <span class="px-3">
+                            __________________
                         </span>
                         <span>
                             {{ order.engineer_name }}

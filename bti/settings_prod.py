@@ -1,6 +1,12 @@
 # DEBUG = False
 ALLOWED_HOSTS = ['167.71.54.163', 'localhost', '127.0.0.1']
 
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
 #settings for db on server
 # DATABASES = {
 #     'default': {
