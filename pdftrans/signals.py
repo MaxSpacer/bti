@@ -41,19 +41,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     global_appartment = hh[0]
                     print(global_appartment)
                 else:
-
-                # pp1 = (row[1].strip(" "))
-
-                    # for word in pp[0]:
-                    #     print(word)
-
-                    # print('all ok')
-                    # print(pp[0])
-                    # print(hh)
                     print('pp')
                     print(pp)
-                    # print(pp1)
-                    # print(pp[0])
                     print(pp[1])
                     adress_item_list = pp[1].split(",")
                     print('adress_item_list')
@@ -64,8 +53,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 k = ''
                 v = ''
                 total_val = adress_item_list[i].split()
-                # print('total_val')
-                # print(total_val)
                 for word in total_val:
                     if word[0].isupper() or word[0].isdigit():
                         v = word
@@ -137,12 +124,19 @@ def export_data_pdf(sender, instance, created, **kwargs):
             order=instance,
             defaults=total_dict,
             )
+    if instance.new_source:
+        tables = camelot.read_pdf(uploaded_pdf_url)
+    else:
+        tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,680,780,100'])
 
-    tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,690,780,100'])
+    print(tables[0])
+    print(tables[0].parsing_report)
+    print(tables[0].df)
+
     json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
     json_table2 = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table2.csv')
-    json = tables[0].to_json(json_table)
-    json1 = tables[0].to_csv(json_table2)
+    json = tables[0].to_json(path=json_table)
+    # json1 = tables[0].to_csv(path=json_table2, orient = 'records', lines = 'True')
     if json_table:
         with open(json_table, 'r') as f:
             print("------------data-------------------")
@@ -151,10 +145,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
             i = 0
             data.pop()
             for x in data:
-                # if i == 0:
-                #     loc_apa = x["1"].split()
-                #     local_appart = loc_apa[2]
-                if i > 4 and x['0'] != '':
+                if i > 2 and x['9'] != '':
                     ExplicationListItem.objects.create(
                     order_list = instance,
                     floor_number = x['0'],
@@ -170,10 +161,11 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     apart_number = global_appartment
                     )
                 i += 1
-            # print('-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
             explication_list_items = ExplicationListItem.objects.filter(order_list=instance)
             def string_to_correct_decimal(string):
-                result = Decimal(string.strip(" '"))
+                print('string')
+                print(string)
+                result = Decimal(string.strip(" '").replace(',', '.'))
                 return result
             square_total_sum = Decimal("0.0")
             square_general_sum = Decimal("0.0")
@@ -245,7 +237,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
     # sending email method -=send_mail=-
     path_full_pdf_for_email = str(path_full_pdf)
     path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    # print(path_full_link_site)
     context = {
     'order_number': instance.order_number,
     'link_doc': path_full_pdf,
