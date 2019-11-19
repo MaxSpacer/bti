@@ -215,7 +215,9 @@ def export_data_pdf(sender, instance, created, **kwargs):
     i = 0
     for page in doc:                            # iterate through the pages
         if i == 1:
-            pix = page.getPixmap(alpha = False)     # render page to an image
+            zoom = 2    # zoom factor
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.getPixmap(matrix = mat, alpha = False)     # render page to an image
             pix.writePNG(path_img_scheme)    # store image as a PNG
             def trim(im):
                 bg = Image.new(im.mode, im.size, im.getpixel((0,0)))

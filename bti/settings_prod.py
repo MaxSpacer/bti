@@ -1,7 +1,7 @@
 # DEBUG = False
-ALLOWED_HOSTS = ['167.71.54.163', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['167.172.162.28', 'localhost', '127.0.0.1']
 
-
+# for https settings
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
