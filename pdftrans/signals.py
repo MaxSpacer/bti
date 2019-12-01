@@ -210,7 +210,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
     path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name
     current_site = Site.objects.get_current().domain
-    path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
     doc = fitz.open(uploaded_pdf_url)
     i = 0
     for page in doc:                            # iterate through the pages
@@ -238,7 +238,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
 
     # sending email method -=send_mail=-
     path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'http://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
     context = {
     'order_number': instance.order_number,
     'link_doc': path_full_pdf,
