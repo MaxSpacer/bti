@@ -27,5 +27,4 @@ def absolute_address(value):
         if x in s:
             s = s.replace(x, "")
             s = s.replace('  ', " ")
-            print ('tut')
     return s

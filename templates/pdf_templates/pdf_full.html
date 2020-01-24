@@ -293,36 +293,39 @@
                 </div>
                 <div class="schema_img" >
                     {% for item in order.orderimage_set.all%}
-                    <img class="image-fluid" src="{{ item.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
+                    <img class=" " src="{{ item.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
                     {% endfor %}
                 </div>
                 <table class="legenda_tbl">
                   <tr>
-                    <td class="tg-0pky text-center pb-2" colspan="2">Условные обозначения:</td>
+                    <td class="pb-2" colspan="2">Условные обозначения:</td>
                   </tr>
                   <tr>
-                    <td class="tg-0lax">
-                        <img class="image-fluid legenda_img" src="{% static 'img/legenda-1.png' %}" alt="Event QR code" />
+                    <td class="">
+                        <img class="legenda_img" src="{% static 'img/legenda-1.png' %}" alt="Event QR code" />
                     </td>
-                    <td class="tg-0lax">стена с окном и дверью</td>
+                    <td class="">стена с окном и дверью</td>
                   </tr>
                   <tr>
                       <td>
-                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-2.png' %}" alt="Event QR code" />
+                          <img class="legenda_img" src="{% static 'img/legenda-2.png' %}" alt="Event QR code" />
                       </td>
-                    <td class="tg-0lax">линейный размер</td>
+                    <td class="">линейный размер</td>
                   </tr>
                   <tr>
                       <td>
-                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-4.png' %}" alt="Event QR code" />
+                          <img class="legenda_img" src="{% static 'img/legenda-4.png' %}" alt="Event QR code" />
                       </td>
-                    <td class="tg-0lax">номер комнаты/площадь</td>
+                    <td class="">номер комнаты/площадь</td>
                   </tr>
                   <tr>
-                      <td>
-                          <img class="image-fluid legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" />
+                      <td class="apart_number_legend">
+                          <!-- <img class="legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" /> -->
+                          {% with order.explicationlistitem_set.all|first as appart %}
+                          кв.{{ appart.apart_number }}&nbsp
+                          {% endwith %}
                       </td>
-                    <td class="tg-0lax">номер помещения</td>
+                    <td class="">номер помещения</td>
                   </tr>
                 </table>
                 <table class="table-bordered table-page2 text-center">
@@ -442,7 +445,7 @@
                           <!-- <td></td> -->
                       </tr>
                     </table>
-                    <!-- <img class="image-fluid w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
+                    <!-- <img class="  w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
                     <p class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </p>

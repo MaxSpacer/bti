@@ -78,9 +78,14 @@
     width: 420px;
     font-weight: 500;
 }
-.legenda_tbl td{
+.legenda_tbl td:nth-child(2n){
     text-align: left;
-    /* padding-top: 7px; */
+}
+.apart_number_legend{
+    color: red;
+    padding: 5px 0;
+    font-size: 85%;
+    font-weight: bold;
 }
 .schema_img {
     position: absolute;

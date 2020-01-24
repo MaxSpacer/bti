@@ -35,16 +35,21 @@ def export_data_pdf(sender, instance, created, **kwargs):
         with open(csv_address_f, 'r', encoding='utf-8') as f:
             row_read = CSV.reader(f)
             for row in row_read:
+                print('row')
+                print(row)
                 pp = (row[0].strip(" '")).split(":")
+                print('pp')
+                print(pp)
                 if 'Квартира' in pp[0]:
                     hh = [int(s) for s in pp[0].split() if s.isdigit()]
                     global_appartment = hh[0]
+                    print('global_appartment')
                     print(global_appartment)
                 else:
-                    print('pp')
+                    print('pp2')
                     print(pp)
                     print(pp[1])
-                    adress_item_list = pp[1].split(",")
+                    adress_item_list = pp[1].strip(",").split(",")
                     print('adress_item_list')
                     print(adress_item_list)
             i = 0
@@ -53,6 +58,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 k = ''
                 v = ''
                 total_val = adress_item_list[i].split()
+                print('total_val')
+                print(total_val)
                 for word in total_val:
                     if word[0].isupper() or word[0].isdigit():
                         v = word
@@ -60,7 +67,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
                         k = word
                 if i == 1:
                     v = adress_item_list[i].strip()
-
                 total_list.append([k, v])
                 i+=1
             print('total_list')
@@ -238,30 +244,30 @@ def export_data_pdf(sender, instance, created, **kwargs):
         i+=1
 
     # sending email method -=send_mail=-
-    path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    context = {
-    'order_number': instance.order_number,
-    'link_doc': path_full_pdf,
-    'link_site': path_full_link_site,
-    }
-    str_for_traslit = unidecode(str(instance.adress))
-    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    if instance.is_emailed == False:
-        if subject and html_content and from_email:
-            try:
-                if msg.send():
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # path_full_pdf_for_email = str(path_full_pdf)
+    # path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf,
+    # 'link_site': path_full_link_site,
+    # }
+    # str_for_traslit = unidecode(str(instance.adress))
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass
