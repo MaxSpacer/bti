@@ -72,17 +72,18 @@ def export_data_pdf(sender, instance, created, **kwargs):
             print('total_list')
             print(total_list)
             total_dict = {
-                'city_type':'',
-                'city_name': '',
-                'street_type':'',
-                'street':'',
-                'micro_rayon':'',
-                'house_number':'',
-                'corpus_number':'',
-                'litera':''
-            }
+                        'city_type':'',
+                        'city_name': '',
+                        'street_type':'',
+                        'street':'',
+                        'micro_rayon':'',
+                        'house_number':'',
+                        'corpus_number':'',
+                        'litera':''
+                        }
             for item in total_list:
-                if item[0] == 'город' or item[0] == 'поселение' or item[0] == 'деревня' or item[0] == 'поселок':
+                # if item[0] == 'город' or item[0] == 'поселение' or item[0] == 'деревня' or item[0] == 'поселок':
+                if item[0] in ('город', 'поселение', 'деревня', 'поселок'):
                     k = 'city_type'
                     v = item[0]
                     total_dict.update({k: v})
@@ -90,7 +91,22 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     v = item[1]
                     total_dict.update({k: v})
 
-                elif item[0] == 'улица' or item[0] == 'ул.' or item[0] == 'переулок' or item[0] == 'пер.' or item[0] == 'проспект' or item[0] == 'просп.' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь' or item[0] == 'наб.' or item[0] == 'набережная' or item[0] == 'бульвар' or item[0] == 'бул.':
+                # elif item[0] == 'улица' or item[0] == 'ул.' or item[0] == 'переулок' or item[0] == 'пер.' or item[0] == 'проспект' or item[0] == 'просп.' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь' or item[0] == 'наб.' or item[0] == 'набережная' or item[0] == 'бульвар' or item[0] == 'бул.':
+                elif item[0] in (
+                                'улица',
+                                'ул.',
+                                'переулок',
+                                'пер.',
+                                'проспект',
+                                'просп.',
+                                'проезд',
+                                'шоссе',
+                                'площадь',
+                                'наб.',
+                                'набережная',
+                                'бульвар',
+                                'бул.'
+                                ):
                     k = 'street_type'
                     v = item[0]
                     total_dict.update({k: v})
