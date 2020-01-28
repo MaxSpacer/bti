@@ -137,13 +137,15 @@ class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'статус заказа')
     subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=False, default = 'Москва')
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False, default = '')
+    # city_type_general = models.CharField(verbose_name="Город - тип", max_length=64, default='')
+    # city_name_general = models.CharField(verbose_name="Город - наименование", max_length=64, blank=True, null=False, default = 'Москва')
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False, default = '')
     mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False, default = '')
-    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, default='')
+    city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, default='город')
     city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=True, null=False, default = 'Москва')
     street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, default='')
     street = models.CharField(verbose_name="название улицы (проспекта, переулка и т. д.)", max_length=64, blank=True, null=False, default = '')
-    micro_rayon = models.CharField(verbose_name="микрорайон", max_length=64, blank=True, null=False, default = '')
+    # micro_rayon = models.CharField(verbose_name="микрорайон", max_length=64, blank=True, null=False, default = '')
     house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=True, null=False, default = '')
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False, default = '')
     litera = models.CharField(verbose_name="Литера", max_length=64, blank=True, null=False, default = '')
@@ -157,13 +159,30 @@ class Adress(models.Model):
         if self.build_number:
             build_str = ", строение %s" % (self.build_number)
         else: build_str = ""
-        if self.micro_rayon:
-            micro_ray = ", микрорайон %s" % (self.micro_rayon)
-        else: micro_ray = ""
+        # if self.micro_rayon:
+        #     micro_ray = ", микрорайон %s" % (self.micro_rayon)
+        # else: micro_ray = ""
         if self.litera:
             lit = ", литера %s" % (self.litera)
         else: lit = ""
-        return "%s %s%s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.house_number, corpus_str, build_str, lit)
+        return "%s %s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, self.street, self.house_number, corpus_str, build_str, lit)
+
+    # def __str__(self):
+    #     address_str = self.city_type_general + self.city_name_general + self.city_type + self.city_name
+    #     return str(address_str.split(' '))
+        # if self.corpus_number:
+        #     corpus_str = ", корпус %s" % (self.corpus_number)
+        # else: corpus_str = ""
+        # if self.build_number:
+        #     build_str = ", строение %s" % (self.build_number)
+        # else: build_str = ""
+        # if self.micro_rayon:
+        #     micro_ray = ", микрорайон %s" % (self.micro_rayon)
+        # else: micro_ray = ""
+        # if self.litera:
+        #     lit = ", литера %s" % (self.litera)
+        # else: lit = ""
+        # return "%s %s%s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.house_number, corpus_str, build_str, lit)
 
     class Meta:
         verbose_name = 'Адрес'

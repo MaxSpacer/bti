@@ -22,7 +22,7 @@ from weasyprint.fonts import FontConfiguration
 from django_weasyprint.utils import django_url_fetcher
 from django.core.mail import EmailMultiAlternatives
 from PIL import Image, ImageChops
-
+from .adress_parser import adress_parser_func
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
@@ -52,96 +52,100 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     adress_item_list = pp[1].strip(",").split(",")
                     print('adress_item_list')
                     print(adress_item_list)
-            i = 0
-            total_list = []
-            for item in adress_item_list:
-                k = ''
-                v = ''
-                total_val = adress_item_list[i].split()
-                print('total_val')
-                print(total_val)
-                for word in total_val:
-                    if word[0].isupper() or word[0].isdigit():
-                        v = word
-                    else:
-                        k = word
-                if i == 1:
-                    v = adress_item_list[i].strip()
-                total_list.append([k, v])
-                i+=1
-            print('total_list')
-            print(total_list)
+            begin_dict = adress_parser_func(adress_item_list)
+            print('begin_dict')
+            print(begin_dict)
             total_dict = {
-                        'city_type':'',
-                        'city_name': '',
+                        'mun_type': '',
+                        'mun_name': '',
+                        'city_type':'город',
+                        'city_name': 'Москва',
                         'street_type':'',
                         'street':'',
-                        'micro_rayon':'',
                         'house_number':'',
                         'corpus_number':'',
-                        'litera':''
+                        'litera':'',
+                        'build_number':''
                         }
-            for item in total_list:
-                # if item[0] == 'город' or item[0] == 'поселение' or item[0] == 'деревня' or item[0] == 'поселок':
-                if item[0] in ('город', 'поселение', 'деревня', 'поселок'):
-                    k = 'city_type'
-                    v = item[0]
-                    total_dict.update({k: v})
-                    k = 'city_name'
-                    v = item[1]
-                    total_dict.update({k: v})
 
-                # elif item[0] == 'улица' or item[0] == 'ул.' or item[0] == 'переулок' or item[0] == 'пер.' or item[0] == 'проспект' or item[0] == 'просп.' or item[0] == 'проезд' or item[0] == 'шоссе' or item[0] == 'площадь' or item[0] == 'наб.' or item[0] == 'набережная' or item[0] == 'бульвар' or item[0] == 'бул.':
-                elif item[0] in (
-                                'улица',
-                                'ул.',
-                                'переулок',
-                                'пер.',
-                                'проспект',
-                                'просп.',
-                                'проезд',
-                                'шоссе',
-                                'площадь',
-                                'наб.',
-                                'набережная',
-                                'бульвар',
-                                'бул.'
-                                ):
+            # city_flag = 0
+            municipal_flag = 0
+            for key, value in begin_dict.items():
+                print('item_dict_in_signal')
+                print(key)
+                print(value)
+
+                # if key == 'город':
+                if key in (
+                    'город',
+                    'поселок',
+                    'городское поселение',
+                    'поселение',
+                    'деревня',
+                    'СНТ',
+                    'село',
+                ):
+                    if municipal_flag == 0:
+                        k = 'city_type'
+                        v = key
+                        total_dict.update({k: v})
+                        k = 'city_name'
+                        v = value
+                        total_dict.update({k: v})
+                        municipal_flag = 1
+                    else:
+                        # tempk = total_dict[city_type]
+                        # tempv = total_dict[city_name]
+                        total_dict.update({'mun_type': total_dict['city_type']})
+                        total_dict.update({'mun_name': total_dict['city_name']})
+                        k = 'city_type'
+                        v = key
+                        total_dict.update({k: v})
+                        k = 'city_name'
+                        v = value
+                        total_dict.update({k: v})
+
+                elif key in (
+                    'микрорайон',
+                    'улица',
+                    'переулок',
+                    'проспект',
+                    'проезд',
+                    'шоссе',
+                    'площадь',
+                    'набережная',
+                    'бульвар',
+                    'улица',
+                    ):
                     k = 'street_type'
-                    v = item[0]
+                    v = key
                     total_dict.update({k: v})
                     k = 'street'
-                    v = item[1]
+                    v = value
                     total_dict.update({k: v})
 
-                elif item[0] == 'микрорайон':
-                    k = 'micro_rayon'
-                    v = item[1]
-                    total_dict.update({k: v})
-
-                elif item[0] == 'дом':
+                elif key == 'дом':
                     k = 'house_number'
-                    v = item[1]
+                    v = value
                     total_dict.update({k: v})
 
-                elif item[0] == 'корпус':
+                elif key == 'корпус':
                     k = 'corpus_number'
-                    v = item[1]
+                    v = value
                     total_dict.update({k: v})
 
-                elif item[0] == 'litera':
+                elif key == 'литера':
                     k = 'litera'
-                    v = item[1]
+                    v = value
                     total_dict.update({k: v})
 
-                elif item[0] == 'строение':
+                elif key == 'строение':
                     k = 'build_number'
-                    v = item[1]
+                    v = value
                     total_dict.update({k: v})
 
             print('total_dict')
             print(total_dict)
-                # func(adress_item_list[i])
             v, created = Adress.objects.update_or_create(
             order=instance,
             defaults=total_dict,
