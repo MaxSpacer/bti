@@ -14,6 +14,17 @@ from django.contrib.sites.models import Site
 from django.utils import timezone
 from settings_pdftrans.models import *
 
+
+def get_subject_type_choices():
+    SUBJECT_TYPE_CHOICES = [(str(e.subject_type), e.subject_type) for e in SubjectType.objects.all()]
+    return SUBJECT_TYPE_CHOICES
+
+
+def get_subject_type_default():
+    def_value = SubjectType.objects.filter().first()
+    default = str(def_value)
+    return default
+
 def get_doc_type_choices():
     DOC_TYPE_CHOICES = [(str(e.docs_type), e.docs_type) for e in DocType.objects.all()]
     return DOC_TYPE_CHOICES
@@ -21,7 +32,6 @@ def get_doc_type_choices():
 def get_doc_type_default():
     def_value = DocType.objects.filter().first()
     default = str(def_value)
-
     return default
 
 def get_type_object_choices():
@@ -52,6 +62,7 @@ class Order(models.Model):
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True, max_length=250)
     new_source = models.BooleanField(verbose_name="если исходник старого образца, то снимите галку", default=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
+    subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
     name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices(), default=get_name_object_default())
@@ -105,6 +116,7 @@ class Order(models.Model):
         return "Ордер № %s %s" % (self.id, self.order_number)
 
     def __init__(self,  *args, **kwargs):
+        self._meta.get_field('subj_type').default = SubjectType.objects.filter().first()
         self._meta.get_field('doc_type').default = DocType.objects.filter().first()
         self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
         self._meta.get_field('name_object').default = NameObject.objects.filter().first()
@@ -135,54 +147,20 @@ class OrderImage(models.Model):
 
 class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'статус заказа')
-    subject_rf = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=False, default = 'Москва')
     rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False, default = '')
-    # city_type_general = models.CharField(verbose_name="Город - тип", max_length=64, default='')
-    # city_name_general = models.CharField(verbose_name="Город - наименование", max_length=64, blank=True, null=False, default = 'Москва')
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False, default = '')
     mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False, default = '')
     city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, default='город')
     city_name = models.CharField(verbose_name="Населенный пункт наименование", max_length=64, blank=True, null=False, default = 'Москва')
-    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, default='')
+    street_type = models.CharField(verbose_name="Улица (проспект, переулок и т. д.)", max_length=64, blank=True, default='')
     street = models.CharField(verbose_name="название улицы (проспекта, переулка и т. д.)", max_length=64, blank=True, null=False, default = '')
-    # micro_rayon = models.CharField(verbose_name="микрорайон", max_length=64, blank=True, null=False, default = '')
     house_number = models.CharField(verbose_name="Номер дома", max_length=64, blank=True, null=False, default = '')
     corpus_number = models.CharField(verbose_name="Номер корпуса", max_length=64, blank=True, null=False, default = '')
     litera = models.CharField(verbose_name="Литера", max_length=64, blank=True, null=False, default = '')
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False, default = '')
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False, default = '')
+    full_adress = models.CharField(verbose_name="полный адрес", max_length=256, blank=True, null=False, default = '')
 
-    def __str__(self):
-        if self.corpus_number:
-            corpus_str = ", корпус %s" % (self.corpus_number)
-        else: corpus_str = ""
-        if self.build_number:
-            build_str = ", строение %s" % (self.build_number)
-        else: build_str = ""
-        # if self.micro_rayon:
-        #     micro_ray = ", микрорайон %s" % (self.micro_rayon)
-        # else: micro_ray = ""
-        if self.litera:
-            lit = ", литера %s" % (self.litera)
-        else: lit = ""
-        return "%s %s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, self.street, self.house_number, corpus_str, build_str, lit)
-
-    # def __str__(self):
-    #     address_str = self.city_type_general + self.city_name_general + self.city_type + self.city_name
-    #     return str(address_str.split(' '))
-        # if self.corpus_number:
-        #     corpus_str = ", корпус %s" % (self.corpus_number)
-        # else: corpus_str = ""
-        # if self.build_number:
-        #     build_str = ", строение %s" % (self.build_number)
-        # else: build_str = ""
-        # if self.micro_rayon:
-        #     micro_ray = ", микрорайон %s" % (self.micro_rayon)
-        # else: micro_ray = ""
-        # if self.litera:
-        #     lit = ", литера %s" % (self.litera)
-        # else: lit = ""
-        # return "%s %s%s, %s, дом %s%s%s%s" % (self.city_type, self.city_name, micro_ray, self.street, self.house_number, corpus_str, build_str, lit)
 
     class Meta:
         verbose_name = 'Адрес'

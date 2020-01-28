@@ -100,7 +100,7 @@
                         <span class=" ">Субъект РФ</span>
                     </td>
                     <td colspan="2">
-                        <span class=" ">{{order.adress.subject_rf}}</span>
+                        <span class=" ">{{order.subj_type}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -270,7 +270,7 @@
                                     <div class="">расположенного по адресу:</div>
                                 </td>
                                 <td>
-                                    {{order.adress}}
+                                    {{order.adress.full_adress}}
                                 </td>
                             </tr>
                             <tr>
@@ -377,7 +377,7 @@
                             Адрес (иное описание местоположения):
                         </p>
                         <p class="font-weight-bold mb-2">
-                            {{ order.adress }}
+                            {{ order.adress.full_adress }}
                         </p>
                         <p class="">Квартира №
                             {% with order.explicationlistitem_set.all|first as appart %}

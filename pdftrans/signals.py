@@ -34,6 +34,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
     if csv_address_f:
         with open(csv_address_f, 'r', encoding='utf-8') as f:
             row_read = CSV.reader(f)
+            full_adress_string = ''
             for row in row_read:
                 print('row')
                 print(row)
@@ -49,6 +50,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     print('pp2')
                     print(pp)
                     print(pp[1])
+                    full_adress_string = pp[1].strip(" ")
                     adress_item_list = pp[1].strip(",").split(",")
                     print('adress_item_list')
                     print(adress_item_list)
@@ -65,17 +67,15 @@ def export_data_pdf(sender, instance, created, **kwargs):
                         'house_number':'',
                         'corpus_number':'',
                         'litera':'',
-                        'build_number':''
+                        'build_number':'',
+                        'full_adress':''
                         }
-
-            # city_flag = 0
+            total_dict.update({'full_adress': full_adress_string})
             municipal_flag = 0
             for key, value in begin_dict.items():
-                print('item_dict_in_signal')
-                print(key)
-                print(value)
-
-                # if key == 'город':
+                # print('item_dict_in_signal')
+                # print(key)
+                # print(value)
                 if key in (
                     'город',
                     'поселок',
@@ -94,8 +94,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
                         total_dict.update({k: v})
                         municipal_flag = 1
                     else:
-                        # tempk = total_dict[city_type]
-                        # tempv = total_dict[city_name]
                         total_dict.update({'mun_type': total_dict['city_type']})
                         total_dict.update({'mun_name': total_dict['city_name']})
                         k = 'city_type'

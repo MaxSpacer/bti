@@ -4,6 +4,19 @@ from django.db import models
 from django.contrib.sites.models import Site
 
 
+class SubjectType(models.Model):
+    subject_type = models.CharField(verbose_name="субъект РФ", max_length=64, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True , auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+
+    class Meta:
+        verbose_name = 'субъект РФ'
+        verbose_name_plural = 'субъекты РФ'
+
+    def __str__(self):
+        return "%s" % self.subject_type
+
+
 class DocType(models.Model):
     docs_type = models.CharField(verbose_name="тип документа", max_length=64, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True , auto_now=False)
