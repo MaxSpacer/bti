@@ -71,12 +71,12 @@
                     <label>Адрес объекта</label>
                 </td>
                 <td>
-                    <span>{{order.adress}}</span>
+                    <span>{{order.adress.full_adress}}</span>
                 </td>
             </tr>
             <tr>
                 <td class="txtBold"><label>Список объектов</label></td><td><span>
-                    {{order.name_object}} № 
+                    {{order.name_object}} №
                     {% with order.explicationlistitem_set.all|first as appart %}
                         {{ appart.apart_number|lower }}
                     {% endwith %}</span></td></tr>

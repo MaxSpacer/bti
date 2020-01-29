@@ -47,8 +47,8 @@ def document_bti_pdf(request, pk):
     print('order')
     print(order)
     print(order.id)
-    print(order.adress)
-    print(order.adress.street)
+    # print(order.adress)
+    # print(order.adress.street)
     explication_list_items = ExplicationListItem.objects.filter(order_list=order.id).first()
 
     str_for_traslit = unidecode(order.adress.city_name + '_' + order.adress.street + '_d_' + order.adress.house_number +'_k_'+ explication_list_items.apart_number + '.pdf')

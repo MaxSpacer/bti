@@ -473,12 +473,12 @@
                             {{ order.engineer_name }}
                         </span>
                     </div>
+                    <img class="bar-code" src="{{ order.barcode.url }}" alt="">
                 </div>
-                <div class="text-left forbar-code p-0">
-                    <img class="bar-code m-0 p-0" src="{{ order.barcode.url }}" alt="">
-                </div>
-                <div class="order_number">
+                <!-- <div class="text-left forbar-code p-0">
+                </div> -->
+                <!-- <div class="order_number">
                     {{order.order_number|intspace}}
-                </div>
+                </div> -->
             </div>
 </body>

@@ -2,17 +2,19 @@
 
 import os
 import qrcode
-import barcode
 import random
+import barcode
+import datetime
+from PIL import Image
+from barcode import generate
 from django.db import models
 from django.conf import settings
-from django.core.files import File
-from barcode import generate
-from barcode.writer import ImageWriter
-from django.core.validators import MaxValueValidator
-from django.contrib.sites.models import Site
 from django.utils import timezone
+from django.core.files import File
 from settings_pdftrans.models import *
+from barcode.writer import ImageWriter
+from django.contrib.sites.models import Site
+from django.core.validators import MaxValueValidator
 
 
 def get_subject_type_choices():
@@ -54,8 +56,6 @@ def get_name_object_default():
 
     return default
 
-# self._meta.get_field('name_object').choices = get_name_object_choices()
-# self._meta.get_field('name_object').default = NameObject.objects.filter().first()
 
 class Order(models.Model):
     order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
@@ -76,21 +76,36 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
 
-
     def generate_qr_bar_code(self):
-        v = str(random.randint(1000000000, 2147483645))
-        bar_file_name = "bar_%s" % v
-        qr_file_name = "qr_%s.png" % v
-        barcode_full_path = os.path.join(settings.MEDIA_ROOT, 'barcode', bar_file_name)
-        barcode_path_for_bd = "barcode/%s.png" % bar_file_name
-        qrcode_full_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qr_file_name)
-        qrcode_path_for_bd = "qrcode/%s" % qr_file_name
+        # v = str(random.randint(1000000000, 2147483645))
+        uniq_random_time_number = datetime.datetime.now().strftime('%f%S%M')
+        print(uniq_random_time_number)
+
+        barcode_file_name = "bar_%s" % uniq_random_time_number
+        barcode_full_path = os.path.join(settings.MEDIA_ROOT, 'barcode', str(barcode_file_name + '.png'))
+        barcode_path = os.path.join(settings.MEDIA_ROOT, 'barcode', barcode_file_name)
+        barcode_path_for_bd = "barcode/%s.png" % barcode_file_name
 
         ISBN = barcode.get_barcode_class('isbn10')
-        ean = ISBN(v, writer=ImageWriter())
-        print(ean)
-        ean.save(barcode_full_path)
+        ean = ISBN(uniq_random_time_number, writer=ImageWriter())
+        ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':2.5, 'module_height':4,'font_size':18})
 
+        ima = Image.open(barcode_full_path)
+        ima = ima.resize((200,60))
+
+        barcode_formated = Image.new('1', (550, 30,), color=1)
+        box = (0, 0, 200, 30)
+        box2 = (0, 28, 200, 59)
+        region = ima.crop(box)
+        region2 = ima.crop(box2)
+
+        barcode_formated.paste(region, (0,0))
+        barcode_formated.paste(region2, (350,0))
+        barcode_formated.save(barcode_full_path)
+
+        qrcode_file_name = "qr_%s.png" % uniq_random_time_number
+        qrcode_full_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_file_name)
+        qrcode_path_for_bd = "qrcode/%s" % qrcode_file_name
         qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -98,15 +113,15 @@ class Order(models.Model):
         border=0,
         )
         domain = Site.objects.get_current().domain
-        # data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=v)
-        data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=v)
+        # data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
         qr.add_data(data_url)
         qr.make(fit=True)
         img = qr.make_image()
         img.save(qrcode_full_path)
         self.qrcode = (qrcode_path_for_bd)
         self.barcode = (barcode_path_for_bd)
-        self.order_number = v
+        self.order_number = uniq_random_time_number
 
     class Meta:
         verbose_name = 'Заказ'
@@ -143,6 +158,21 @@ class OrderImage(models.Model):
     class Meta:
         verbose_name = 'схема помещения'
         verbose_name_plural = 'схемы помещений'
+
+
+class OrderTech(models.Model):
+    order_tech_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Тех.паспорт ордера')
+    order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
+    tech_pasp_pdf_url = models.URLField(max_length=250, blank=True, null=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.tech_pasp_pdf_url
+
+    class Meta:
+        verbose_name = 'Тех.паспорт'
+        verbose_name_plural = 'Тех.паспорта'
 
 
 class Adress(models.Model):
