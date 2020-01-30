@@ -17,7 +17,7 @@ from unidecode import unidecode
 
 class OrderView(DetailView):
     model = Order
-    template_name = 'pdf_templates/pdf.html'
+    template_name = 'pdf_templates/pdf_full.html'
 
 class OrderPrintView(WeasyTemplateResponseMixin, OrderView):
     pdf_stylesheets = [
