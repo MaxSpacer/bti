@@ -386,8 +386,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="explications-table w-100 mb-5">
-                    <table class="table-bordered w-100" style="font-size: 1.2rem;">
+                <div class="explications-table w-100">
+                    <table class="table-bordered w-100 table-counter" style="font-size: 1.2rem;">
                       <tr>
                         <td rowspan="3">Этаж</td>
                         <td rowspan="3">№№ комнат</td>
@@ -410,6 +410,7 @@
                         <td>прочих</td>
                         <!-- <td></td> -->
                       </tr>
+
                             {% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%}
                             <tr>
                                 <td>{{ items.floor_number }}</td>
@@ -423,35 +424,11 @@
                                 <td>{{ items.square_another_item|default_if_none:"" }}</td>
                                 <td>{{ items.height_item|default_if_none:"" }}</td>
                             </tr>
-                                {% if forloop.counter == 18 or forloop.counter == 32 or forloop.counter == 70 %}
-                                    </table>
-                                    <div class="py-3 page3-footer text-center">
-                                        <div class="mb-2">
-                                            <span class="">
-                                                Экспликация на __ стр.
-                                            </span>
-                                            <span class="px-5 mx-5">
 
-                                            </span>
-                                            <span>
-                                                {{ order.customer_data|date:"d.m.Y" }}
-                                            </span>
-                                        </div>
-                                        <div class="">
-                                            <span>
-                                                Исполнитель
-                                            </span>
-                                            <span class="px-3">
-                                                __________________
-                                            </span>
-                                            <span>
-                                                {{ order.engineer_name }}
-                                            </span>
-                                        </div>
-                                        <img class="bar-code" src="{{ order.barcode.url }}" alt="">
-                                    </div>
+                                {% if forloop.counter == 15 or forloop.counter == 45 or forloop.counter == 70 or forloop.counter == 100 %}
+                                    </table>
 <p style="page-break-after: always"></p>
-                                    <table class="table-bordered w-100 mt-5" style="font-size: 1.2rem;">
+                                    <table class="table-bordered w-100 table-counter" style="font-size: 1.2rem;">
                                 {% endif %}
                             {% endfor %}
                       <tr>
@@ -480,30 +457,29 @@
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </p>
                 </div>
+                <!-- <span class="display-block" style="min-height:30px;"></span> -->
+                <!-- <span class="display-block" style="min-height:200px;"></span> -->
             </div>
             <div class="py-3 page3-footer text-center">
-                <div class="mb-2">
-                    <span class="">
-                        Экспликация на __ стр.
-                    </span>
-                    <span class="px-5 mx-5">
-
-                    </span>
-                    <span>
-                        {{ order.customer_data|date:"d.m.Y" }}
-                    </span>
-                </div>
-                <div class="">
-                    <span>
-                        Исполнитель
-                    </span>
-                    <span class="px-3">
-                        ______________________
-                    </span>
-                    <span>
-                        {{ order.engineer_name }}
-                    </span>
-                </div>
+                <table class="mx-auto">
+                    <tr>
+                        <td colspan="2">
+                            Экспликация на <span class="output-counter"></span> стр.
+                        </td>
+                        <td class="text-right">
+                            {{ order.customer_data|date:"d.m.Y" }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Исполнитель
+                        </td>
+                        <td class="border-bottom-1">  ______________________  </td>
+                        <td class="text-right">
+                            {{ order.engineer_name }}
+                        </td>
+                    </tr>
+                </table>
                 <img class="bar-code" src="{{ order.barcode.url }}" alt="">
             </div>
 </body>

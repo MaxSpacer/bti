@@ -2,7 +2,23 @@
         font-family: "Ascon";
         src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
 } */
-/* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
+body {
+  counter-reset: section;                     /* Устанавливает значение
+                                                 счетчика, равным 0 */
+}
+.table-counter::before {
+  counter-increment: section;                 /* Инкрементирует счетчик*/
+  content: "";   /* Отображает текущее
+                                                 значение счетчика */
+}
+.output-counter::before{
+    /* content: "Секция " counter(section) ": "; */
+    content:  counters(section, "");
+}
+.explications-table{
+    /* margin-bottom: 110px; */
+
+}
 .myborder{
     border: 1.5px solid black !important;
     }
@@ -104,6 +120,10 @@
     position: absolute;
     width: 100%;
     bottom: -55px;
+}
+.page3-footer > table td{
+    padding: 5px 8px;
+    text-align: left;
 }
 .explication-block{
     margin-top: 10%;
