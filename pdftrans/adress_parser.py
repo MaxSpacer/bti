@@ -55,7 +55,8 @@ def clr_str_func(arg_string):
         pattern = '"' + str(str_item) + '\\b"'
         print('pattern')
         print(pattern)
-        regex = re.compile(pattern)
+        # regex = re.compile('pattern')
+        regex = re.compile(rf"{str_item}\\b")
         s = regex.search(arg_string)
         if s:
             print('****key_string****')
