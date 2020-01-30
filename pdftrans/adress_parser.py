@@ -52,7 +52,7 @@ def clr_str_func(arg_string):
     ]
     for str_item in find_list:
         # return_address_dict = {}
-        regex = re.compile(rf"{str_item}\b")
+        regex = re.compile(u"{str_item}\b")
         s = regex.search(arg_string)
         if s:
             print('****key_string****')
