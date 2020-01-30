@@ -93,8 +93,13 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    {% if order.doc_type == "Технический паспорт"%}
-                        <a href="{{ order.uploaded_pdf.url }}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
+                    {% if order.doc_type == "Технический паспорт" %}
+                        {% for item in order.ordertech_set.all%}
+
+                        <!-- <img class=" " src="{{ item.order_tech_pasp_pdf.url }}" alt="scmg" style="width:{{ order.width_image_schema }}%"/> -->
+                        <a href="{{ item.order_tech_pasp_pdf.url }}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
+                        {% endfor %}
+
                     {% else %}
                         <a href="{% url 'pdftrans:order_pdf_view_n' order.id %}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
                     {% endif %}

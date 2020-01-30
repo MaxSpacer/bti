@@ -304,10 +304,10 @@ def export_data_pdf(sender, instance, created, **kwargs):
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
 
-        # v, created = OrderTech.objects.update_or_create(
-        # order_tech_fk=instance
-        # defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
-        # )
+        v, created = OrderTech.objects.update_or_create(
+        order_tech_fk=instance,
+        defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
+        )
 
 
     # sending email method -=send_mail=-

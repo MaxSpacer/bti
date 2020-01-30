@@ -42,22 +42,26 @@ def clr_str_func(arg_string):
         # 'бул.',
         'дом',
         # 'д.',
-        'корпус.',
+        'корпус',
         # 'кор.',
         # 'к.',
-        'литера.',
+        'литера',
         # 'лит.',
-        'строение',
+        'строение'
         # 'стр.',
     ]
     for str_item in find_list:
         # return_address_dict = {}
-        pattern = '"' + str(str_item) + '\b"'
+        pattern = '"' + str(str_item) + '\\b"'
         print('pattern')
         print(pattern)
-        regex = re.compile(pattern)
+        regex = re.compile(rf'{str_item}\b')
+        print('arg_string')
+        print(arg_string)
         # regex = re.compile(rf"{str_item}\\b")
         s = regex.search(arg_string)
+        print('s')
+        print(s)
         if s:
             print('****key_string****')
             key_string = s.group()
@@ -72,7 +76,7 @@ def clr_str_func(arg_string):
             print(return_address_list)
             return return_address_list
         else:
-            pass
+            print('not find anythng')
 
 
 def adress_parser_func(arg_list):
@@ -83,7 +87,11 @@ def adress_parser_func(arg_list):
     after_parsing_dict  = {}
     for item in arg_list:
         print('parsing*-*')
+        print('item_in parsing')
+        print(item)
         list_to_dict = clr_str_func(item)
+        print('list_to_dict')
+        print(list_to_dict)
         after_parsing_dict.update({list_to_dict[0]: list_to_dict[1]})
         j += 1
 

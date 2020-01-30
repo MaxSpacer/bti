@@ -59,7 +59,7 @@ def get_name_object_default():
 
 class Order(models.Model):
     order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
-    uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='tech_pasports/', blank=True, null=True, max_length=250)
+    uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/', blank=True, null=True, max_length=250)
     new_source = models.BooleanField(verbose_name="если исходник старого образца, то снимите галку", default=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
@@ -172,19 +172,19 @@ class OrderImage(models.Model):
         verbose_name_plural = 'схемы помещений'
 
 
-# class OrderTech(models.Model):
-#     order_tech_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Тех.паспорт ордера')
-#     order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
-#     tech_pasp_pdf_url = models.URLField(max_length=250, blank=True, null=False)
-#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-#
-#     def __str__(self):
-#         return "%s" % self.tech_pasp_pdf_url
-#
-#     class Meta:
-#         verbose_name = 'Тех.паспорт'
-#         verbose_name_plural = 'Тех.паспорта'
+class OrderTech(models.Model):
+    order_tech_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Тех.паспорт ордера')
+    order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
+    tech_pasp_pdf_url = models.URLField(max_length=250, blank=True, null=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.tech_pasp_pdf_url
+
+    class Meta:
+        verbose_name = 'Тех.паспорт'
+        verbose_name_plural = 'Тех.паспорта'
 
 
 class Adress(models.Model):
