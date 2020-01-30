@@ -52,13 +52,15 @@ def clr_str_func(arg_string):
     ]
     for str_item in find_list:
         # return_address_dict = {}
-        pattern = 'r"' + str(str_item) + '\\b"'
+        pattern = str(str_item) + "\\b"
         print('pattern')
         print(pattern)
         regex = re.compile(pattern)
         print('arg_string')
         print(arg_string)
-        # regex = re.compile(rf"{str_item}\\b")
+        # regex = re.compile(rf'{str_item}\b')
+        print('regex')
+        print(regex)
         s = regex.search(arg_string)
         print('s')
         print(s)
