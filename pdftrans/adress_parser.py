@@ -65,8 +65,10 @@ def clr_str_func(arg_string):
             print('****value_string****')
             arg_string = regex.sub('', arg_string)
             arg_string = re.sub(r'\s+', ' ', arg_string).strip()
+            print('arg_string')
             print(arg_string)
             return_address_list = [key_string,arg_string]
+            print('return_address_list')
             print(return_address_list)
             return return_address_list
         else:
@@ -80,6 +82,7 @@ def adress_parser_func(arg_list):
     j = 0
     after_parsing_dict  = {}
     for item in arg_list:
+        print('parsing*-*')
         list_to_dict = clr_str_func(item)
         after_parsing_dict.update({list_to_dict[0]: list_to_dict[1]})
         j += 1
