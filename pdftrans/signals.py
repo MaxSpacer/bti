@@ -300,7 +300,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
             first_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
         pdf_document.close()
 
-        file_handle.save(tech_pasp_input_file, incremental=True)
+        file_handle.save(tech_pasp_path_file)
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
 
