@@ -29,8 +29,8 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderImageInline, AdressInline, ExplicationSquareTotalInline, ExplicationListItemInline]
 admin.site.register(Order, OrderAdmin)
 
-class OrderTechAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in OrderTech._meta.fields]
+# class OrderTechAdmin(admin.ModelAdmin):
+    # list_display = [field.name for field in OrderTech._meta.fields]
     # readonly_fields = ('barcode','qrcode','order_number')
     # inlines = [OrderTechImageInline, AdressInline, ExplicationSquareTotalInline, ExplicationListItemInline]
-admin.site.register(OrderTech, OrderTechAdmin)
+# admin.site.register(OrderTech, OrderTechAdmin)

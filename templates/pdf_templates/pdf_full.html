@@ -410,20 +410,50 @@
                         <td>прочих</td>
                         <!-- <td></td> -->
                       </tr>
-                      {% for items in order.explicationlistitem_set.all|dictsort:"appart_number_item"%}
-                      <tr>
-                          <td>{{ items.floor_number }}</td>
-                          <td>{{ items.appart_number_item }}</td>
-                          <td class="text-nowrap">{{ items.appart_name_item }}</td>
-                          <td>{{ items.square_total_item|default_if_none:"" }}</td>
-                          <td>{{ items.square_general_item|default_if_none:"" }}</td>
-                          <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
-                          <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
-                          <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
-                          <td>{{ items.square_another_item|default_if_none:"" }}</td>
-                          <td>{{ items.height_item|default_if_none:"" }}</td>
-                      </tr>
-                      {% endfor %}
+                            {% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%}
+                            <tr>
+                                <td>{{ items.floor_number }}</td>
+                                <td>{{ items.appart_number_item }}</td>
+                                <td class="text-nowrap">{{ items.appart_name_item }}</td>
+                                <td>{{ items.square_total_item|default_if_none:"" }}</td>
+                                <td>{{ items.square_general_item|default_if_none:"" }}</td>
+                                <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
+                                <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
+                                <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
+                                <td>{{ items.square_another_item|default_if_none:"" }}</td>
+                                <td>{{ items.height_item|default_if_none:"" }}</td>
+                            </tr>
+                                {% if forloop.counter == 15 or forloop.counter == 30 or forloop.counter == 70 %}
+                                    </table>
+                                    <div class="py-3 page3-footer text-center">
+                                        <div class="mb-2">
+                                            <span class="">
+                                                Экспликация на __ стр.
+                                            </span>
+                                            <span class="px-5 mx-5">
+
+                                            </span>
+                                            <span>
+                                                {{ order.customer_data|date:"d.m.Y" }}
+                                            </span>
+                                        </div>
+                                        <div class="">
+                                            <span>
+                                                Исполнитель
+                                            </span>
+                                            <span class="px-3">
+                                                __________________
+                                            </span>
+                                            <span>
+                                                {{ order.engineer_name }}
+                                            </span>
+                                        </div>
+                                        <img class="bar-code" src="{{ order.barcode.url }}" alt="">
+                                    </div>
+<p style="page-break-after: always"></p>
+                                    <table class="table-bordered w-100 mt-5" style="font-size: 1.2rem;">
+                                {% endif %}
+                            {% endfor %}
                       <tr>
                           <td colspan="3">Итого по квартире</td>
                           <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
@@ -450,35 +480,30 @@
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </p>
                 </div>
-                <div class="py-3 page3-footer mb-5">
-                    <div class="mb-2">
-                        <span class="">
-                            Экспликация на 1 стр.
-                        </span>
-                        <span class="px-5 mx-5">
+            </div>
+            <div class="py-3 page3-footer text-center">
+                <div class="mb-2">
+                    <span class="">
+                        Экспликация на __ стр.
+                    </span>
+                    <span class="px-5 mx-5">
 
-                        </span>
-                        <span>
-                            {{ order.customer_data|date:"d.m.Y" }}
-                        </span>
-                    </div>
-                    <div class="">
-                        <span>
-                            Исполнитель
-                        </span>
-                        <span class="px-3">
-                            __________________
-                        </span>
-                        <span>
-                            {{ order.engineer_name }}
-                        </span>
-                    </div>
-                    <img class="bar-code" src="{{ order.barcode.url }}" alt="">
+                    </span>
+                    <span>
+                        {{ order.customer_data|date:"d.m.Y" }}
+                    </span>
                 </div>
-                <!-- <div class="text-left forbar-code p-0">
-                </div> -->
-                <!-- <div class="order_number">
-                    {{order.order_number|intspace}}
-                </div> -->
+                <div class="">
+                    <span>
+                        Исполнитель
+                    </span>
+                    <span class="px-3">
+                        ______________________
+                    </span>
+                    <span>
+                        {{ order.engineer_name }}
+                    </span>
+                </div>
+                <img class="bar-code" src="{{ order.barcode.url }}" alt="">
             </div>
 </body>

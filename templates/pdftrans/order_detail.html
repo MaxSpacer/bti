@@ -75,14 +75,29 @@
                 </td>
             </tr>
             <tr>
-                <td class="txtBold"><label>Список объектов</label></td><td><span>
-                    {{order.name_object}} №
+                <td class="txtBold">
+                    <label>Список объектов</label>
+                </td>
+                <td>
+                    <span>
                     {% with order.explicationlistitem_set.all|first as appart %}
-                        {{ appart.apart_number|lower }}
-                    {% endwith %}</span></td></tr>
-                <tr>
-                    <td colspan="2">
+                        {{order.name_object}} №
+                        {% if appart.apart_number %}
+                            {{ appart.apart_number|lower }}
+                        {% else %}
+                            {{ order.global_appartment }}
+                        {% endif %}
+                    {% endwith %}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {% if order.doc_type == "Технический паспорт"%}
+                        <a href="{{ order.uploaded_pdf.url }}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
+                    {% else %}
                         <a href="{% url 'pdftrans:order_pdf_view_n' order.id %}" class="popupLink" target="" id="getOrderFile">Загрузить файл</a>
+                    {% endif %}
                 </td>
             </tr>
             </table>
@@ -182,6 +197,7 @@
                                 <div class="EmployeEntrance EmployeEntrance-padding"><span>Мы в соц.сетях:</span><a href="https://vk.com/mosgorbti" target="_blank" title="МосгорБТИ в социальной сети вконтакте"><div class="fbIcon icVk" src="{% static 'img/VK19.png' %}"></div></a>
                                 <a href="http://www.facebook.com/mosgorbti" target="_blank" title="">
                                     <div class="fbIcon icFb"></div></a><a href="https://www.youtube.com/channel/UC6iDkh58ys_Z7z3Z1m5jD_Q/videos" target="_blank" title="Видео на канале МосгорБТИ в youtube"><div class="fbIcon icYout"></div></a><a href="https://www.instagram.com/mosgorbti/" target="_blank" title="МосгорБТИ в инстаграм"><div class="fbIcon icInstagram"></div></a></div><a class="EmployeEntrance" href="https://www.mosgorbti.ru/#">Вход для сотрудников</a>
+
                                     <a href="https://www.mosgorbti.ru/sitemap.aspx">Карта сайта</a>
                         </div> -->
                         <div class="footer_links">

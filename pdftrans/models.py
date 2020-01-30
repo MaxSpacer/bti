@@ -5,7 +5,7 @@ import qrcode
 import random
 import barcode
 import datetime
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from barcode import generate
 from django.db import models
 from django.conf import settings
@@ -59,7 +59,7 @@ def get_name_object_default():
 
 class Order(models.Model):
     order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
-    uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/%Y/%m/%d/', blank=True, null=True, max_length=250)
+    uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='tech_pasports/', blank=True, null=True, max_length=250)
     new_source = models.BooleanField(verbose_name="если исходник старого образца, то снимите галку", default=True)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
@@ -77,6 +77,7 @@ class Order(models.Model):
 
 
     def generate_qr_bar_code(self):
+        print(self.doc_type)
         # v = str(random.randint(1000000000, 2147483645))
         uniq_random_time_number = datetime.datetime.now().strftime('%f%S%M')
         print(uniq_random_time_number)
@@ -88,19 +89,30 @@ class Order(models.Model):
 
         ISBN = barcode.get_barcode_class('isbn10')
         ean = ISBN(uniq_random_time_number, writer=ImageWriter())
-        ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':2.5, 'module_height':4,'font_size':18})
+        ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':2.5, 'module_height':4,'font_size':0})
 
         ima = Image.open(barcode_full_path)
         ima = ima.resize((200,60))
 
         barcode_formated = Image.new('1', (550, 30,), color=1)
         box = (0, 0, 200, 30)
-        box2 = (0, 28, 200, 59)
         region = ima.crop(box)
-        region2 = ima.crop(box2)
-
         barcode_formated.paste(region, (0,0))
-        barcode_formated.paste(region2, (350,0))
+
+        i = 0
+        space = " "
+        barcode_text = str()
+        for x in uniq_random_time_number:
+            if (i == 2 or i == 4):
+                barcode_text = barcode_text + ' '
+                print(barcode_text)
+            barcode_text = barcode_text + uniq_random_time_number[i]
+            i+=1
+
+        barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'Times_New_Roman.ttf')
+        fnt = ImageFont.truetype(barcode_text_font, 15)
+        d = ImageDraw.Draw(barcode_formated)
+        d.text((440,10), barcode_text, font=fnt, fill=(0))
         barcode_formated.save(barcode_full_path)
 
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number
@@ -160,19 +172,19 @@ class OrderImage(models.Model):
         verbose_name_plural = 'схемы помещений'
 
 
-class OrderTech(models.Model):
-    order_tech_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Тех.паспорт ордера')
-    order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
-    tech_pasp_pdf_url = models.URLField(max_length=250, blank=True, null=False)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-
-    def __str__(self):
-        return "%s" % self.tech_pasp_pdf_url
-
-    class Meta:
-        verbose_name = 'Тех.паспорт'
-        verbose_name_plural = 'Тех.паспорта'
+# class OrderTech(models.Model):
+#     order_tech_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Тех.паспорт ордера')
+#     order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
+#     tech_pasp_pdf_url = models.URLField(max_length=250, blank=True, null=False)
+#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+#
+#     def __str__(self):
+#         return "%s" % self.tech_pasp_pdf_url
+#
+#     class Meta:
+#         verbose_name = 'Тех.паспорт'
+#         verbose_name_plural = 'Тех.паспорта'
 
 
 class Adress(models.Model):
@@ -190,6 +202,7 @@ class Adress(models.Model):
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False, default = '')
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False, default = '')
     full_adress = models.CharField(verbose_name="полный адрес", max_length=256, blank=True, null=False, default = '')
+    global_appartment = models.CharField(verbose_name="номер помещения", max_length=8, blank=True, null=False, default = '')
 
 
     class Meta:

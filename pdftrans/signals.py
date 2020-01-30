@@ -3,6 +3,8 @@
 import os
 import json as JSON
 import csv as CSV
+import PyPDF2
+import re
 from django.conf import settings
 from decimal import Decimal
 from .models import *
@@ -69,9 +71,11 @@ def export_data_pdf(sender, instance, created, **kwargs):
                             'corpus_number':'',
                             'litera':'',
                             'build_number':'',
-                            'full_adress':''
+                            'full_adress':'',
+                            'global_appartment':''
                             }
                 total_dict.update({'full_adress': full_adress_string})
+                total_dict.update({'global_appartment': global_appartment})
                 municipal_flag = 0
                 for key, value in begin_dict.items():
                     # print('item_dict_in_signal')
@@ -232,8 +236,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     },
                     )
         path_img_name = 'schema_' + str(instance.order_number) + '.png'
-        path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'uploaded_pdf/schemes/', path_img_name)
-        path_img_scheme_bd = "uploaded_pdf/schemes/%s" % path_img_name
+        path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'schemes/', path_img_name)
+        path_img_scheme_bd = "schemes/%s" % path_img_name
         current_site = Site.objects.get_current().domain
         # path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
@@ -262,29 +266,48 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 )
             i+=1
 
+        doc.close()
+        if os.path.exists(uploaded_pdf_url):
+             os.remove(uploaded_pdf_url)
+        else:
+              print("The file does not exist")
+
     elif instance.doc_type == 'Технический паспорт':
         tech_pasp_input_file = instance.uploaded_pdf.path
-        tech_pasp_path_name = 'tech_' + str(instance.order_number) + '.pdf'
-        tech_pasp_path_file = os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name)
-        tech_pasp_path_bd = "tech_pasports/%s" % tech_pasp_path_name
+        # tech_pasp_path_name = 'tech_' + str(instance.order_number) + '.pdf'
+        # tech_pasp_path_file = os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name)
+        # tech_pasp_path_bd = "tech_pasports/%s" % tech_pasp_path_name
         tech_pasp_qrcode_file = instance.qrcode.path
         tech_pasp_barcode_file = instance.barcode.path
 
         image_rectangle = fitz.Rect(470,45,530,105)
         tech_pasp_barcode_image_rectangle = fitz.Rect(15,790,600,820)
 
+        search_term = "ЭКСПЛИКАЦИЯ"
+        search_term2 = "ПОЭТАЖНОМУ"
+        pdf_document = fitz.open(tech_pasp_input_file)
+        pages_list = []
+        for current_page in range(len(pdf_document)):
+            page = pdf_document.loadPage(current_page)
+            if page.searchFor(search_term) and page.searchFor(search_term2):
+                print("%s found on page %i" % (search_term, current_page))
+                pages_list.append(current_page)
+
         file_handle = fitz.open(tech_pasp_input_file)
-        first_page = file_handle[4]
+        for x in pages_list:
+            first_page = file_handle[x]
+            first_page.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
+            first_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
+        pdf_document.close()
 
-        first_page.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
-        first_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
+        file_handle.save(tech_pasp_input_file, incremental=True)
+        # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
+        # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
 
-        file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
-
-        v, created = OrderTech.objects.update_or_create(
-        order_tech_fk=instance,
-        defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
-        )
+        # v, created = OrderTech.objects.update_or_create(
+        # order_tech_fk=instance
+        # defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
+        # )
 
 
     # sending email method -=send_mail=-
