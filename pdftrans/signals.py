@@ -266,17 +266,17 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 )
             i+=1
 
-        doc.close()
-        if os.path.exists(uploaded_pdf_url):
-             os.remove(uploaded_pdf_url)
-        else:
-              print("The file does not exist")
+        # doc.close()
+        # if os.path.exists(uploaded_pdf_url):
+        #      os.remove(uploaded_pdf_url)
+        # else:
+        #       print("The file does not exist")
 
     elif instance.doc_type == 'Технический паспорт':
         tech_pasp_input_file = instance.uploaded_pdf.path
-        # tech_pasp_path_name = 'tech_' + str(instance.order_number) + '.pdf'
-        # tech_pasp_path_file = os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name)
-        # tech_pasp_path_bd = "tech_pasports/%s" % tech_pasp_path_name
+        tech_pasp_path_name = 'tech_' + str(instance.order_number) + '.pdf'
+        tech_pasp_path_file = os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name)
+        tech_pasp_path_bd = "tech_pasports/%s" % tech_pasp_path_name
         tech_pasp_qrcode_file = instance.qrcode.path
         tech_pasp_barcode_file = instance.barcode.path
 
@@ -311,30 +311,30 @@ def export_data_pdf(sender, instance, created, **kwargs):
 
 
     # sending email method -=send_mail=-
-    path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    context = {
-    'order_number': instance.order_number,
-    'link_doc': path_full_pdf,
-    'link_site': path_full_link_site,
-    }
-    str_for_traslit = unidecode(str(instance.adress))
-    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    if instance.is_emailed == False:
-        if subject and html_content and from_email:
-            try:
-                if msg.send():
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # path_full_pdf_for_email = str(path_full_pdf)
+    # path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf,
+    # 'link_site': path_full_link_site,
+    # }
+    # str_for_traslit = unidecode(str(instance.adress))
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
     pass
