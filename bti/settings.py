@@ -141,7 +141,7 @@ EMAIL_USE_SSL = True
 
 
 # uncomment for deploy
-# try:
-#     from .settings_prod import *
-# except:
-#     pass
+try:
+    from .settings_prod import *
+except:
+    pass
