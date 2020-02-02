@@ -2,12 +2,30 @@
         font-family: "Ascon";
         src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
 } */
-/* C:\Users\Max\Envs\bti_env\bti\static\static_dev\fonts\ascon.ttf */
+.page3 {
+  counter-reset: my_page;
+}
+.table-counter::before {
+  counter-increment: my_page;
+  content:"";               /* Инкрементирует счетчик*/
+                            /* Отображает текущее значение счетчика */
+}
+.explications-list-block{
+    margin-top: -37px;
+}
+}
+.table-counter{
+    /* position: absolute; */
+}
+.output-counter::before{
+    content:  counters(my_page, "");
+}
 .myborder{
     border: 1.5px solid black !important;
     }
-.table-bordered td{
+.table-explicate-bordered td{
     border: 1.5px solid black !important;
+    /* border: 0; */
     padding-left: 2px;
     padding-right: 2px;
 }
@@ -28,15 +46,15 @@
     margin: 9mm 9mm 9mm 9mm;
     border: 3px solid;
 }
-.page{display: none;}
+.page{
+    display: none;
+}
 .page2{
     font-stretch: ultra-condensed;
     letter-spacing: -0.05em;
     line-height: 98%;
 }
 .plan-size-font {
-    /* font-size: 165%; */
-    /* font-family: Ascon; */
     font-weight: 600;
     font-style: italic;
 }
@@ -44,11 +62,13 @@
     position: absolute;
     bottom: 40px;
     right: 10px;
+
 }
 .table-page2 td{
     padding-top: 2px;
     padding-left: 5px;
     padding-right: 5px;
+    border: 1px solid black !important;
 }
 .top-block{
     position: absolute;
@@ -69,11 +89,14 @@
     width: 150px;
 }
 .legenda_tbl{
+
     position: absolute;
     left: 4%;
     bottom: 2%;
     width: 420px;
     font-weight: 500;
+    /* border: 1.5px solid; */
+
 }
 .legenda_tbl td:nth-child(2n){
     text-align: left;
@@ -104,6 +127,10 @@
     position: absolute;
     width: 100%;
     bottom: -55px;
+}
+.page3-footer > table td{
+    padding: 5px 8px;
+    text-align: left;
 }
 .explication-block{
     margin-top: 10%;

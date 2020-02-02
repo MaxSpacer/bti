@@ -3,6 +3,11 @@ from django import template
 
 register = template.Library()
 
+@register.filter('multipliticy')
+def multipliticy(value):
+    value = value - 16
+    return (True if value % 35 == 0 else False)
+
 @register.filter('intspace')
 def intspace(value):
     s = str(value)
