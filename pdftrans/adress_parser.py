@@ -8,7 +8,7 @@ import csv as CSV
 
 def get_source_adress_func(arg_up_pdf_url):
     uploaded_pdf_url = arg_up_pdf_url
-    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,660'])
+    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,665'])
     csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
     csv = address_string[0].to_csv(csv_address_f)
     if csv_address_f:

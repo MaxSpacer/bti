@@ -50,13 +50,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     'full_adress':'',
                     'global_appartment':''
                     }
-
-        # total_dict.update({'global_appartment': global_appartment})
         municipal_flag = 0
         for key, value in begin_dict.items():
-            # print('item_dict_in_signal')
-            # print(key)
-            # print(value)
             if key in (
                 'город',
                 'поселок',
@@ -75,8 +70,9 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     total_dict.update({k: v})
                     municipal_flag = 1
                 else:
-                    total_dict.update({'mun_type': total_dict['city_type']})
-                    total_dict.update({'mun_name': total_dict['city_name']})
+                    if total_dict['city_type'] != 'город':
+                        total_dict.update({'mun_type': total_dict['city_type']})
+                        total_dict.update({'mun_name': total_dict['city_name']})
                     k = 'city_type'
                     v = key
                     total_dict.update({k: v})
@@ -309,30 +305,30 @@ def export_data_pdf(sender, instance, created, **kwargs):
 
 
     # sending email method -=send_mail=-
-    path_full_pdf_for_email = str(path_full_pdf)
-    path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    context = {
-    'order_number': instance.order_number,
-    'link_doc': path_full_pdf,
-    'link_site': path_full_link_site,
-    }
-    str_for_traslit = unidecode(str(instance.adress))
-    subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    from_email = 'btireestrexpress@yandex.ru'
-    to = 'btireestrexpress@yandex.ru'
-    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    text_content = strip_tags(html_content)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    if instance.is_emailed == False:
-        if subject and html_content and from_email:
-            try:
-                if msg.send():
-                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-                    instance.is_emailed = True
-            except BadHeaderError:
-                return print('Invalid header found in email %s' % instance.pk)
-            return print('email is sended %s' % instance.pk)
-        else:
-            return print('Make sure all fields are entered and valid %s' % instance.pk)
-    pass
+    # path_full_pdf_for_email = str(path_full_pdf)
+    # path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
+    # context = {
+    # 'order_number': instance.order_number,
+    # 'link_doc': path_full_pdf,
+    # 'link_site': path_full_link_site,
+    # }
+    # str_for_traslit = unidecode(str(instance.adress))
+    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
+    # from_email = 'btireestrexpress@yandex.ru'
+    # to = 'btireestrexpress@yandex.ru'
+    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    # text_content = strip_tags(html_content)
+    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    # msg.attach_alternative(html_content, "text/html")
+    # if instance.is_emailed == False:
+    #     if subject and html_content and from_email:
+    #         try:
+    #             if msg.send():
+    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+    #                 instance.is_emailed = True
+    #         except BadHeaderError:
+    #             return print('Invalid header found in email %s' % instance.pk)
+    #         return print('email is sended %s' % instance.pk)
+    #     else:
+    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
+    # pass

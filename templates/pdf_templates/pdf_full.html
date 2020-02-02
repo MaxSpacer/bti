@@ -389,8 +389,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="explications-table w-100">
-                    <table class="table-bordered w-100 table-counter" style="font-size: 1.2rem;">
+                    <table class="table-explicate-bordered w-100 table-counter mt-0 pt-0" style="font-size: 1.2rem;">
                       <tr>
                         <td rowspan="3">Этаж</td>
                         <td rowspan="3">№№ комнат</td>
@@ -403,7 +402,6 @@
                         <td rowspan="2">Всего</td>
                         <td colspan="2">в том числе</td>
                         <td colspan="3">в т.ч.</td>
-                        <!-- <td></td> -->
                       </tr>
                       <tr>
                         <td>основная<br> (жилая)</td>
@@ -411,29 +409,28 @@
                         <td>лоджий</td>
                         <td>балконов</td>
                         <td>прочих</td>
-                        <!-- <td></td> -->
                       </tr>
 
-                            {% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%}
-                            <tr>
-                                <td>{{ items.floor_number }}</td>
-                                <td>{{ items.appart_number_item }}</td>
-                                <td class="text-nowrap">{{ items.appart_name_item }}</td>
-                                <td>{{ items.square_total_item|default_if_none:"" }}</td>
-                                <td>{{ items.square_general_item|default_if_none:"" }}</td>
-                                <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
-                                <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
-                                <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
-                                <td>{{ items.square_another_item|default_if_none:"" }}</td>
-                                <td>{{ items.height_item|default_if_none:"" }}</td>
-                            </tr>
+                    {% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%}
+                    <tr>
+                        <td>{{ items.floor_number }}</td>
+                        <td>{{ items.appart_number_item }}</td>
+                        <td class="text-nowrap">{{ items.appart_name_item }}</td>
+                        <td>{{ items.square_total_item|default_if_none:"" }}</td>
+                        <td>{{ items.square_general_item|default_if_none:"" }}</td>
+                        <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
+                        <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
+                        <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
+                        <td>{{ items.square_another_item|default_if_none:"" }}</td>
+                        <td>{{ items.height_item|default_if_none:"" }}</td>
+                    </tr>
 
-                                {% if forloop.counter == 15 or forloop.counter == 45 or forloop.counter == 70 or forloop.counter == 100 %}
-                                    </table>
+                        {% if forloop.counter == 15 or forloop.counter == 45 or forloop.counter == 70 or forloop.counter == 100 %}
+                            </table>
 <p style="page-break-after: always"></p>
-                                    <table class="table-bordered w-100 table-counter" style="font-size: 1.2rem;">
-                                {% endif %}
-                            {% endfor %}
+                            <table class="table-bordered w-100 table-counter" style="font-size: 1.2rem;">
+                        {% endif %}
+                    {% endfor %}
                       <tr>
                           <td colspan="3">Итого по квартире</td>
                           <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
@@ -452,14 +449,12 @@
                           <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td> -->
-                          <!-- <td></td> -->
                       </tr>
                     </table>
                     <!-- <img class="  w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
                     <p class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
                     </p>
-                </div>
                 <!-- <span class="display-block" style="min-height:30px;"></span> -->
                 <!-- <span class="display-block" style="min-height:200px;"></span> -->
             </div>

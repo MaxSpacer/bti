@@ -8,22 +8,20 @@ body {
 }
 .table-counter::before {
   counter-increment: section;                 /* Инкрементирует счетчик*/
-  content: "";   /* Отображает текущее
+  content: ;   /* Отображает текущее
                                                  значение счетчика */
 }
 .output-counter::before{
     /* content: "Секция " counter(section) ": "; */
     content:  counters(section, "");
 }
-.explications-table{
-    /* margin-bottom: 110px; */
 
-}
 .myborder{
     border: 1.5px solid black !important;
     }
-.table-bordered td{
+.table-explicate-bordered td{
     border: 1.5px solid black !important;
+    /* border: 0; */
     padding-left: 2px;
     padding-right: 2px;
 }
