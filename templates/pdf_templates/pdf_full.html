@@ -378,13 +378,14 @@
                         <p class="mb-2">
                             Адрес (иное описание местоположения):
                         </p>
-                        <p class="font-weight-bold mb-2">
+                        <p class="font-weight-bold mb-2" style="width:101%">
                             {{ order.adress.full_adress }}
                         </p>
                         <p class="">Квартира №
-                            {% with order.explicationlistitem_set.all|first as appart %}
-                            {{ appart.apart_number }}
-                            {% endwith %}
+                            {{ order.adress.global_appartment }}
+                            {#% with order.explicationlistitem_set.all|first as appart %#}
+                            {#{ appart.apart_number }#}
+                            {#% endwith %#}
                         </p>
                     </div>
                 </div>

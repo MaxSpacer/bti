@@ -8,7 +8,7 @@ import csv as CSV
 
 def get_source_adress_func(arg_up_pdf_url):
     uploaded_pdf_url = arg_up_pdf_url
-    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,680'])
+    address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,660'])
     csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
     csv = address_string[0].to_csv(csv_address_f)
     if csv_address_f:
@@ -18,14 +18,11 @@ def get_source_adress_func(arg_up_pdf_url):
             for row in row_read:
                 print('source row')
                 print(row)
-                row_string = (row[0].strip(" '")).split(":")
-                print('row_string')
-                print(row_string)
-                if 'По адресу' in row_string[0]:
-                    full_adress_string = row_string[1].strip(" ")
-                elif 'Квартира' in row_string[0]:
-                    rstring = row_string[0].replace(" № ",' ')
-                    full_adress_string += rstring
+                print(type(row))
+                for ro in row:
+                    ro  = ro.replace('По адресу:','')
+                    ro  = ro.replace('№','')
+                    full_adress_string += ro + ' '
 
             print('full_adress_string')
             print(full_adress_string)

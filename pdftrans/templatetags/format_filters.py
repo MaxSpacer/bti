@@ -3,7 +3,6 @@ from django import template
 
 register = template.Library()
 
-
 @register.filter('intspace')
 def intspace(value):
     s = str(value)
@@ -17,7 +16,6 @@ def intspace(value):
         l = l + s[i]
         i+=1
     return l
-
 
 @register.filter('absolute_address')
 def absolute_address(value):
