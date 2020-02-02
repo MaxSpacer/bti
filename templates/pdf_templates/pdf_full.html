@@ -199,6 +199,7 @@
                         </td>
                         <td colspan="2">
                             {{order.adress.litera}}
+
                         </td>
                     </tr>
                     <tr>
@@ -207,9 +208,10 @@
                         </td>
                         <td colspan="2">
                             <span class="font1">
-                            {% with order.explicationlistitem_set.all|first as appart %}
-                            {{ appart.apart_number }}
-                            {% endwith %}</span>
+                            {{order.adress.global_appartment}}
+                            {#% with order.explicationlistitem_set.all|first as appart %#}
+                            {#{ appart.apart_number }#}
+                            {#% endwith %#}</span>
                         </td>
                     </tr>
                     <tr>

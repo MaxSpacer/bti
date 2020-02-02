@@ -2,7 +2,6 @@
 
 import os
 import json as JSON
-import csv as CSV
 import PyPDF2
 import re
 from django.conf import settings
@@ -24,135 +23,134 @@ from weasyprint.fonts import FontConfiguration
 from django_weasyprint.utils import django_url_fetcher
 from django.core.mail import EmailMultiAlternatives
 from PIL import Image, ImageChops
-from .adress_parser import adress_parser_func
+from .adress_parser import adress_parser_func, get_source_adress_func
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
     if instance.doc_type == 'Экспликация на помещение':
-        # address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,780,680'])
-        address_string = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,720,400,680'])
-        csv_address_f = os.path.join(settings.MEDIA_ROOT, 'temp', 'csv_address.csv')
-        csv = address_string[0].to_csv(csv_address_f)
-        if csv_address_f:
-            with open(csv_address_f, 'r', encoding='utf-8') as f:
-                row_read = CSV.reader(f)
-                full_adress_string = ''
-                for row in row_read:
-                    print('row')
-                    print(row)
-                    pp = (row[0].strip(" '")).split(":")
-                    print('pp')
-                    print(pp)
-                    if 'Квартира' in pp[0]:
-                        hh = [int(s) for s in pp[0].split() if s.isdigit()]
-                        global_appartment = hh[0]
-                        print('global_appartment')
-                        print(global_appartment)
-                    else:
-                        print('pp2')
-                        print(pp)
-                        print(pp[1])
-                        full_adress_string = pp[1].strip(" ")
-                        adress_item_list = pp[1].strip(",").split(",")
-                        print('adress_item_list')
-                        print(adress_item_list)
-                begin_dict = adress_parser_func(adress_item_list)
-                print('begin_dict')
-                print(begin_dict)
-                total_dict = {
-                            'mun_type': '',
-                            'mun_name': '',
-                            'city_type':'город',
-                            'city_name': 'Москва',
-                            'street_type':'',
-                            'street':'',
-                            'house_number':'',
-                            'corpus_number':'',
-                            'litera':'',
-                            'build_number':'',
-                            'full_adress':'',
-                            'global_appartment':''
-                            }
-                total_dict.update({'full_adress': full_adress_string})
-                total_dict.update({'global_appartment': global_appartment})
-                municipal_flag = 0
-                for key, value in begin_dict.items():
-                    # print('item_dict_in_signal')
-                    # print(key)
-                    # print(value)
-                    if key in (
-                        'город',
-                        'поселок',
-                        'городское поселение',
-                        'поселение',
-                        'деревня',
-                        'СНТ',
-                        'село',
-                    ):
-                        if municipal_flag == 0:
-                            k = 'city_type'
-                            v = key
-                            total_dict.update({k: v})
-                            k = 'city_name'
-                            v = value
-                            total_dict.update({k: v})
-                            municipal_flag = 1
-                        else:
-                            total_dict.update({'mun_type': total_dict['city_type']})
-                            total_dict.update({'mun_name': total_dict['city_name']})
-                            k = 'city_type'
-                            v = key
-                            total_dict.update({k: v})
-                            k = 'city_name'
-                            v = value
-                            total_dict.update({k: v})
+        table_areas=['50,720,400,680']
+        print('type(table_areas)')
+        print(type(table_areas))
+        full_adress_string = get_source_adress_func(uploaded_pdf_url)
+        begin_dict = adress_parser_func(full_adress_string)
+        print('begin_dict')
+        print(begin_dict)
+        total_dict = {
+                    'mun_type': '',
+                    'mun_name': '',
+                    'city_type':'город',
+                    'city_name': 'Москва',
+                    'street_type':'',
+                    'street':'',
+                    'house_number':'',
+                    'corpus_number':'',
+                    'litera':'',
+                    'build_number':'',
+                    'full_adress':'',
+                    'global_appartment':''
+                    }
 
-                    elif key in (
-                        'микрорайон',
-                        'улица',
-                        'переулок',
-                        'проспект',
-                        'проезд',
-                        'шоссе',
-                        'площадь',
-                        'набережная',
-                        'бульвар',
-                        'улица',
-                        ):
-                        k = 'street_type'
-                        v = key
-                        total_dict.update({k: v})
-                        k = 'street'
-                        v = value
-                        total_dict.update({k: v})
+        # total_dict.update({'global_appartment': global_appartment})
+        municipal_flag = 0
+        for key, value in begin_dict.items():
+            # print('item_dict_in_signal')
+            # print(key)
+            # print(value)
+            if key in (
+                'город',
+                'поселок',
+                'городское поселение',
+                'поселение',
+                'деревня',
+                'СНТ',
+                'село',
+            ):
+                if municipal_flag == 0:
+                    k = 'city_type'
+                    v = key
+                    total_dict.update({k: v})
+                    k = 'city_name'
+                    v = value
+                    total_dict.update({k: v})
+                    municipal_flag = 1
+                else:
+                    total_dict.update({'mun_type': total_dict['city_type']})
+                    total_dict.update({'mun_name': total_dict['city_name']})
+                    k = 'city_type'
+                    v = key
+                    total_dict.update({k: v})
+                    k = 'city_name'
+                    v = value
+                    total_dict.update({k: v})
 
-                    elif key == 'дом':
-                        k = 'house_number'
-                        v = value
-                        total_dict.update({k: v})
+            elif key in (
+                'микрорайон',
+                'улица',
+                'переулок',
+                'проспект',
+                'проезд',
+                'шоссе',
+                'площадь',
+                'набережная',
+                'бульвар',
+                'улица',
+                ):
+                k = 'street_type'
+                v = key
+                total_dict.update({k: v})
+                k = 'street'
+                v = value
+                total_dict.update({k: v})
 
-                    elif key == 'корпус':
-                        k = 'corpus_number'
-                        v = value
-                        total_dict.update({k: v})
+            elif key == 'дом':
+                k = 'house_number'
+                v = value
+                total_dict.update({k: v})
 
-                    elif key == 'литера':
-                        k = 'litera'
-                        v = value
-                        total_dict.update({k: v})
+            elif key == 'корпус':
+                k = 'corpus_number'
+                v = value
+                total_dict.update({k: v})
 
-                    elif key == 'строение':
-                        k = 'build_number'
-                        v = value
-                        total_dict.update({k: v})
+            elif key == 'литера':
+                k = 'litera'
+                v = value
+                total_dict.update({k: v})
 
-                print('total_dict')
-                print(total_dict)
-                v, created = Adress.objects.update_or_create(
-                order=instance,
-                defaults=total_dict,
-                )
+            elif key == 'строение':
+                k = 'build_number'
+                v = value
+                total_dict.update({k: v})
+
+            elif key == 'Квартира':
+                k = 'global_appartment'
+                v = value
+                total_dict.update({k: v})
+
+        print('total_dict')
+        print(total_dict)
+
+        no_appart_adress_string = ''
+        no_appart_adress_list = full_adress_string.split(',')
+        del no_appart_adress_list[-1]
+        for l in no_appart_adress_list:
+            no_appart_adress_string += l + ', '
+
+        print('full_adress_string')
+        print(full_adress_string)
+
+        print('no_appart_adress_string')
+        print(no_appart_adress_string)
+
+        total_dict.update({'full_adress': no_appart_adress_string})
+
+        print('total_dict')
+        print(total_dict)
+        v, created = Adress.objects.update_or_create(
+        order=instance,
+        defaults=total_dict,
+        )
         if instance.new_source:
             tables = camelot.read_pdf(uploaded_pdf_url)
         else:
@@ -187,7 +185,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                         square_balkon_item = x['7'],
                         square_another_item = x['8'],
                         height_item = x['9'],
-                        apart_number = global_appartment
+                        apart_number = total_dict['global_appartment']
                         )
                     i += 1
                 explication_list_items = ExplicationListItem.objects.filter(order_list=instance)
