@@ -123,8 +123,8 @@ class Order(models.Model):
         border=0,
         )
         domain = Site.objects.get_current().domain
-        # data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
-        data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        # data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
         qr.add_data(data_url)
         qr.make(fit=True)
         img = qr.make_image()

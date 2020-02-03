@@ -145,8 +145,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
         print('floor_list')
         print(floor_list)
         current_site = Site.objects.get_current().domain
-        # path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
-        path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+        path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+        # path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         doc = fitz.open(uploaded_pdf_url)
         # for floor_item in floor_list:
         for page in doc:
