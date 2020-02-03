@@ -336,10 +336,7 @@
                   <tr>
                       <td class="apart_number_legend">
                           <!-- <img class="legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" /> -->
-                          кв.{{ order.address.global_appartment }}&nbsp
-                          {#% with order.explicationlistitem_set.all|first as appart %#}
-                          кв.{#{ appart.apart_number }#}&nbsp
-                          {#% endwith %#}
+                          кв.{{ order.adress.global_appartment }}&nbsp
                       </td>
                     <td class="">номер помещения</td>
                   </tr>
