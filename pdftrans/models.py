@@ -43,7 +43,6 @@ def get_type_object_choices():
 def get_type_object_default():
     def_value = TypeObject.objects.filter().first()
     default = str(def_value)
-
     return default
 
 def get_name_object_choices():
@@ -53,7 +52,6 @@ def get_name_object_choices():
 def get_name_object_default():
     def_value = NameObject.objects.filter().first()
     default = str(def_value)
-
     return default
 
 
