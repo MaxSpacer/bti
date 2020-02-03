@@ -2,18 +2,6 @@
         font-family: "Ascon";
         src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
 } */
-/* @page :nth(1){
-    font-family: "Ascon";
-    margin: 9mm 9mm 9mm 9mm;
-    border: 3px solid;
-} */
-.page{
-    display: none;
-}
-./* @font-face {
-        font-family: "Ascon";
-        src: url('/static/static_dev/fonts/ascon.ttf') format('truetype');
-} */
 .page3 {
   counter-reset: my_page;
 }
@@ -21,6 +9,9 @@
   counter-increment: my_page;
   content:"";               /* Инкрементирует счетчик*/
                             /* Отображает текущее значение счетчика */
+}
+.page{
+    display: none;
 }
 .explications-list-block{
     margin-top: -37px;

@@ -80,7 +80,9 @@
                 </td>
                 <td>
                     <span>
-                        {{order.name_object}} № {{ order.adress.global_appartment }}
+                        {% if order.adress.global_appartment %}
+                            {{order.name_object}} № {{ order.adress.global_appartment }}
+                        {% endif %}
                     </span>
                 </td>
             </tr>
