@@ -80,14 +80,7 @@
                 </td>
                 <td>
                     <span>
-                    {% with order.explicationlistitem_set.all|first as appart %}
-                        {{order.name_object}} №
-                        {% if appart.apart_number %}
-                            {{ appart.apart_number|lower }}
-                        {% else %}
-                            {{ order.global_appartment }}
-                        {% endif %}
-                    {% endwith %}
+                        {{order.name_object}} № {{ order.adress.global_appartment }}
                     </span>
                 </td>
             </tr>

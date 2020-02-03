@@ -23,135 +23,32 @@ from weasyprint.fonts import FontConfiguration
 from django_weasyprint.utils import django_url_fetcher
 from django.core.mail import EmailMultiAlternatives
 from PIL import Image, ImageChops
-from .adress_parser import adress_parser_func, get_source_adress_func
+from .parser import adress_parser_func, get_source_adress_func, pull_adress_db
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
+    explication_adress_areas=['50,720,400,665']
+    tech_pasports_adress_areas=['30,675,600,615']
+    # tech_pasports_adress_areas=['10,820,450,600']
     if instance.doc_type == 'Экспликация на помещение':
-        table_areas=['50,720,400,680']
-        print('type(table_areas)')
-        print(type(table_areas))
-        full_adress_string = get_source_adress_func(uploaded_pdf_url)
+    #     if instance.old_source:
+    #         explication_adress_areas=['50,680,780,100']
+        # table_areas  =
+        # if instance.new_source:
+            # tables = camelot.read_pdf(uploaded_pdf_url)
+        # else:
+            # tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,680,780,100'])
+        # table_areas  =
+
+        full_adress_string = get_source_adress_func(uploaded_pdf_url, explication_adress_areas, '1')
         begin_dict = adress_parser_func(full_adress_string)
-        print('begin_dict')
+        print('***********begin_dict********')
         print(begin_dict)
-        total_dict = {
-                    'mun_type': '',
-                    'mun_name': '',
-                    'city_type':'город',
-                    'city_name': 'Москва',
-                    'street_type':'',
-                    'street':'',
-                    'house_number':'',
-                    'corpus_number':'',
-                    'litera':'',
-                    'build_number':'',
-                    'full_adress':'',
-                    'global_appartment':''
-                    }
-        municipal_flag = 0
-        for key, value in begin_dict.items():
-            if key in (
-                'город',
-                'поселок',
-                'городское поселение',
-                'поселение',
-                'деревня',
-                'СНТ',
-                'село',
-            ):
-                if municipal_flag == 0:
-                    k = 'city_type'
-                    v = key
-                    total_dict.update({k: v})
-                    k = 'city_name'
-                    v = value
-                    total_dict.update({k: v})
-                    municipal_flag = 1
-                else:
-                    if total_dict['city_type'] != 'город':
-                        total_dict.update({'mun_type': total_dict['city_type']})
-                        total_dict.update({'mun_name': total_dict['city_name']})
-                    k = 'city_type'
-                    v = key
-                    total_dict.update({k: v})
-                    k = 'city_name'
-                    v = value
-                    total_dict.update({k: v})
+        adress_db = pull_adress_db(instance, begin_dict)
 
-            elif key in (
-                'микрорайон',
-                'улица',
-                'переулок',
-                'проспект',
-                'проезд',
-                'шоссе',
-                'площадь',
-                'набережная',
-                'бульвар',
-                'улица',
-                ):
-                k = 'street_type'
-                v = key
-                total_dict.update({k: v})
-                k = 'street'
-                v = value
-                total_dict.update({k: v})
-
-            elif key == 'дом':
-                k = 'house_number'
-                v = value
-                total_dict.update({k: v})
-
-            elif key == 'корпус':
-                k = 'corpus_number'
-                v = value
-                total_dict.update({k: v})
-
-            elif key == 'литера':
-                k = 'litera'
-                v = value
-                total_dict.update({k: v})
-
-            elif key == 'строение':
-                k = 'build_number'
-                v = value
-                total_dict.update({k: v})
-
-            elif key == 'Квартира':
-                k = 'global_appartment'
-                v = value
-                total_dict.update({k: v})
-
-        print('total_dict')
-        print(total_dict)
-
-        no_appart_adress_string = ''
-        no_appart_adress_list = full_adress_string.split(',')
-        del no_appart_adress_list[-1]
-        for l in no_appart_adress_list:
-            no_appart_adress_string += l + ', '
-
-        print('full_adress_string')
-        print(full_adress_string)
-
-        print('no_appart_adress_string')
-        print(no_appart_adress_string)
-
-        total_dict.update({'full_adress': no_appart_adress_string})
-
-        print('total_dict')
-        print(total_dict)
-        v, created = Adress.objects.update_or_create(
-        order=instance,
-        defaults=total_dict,
-        )
-        if instance.new_source:
-            tables = camelot.read_pdf(uploaded_pdf_url)
-        else:
-            tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,680,780,100'])
-
+        tables = camelot.read_pdf(uploaded_pdf_url)
+        print('tables sys info')
         print(tables[0])
         print(tables[0].parsing_report)
         print(tables[0].df)
@@ -159,6 +56,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
         json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
         json_table2 = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table2.csv')
         json = tables[0].to_json(path=json_table)
+        # json1 = tables[0].to_csv(path=json_table2)
         # json1 = tables[0].to_csv(path=json_table2, orient = 'records', lines = 'True')
         if json_table:
             with open(json_table, 'r') as f:
@@ -181,7 +79,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                         square_balkon_item = x['7'],
                         square_another_item = x['8'],
                         height_item = x['9'],
-                        apart_number = total_dict['global_appartment']
+                        apart_number = adress_db.global_appartment
                         )
                     i += 1
                 explication_list_items = ExplicationListItem.objects.filter(order_list=instance)
@@ -277,24 +175,38 @@ def export_data_pdf(sender, instance, created, **kwargs):
         image_rectangle = fitz.Rect(470,45,530,105)
         tech_pasp_barcode_image_rectangle = fitz.Rect(15,790,600,820)
 
-        search_term = "ЭКСПЛИКАЦИЯ"
-        search_term2 = "ПОЭТАЖНОМУ"
+        search_term = "ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ"
+        search_term2 = "Экспликация на"
         pdf_document = fitz.open(tech_pasp_input_file)
         pages_list = []
+        qr_code_page = 0
+        qr_code_page_for_adress_parsing = ''
         for current_page in range(len(pdf_document)):
             page = pdf_document.loadPage(current_page)
-            if page.searchFor(search_term) and page.searchFor(search_term2):
-                print("%s found on page %i" % (search_term, current_page))
+            if page.searchFor(search_term):
+                print("------- %s found on page %i" % (search_term, current_page))
+                qr_code_page = current_page
+                qr_code_page_for_adress_parsing = str(current_page + 1)
+            if page.searchFor(search_term2):
                 pages_list.append(current_page)
 
+        full_adress_string = get_source_adress_func(tech_pasp_input_file, tech_pasports_adress_areas, qr_code_page_for_adress_parsing)
+        begin_dict = adress_parser_func(full_adress_string)
+        adress_db = pull_adress_db(instance, begin_dict)
         file_handle = fitz.open(tech_pasp_input_file)
+        first_page = file_handle[qr_code_page]
+        first_page.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
+        # print('ssssssssssssssssssss')
+        # print(first_page)
+        # print('sssss---pages_list-----sssssss')
+        # print(pages_list)
         for x in pages_list:
-            first_page = file_handle[x]
-            first_page.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
-            first_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
-        pdf_document.close()
-
+            tech_pasp_barcode_page = file_handle[x]
+            tech_pasp_barcode_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
+            # print('sssssss---x---ssssssssss')
+            # print(x)
         file_handle.save(tech_pasp_path_file)
+        pdf_document.close()
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
 

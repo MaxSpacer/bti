@@ -60,7 +60,7 @@ def get_name_object_default():
 class Order(models.Model):
     order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/', blank=True, null=True, max_length=250)
-    new_source = models.BooleanField(verbose_name="если исходник старого образца, то снимите галку", default=True)
+    # old_source = models.BooleanField(verbose_name="если исходник старого образца, то поставьте галку", default=False)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
