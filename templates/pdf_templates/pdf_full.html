@@ -290,8 +290,10 @@
                             <tr>
                                 <td></td>
                                 <td class="text-lowercase">
+                                        {% if order.adress.global_appartment %}
                                         Квартира №
                                         {{ order.adress.global_appartment }}
+                                        {% endif %}
                                         {#% with order.explicationlistitem_set.all|first as appart %#}
                                         {#{ appart.apart_number }#}
                                         {#% endwith %#}
