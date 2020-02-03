@@ -41,16 +41,6 @@
 .table-address {
     table-layout: auto;
 }
-@page :nth(2){
-    font-family: "Ascon";
-    margin: 9mm 9mm 9mm 9mm;
-    border: 3px solid;
-}
-.page2{
-    font-stretch: ultra-condensed;
-    letter-spacing: -0.05em;
-    line-height: 98%;
-}
 .plan-size-font {
     font-weight: 600;
     font-style: italic;

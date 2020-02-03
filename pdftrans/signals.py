@@ -56,8 +56,9 @@ def export_data_pdf(sender, instance, created, **kwargs):
         json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
         json_table2 = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table2.csv')
         json = tables[0].to_json(path=json_table)
-        json1 = tables[0].to_csv(path=json_table2)
+        # json1 = tables[0].to_csv(path=json_table2)
         # json1 = tables[0].to_csv(path=json_table2, orient = 'records', lines = 'True')
+        floor_list = []
         if json_table:
             with open(json_table, 'r') as f:
                 print("------------data-------------------")
@@ -69,6 +70,12 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     print('---------------x---------------')
                     print(x)
                     if i > 2 and x['9'] != '':
+                        if x['0'] != '':
+                            if x['0'].isdigit():
+                                floor_str = 'ЭТАЖ ' + x['0']
+                                floor_list.append(floor_str)
+                            else:
+                                floor_list.append(x['0'])
                         ExplicationListItem.objects.create(
                         order_list = instance,
                         floor_number = x['0'],
@@ -135,13 +142,17 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     'square_total_summa_global': square_total_sum + square_logdi_sum + square_balkon_sum + square_another_sum
                     },
                     )
+        print('floor_list')
+        print(floor_list)
         current_site = Site.objects.get_current().domain
         # path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         doc = fitz.open(uploaded_pdf_url)
-        # i = 0
+        # for floor_item in floor_list:
         for page in doc:
             if page.number > 0:
+                print('page.number')
+                print(page.number)
                 path_img_name = str(page.number) + '_schema_' + str(instance.order_number) + '.png'
                 path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'schemes/', path_img_name)
                 path_img_scheme_bd = "schemes/%s" % path_img_name
@@ -165,19 +176,18 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 im = trim(im)
                 im.save(path_img_scheme)
                 # order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
+
+                floor_item = floor_list.pop(0)
+                print('floor_list------------2')
+                print(floor_list)
                 create_img = OrderImage(
                 order_fk=instance,
                 order_image = path_img_scheme_bd,
-                fullpdf_url_staff = path_full_pdf
+                fullpdf_url_staff = path_full_pdf,
+                floor_for_image = floor_item
                 )
                 create_img.save()
-                # v, created = OrderImage.objects.update_or_create(
-                # order_fk=instance,
-                # defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
-                # )
-            # i+=1
-
-        # doc.close()
+        doc.close()
         # if os.path.exists(uploaded_pdf_url):
         #      os.remove(uploaded_pdf_url)
         # else:

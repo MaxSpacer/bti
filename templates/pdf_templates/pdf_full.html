@@ -262,12 +262,12 @@
 <p style="page-break-before: always"></p>
 
             {% for ord_imag in order.orderimage_set.all %}
-            <style media="screen, print">
-                @page :nth({{ forloop.counter|increment1 }}){
-                    margin: 9mm 9mm 9mm 9mm;
-                    border: 3px solid;
-                }
-            </style>
+                <style media="screen, print">
+                    @page :nth({{ forloop.counter|increment1 }}){
+                        margin: 9mm 9mm 9mm 9mm;
+                        border: 3px solid;
+                    }
+                </style>
             <div class="page2 text-center">
                 <div class="top-block">
                     <div class="myborder p-3">
@@ -300,10 +300,10 @@
                         </table>
                     </div>
                     <div class="text-uppercase p-3 mt-4" style="font-size:;">
-                        этаж
-                        {% with order.explicationlistitem_set.all|first as floor %}
-                        {{ floor.floor_number }}
-                        {% endwith %}
+                        {{ ord_imag.floor_for_image }}
+                        {#% with order.explicationlistitem_set.all|first as floor %#}
+                        {#{ floor.floor_number }#}
+                        {#% endwith %#}
                     </div>
                 </div>
                 <div class="schema_img" >

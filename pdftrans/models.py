@@ -110,7 +110,7 @@ class Order(models.Model):
             i+=1
 
         barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'Times_New_Roman.ttf')
-        fnt = ImageFont.truetype(barcode_text_font, 15)
+        fnt = ImageFont.truetype(barcode_text_font, 16)
         d = ImageDraw.Draw(barcode_formated)
         d.text((440,10), barcode_text, font=fnt, fill=(0))
         barcode_formated.save(barcode_full_path)
@@ -161,6 +161,7 @@ class OrderImage(models.Model):
     order_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Ордер')
     order_image = models.ImageField('схема помещения', blank=True, null=True, max_length=250)
     fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
+    floor_for_image = models.CharField(verbose_name="план этажа", max_length=32, blank=True, null=True, default='')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -168,7 +169,7 @@ class OrderImage(models.Model):
         return "%s" % self.order_image
 
     class Meta:
-        verbose_name = 'схема помещения'
+        verbose_name = 'схема помещения на этаже'
         verbose_name_plural = 'схемы помещений'
 
 

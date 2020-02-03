@@ -6,30 +6,33 @@
 <head>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <style type="text/css" media="screen, print">
-    @font-face {
+        @font-face {
+                font-family: "Ascon";
+                src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
+                /* font-family: "Times New Roman";
+                src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype'); */
+        }
+        @font-face {
+                font-family: "Times New Roman";
+                src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
+        }
+
+        body {
+            font-size: 1.4rem !important;
+        }
+        .page2{
+            font-stretch: ultra-condensed;
+            letter-spacing: -0.05em;
+            line-height: 98%;
             font-family: "Ascon";
-            src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
-            /* font-family: "Times New Roman";
-            src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype'); */
-    }
-    @font-face {
+            font-style: oblique;
+            letter-spacing: 0.4px;
+        }
+        .page, .page3{
             font-family: "Times New Roman";
-            src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
-    }
-    body {
-        font-size: 1.4rem !important;
-    }
-    .page2{
-        font-family: "Ascon";
-        font-style: oblique;
-        letter-spacing: 0.4px;
-    }
-    .page, .page3{
-        font-family: "Times New Roman";
-        /* font-style: ; */
-        letter-spacing: auto;
-    }
-    h4{font-weight: 800;}
+            letter-spacing: auto;
+        }
+        h4{font-weight: 800;}
     </style>
 </head>
 <body>
@@ -255,9 +258,18 @@
             </div>
             </div>
             </div>
+
 <p style="page-break-before: always"></p>
+
+            {% for ord_imag in order.orderimage_set.all %}
+                <style media="screen, print">
+                    @page :nth({{ forloop.counter }}){
+                        margin: 9mm 9mm 9mm 9mm;
+                        border: 3px solid;
+                    }
+                </style>
             <div class="page2 text-center">
-                <div class="top-block ">
+                <div class="top-block">
                     <div class="myborder p-3">
                         <table class="text-left w-100">
                             <tr>
@@ -279,24 +291,23 @@
                                 <td></td>
                                 <td class="text-lowercase">
                                         Квартира №
-                                        {% with order.explicationlistitem_set.all|first as appart %}
-                                        {{ appart.apart_number }}
-                                        {% endwith %}
+                                        {{ order.adress.global_appartment }}
+                                        {#% with order.explicationlistitem_set.all|first as appart %#}
+                                        {#{ appart.apart_number }#}
+                                        {#% endwith %#}
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="text-uppercase p-3 mt-4" style="font-size:;">
-                        этаж
-                        {% with order.explicationlistitem_set.all|first as floor %}
-                        {{ floor.floor_number }}
-                        {% endwith %}
+                        {{ ord_imag.floor_for_image }}
+                        {#% with order.explicationlistitem_set.all|first as floor %#}
+                        {#{ floor.floor_number }#}
+                        {#% endwith %#}
                     </div>
                 </div>
                 <div class="schema_img" >
-                    {% for item in order.orderimage_set.all%}
-                    <img class=" " src="{{ item.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
-                    {% endfor %}
+                    <img class=" " src="{{ ord_imag.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
                 </div>
                 <table class="legenda_tbl">
                   <tr>
@@ -360,6 +371,13 @@
                 </table>
             </div>
 <p style="page-break-after: always"></p>
+            {% endfor %}
+
+
+
+
+
+
             <div class="page3 text-center" style="">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
