@@ -323,9 +323,10 @@
                   <tr>
                       <td class="apart_number_legend">
                           <!-- <img class="legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" /> -->
-                          {% with order.explicationlistitem_set.all|first as appart %}
-                          кв.{{ appart.apart_number }}&nbsp
-                          {% endwith %}
+                          кв.{{ order.address.global_appartment }}&nbsp
+                          {#% with order.explicationlistitem_set.all|first as appart %#}
+                          кв.{#{ appart.apart_number }#}&nbsp
+                          {#% endwith %#}
                       </td>
                     <td class="">номер помещения</td>
                   </tr>
@@ -340,19 +341,19 @@
                   </tr>
                   <tr>
                     <td class="text-left pl-2">Исполнил</td>
-                    <td>Клименко М.В.</td>
+                    <td>{{ order.engineer_name }}</td>
                     <td><span class=""></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
                     <td class="text-left pl-2">Проверил</td>
-                    <td>Панин В.Э.</td>
+                    <td>{{order.customer_name}}</td>
                     <td><span class="px-1"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
                   <tr>
                     <td class="text-left pl-2">Принял</td>
-                    <td>Панин В.Э.</td>
+                    <td>{{order.customer_name}}</td>
                     <td><span class="px-3"></span></td>
                     <td>{{ order.customer_data|date:"d.m.Y" }}</td>
                   </tr>
@@ -389,7 +390,9 @@
                         </p>
                     </div>
                 </div>
-                    <table class="table-explicate-bordered w-100 table-counter mt-0 pt-0" style="font-size: 1.2rem;">
+
+                <div class="explications-list-block">
+                    <table class="table-explicate-bordered table-counter w-100 mt-0 pt-0" style="font-size: 1.2rem;"
                       <tr>
                         <td rowspan="3">Этаж</td>
                         <td rowspan="3">№№ комнат</td>
@@ -411,7 +414,8 @@
                         <td>прочих</td>
                       </tr>
 
-                    {% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%}
+                      {#% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%#}
+                    {% for items in order.explicationlistitem_set.all %}
                     <tr>
                         <td>{{ items.floor_number }}</td>
                         <td>{{ items.appart_number_item }}</td>
@@ -424,13 +428,11 @@
                         <td>{{ items.square_another_item|default_if_none:"" }}</td>
                         <td>{{ items.height_item|default_if_none:"" }}</td>
                     </tr>
-
-                        {% if forloop.counter == 15 or forloop.counter == 45 or forloop.counter == 70 or forloop.counter == 100 %}
+                        {% if forloop.counter == 16 or forloop.counter|multipliticy %}
                             </table>
 <p style="page-break-after: always"></p>
-                            <table class="table-explicate-bordered w-100 table-counter mt-0 pt-0" style="font-size: 1.2rem;">
+                            <table class="table-explicate-bordered table-counter w-100 mt-0 pt-0" style="font-size: 1.2rem;">
                         {% endif %}
-
                     {% endfor %}
                       <tr>
                           <td colspan="3">Итого по квартире</td>
@@ -452,6 +454,8 @@
                           <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td> -->
                       </tr>
                     </table>
+
+                </div>
                     <!-- <img class="  w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
                     <p class="font-weight-bold text-left ml-3">
                         Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
@@ -459,6 +463,7 @@
                 <!-- <span class="display-block" style="min-height:30px;"></span> -->
                 <!-- <span class="display-block" style="min-height:200px;"></span> -->
             </div>
+
             <div class="py-3 page3-footer text-center">
                 <table class="mx-auto">
                     <tr>

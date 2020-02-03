@@ -99,20 +99,20 @@ def adress_parser_func(arg_adress_string):
             regex = re.compile(pattern)
             # regex = re.compile(rf'{str_item}\b') #for windows os
             s = regex.search(item)
-            print('---------str_item----------')
-            print(str_item)
+            # print('---------str_item----------')
+            # print(str_item)
 
             if s:
-                print('****key_string****')
+                # print('****key_string****')
                 key_string = s.group()
-                print('key_string')
-                print(key_string)
+                # print('key_string')
+                # print(key_string)
                 # print('****value_string****')
                 arg_string = regex.sub('', item)
-                print('arg_string')
-                print(arg_string)
+                # print('arg_string')
+                # print(arg_string)
                 arg_string = re.sub(r'\s+', ' ', arg_string).strip()
-                print(arg_string)
+                # print(arg_string)
                 # print('arg_string')
                 # print(arg_string)
                 return_address_list = [key_string,arg_string]

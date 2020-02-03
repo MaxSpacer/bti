@@ -56,7 +56,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
         json_table = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table.json')
         json_table2 = os.path.join(settings.MEDIA_ROOT, 'temp', 'json_table2.csv')
         json = tables[0].to_json(path=json_table)
-        # json1 = tables[0].to_csv(path=json_table2)
+        json1 = tables[0].to_csv(path=json_table2)
         # json1 = tables[0].to_csv(path=json_table2, orient = 'records', lines = 'True')
         if json_table:
             with open(json_table, 'r') as f:
@@ -66,6 +66,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 i = 0
                 data.pop()
                 for x in data:
+                    print('---------------x---------------')
+                    print(x)
                     if i > 2 and x['9'] != '':
                         ExplicationListItem.objects.create(
                         order_list = instance,
@@ -99,22 +101,28 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 for items in explication_list_items:
                     if items.square_total_item:
                         square_total_sum += string_to_correct_decimal(items.square_total_item)
-                        # print(square_total_sum)
+                        print('square_total_sum')
+                        print(square_total_sum)
                     if items.square_general_item:
                         square_general_sum += string_to_correct_decimal(items.square_general_item)
-                        # print(square_general_sum)
+                        print('square_general_sum')
+                        print(square_general_sum)
                     if items.square_advanced_item:
                         square_advanced_sum += string_to_correct_decimal(items.square_advanced_item)
-                        # print(square_advanced_sum)
+                        print('square_advanced_sum')
+                        print(square_advanced_sum)
                     if items.square_logdi_item:
                         square_logdi_sum += string_to_correct_decimal(items.square_logdi_item)
-                        # print(square_logdi_sum)
+                        print('square_logdi_sum')
+                        print(square_logdi_sum)
                     if items.square_balkon_item:
                         square_balkon_sum += string_to_correct_decimal(items.square_balkon_item)
-                        # print(square_balkon_sum)
+                        print('square_balkon_su')
+                        print(square_balkon_sum)
                     if items.square_another_item:
                         square_another_sum += string_to_correct_decimal(items.square_another_item)
-                        # print(square_another_sum)
+                        print('square_another_sum')
+                        print(square_another_sum)
                     v, created = ExplicationSquareTotal.objects.update_or_create(
                     order=instance,
                     defaults={
@@ -127,16 +135,21 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     'square_total_summa_global': square_total_sum + square_logdi_sum + square_balkon_sum + square_another_sum
                     },
                     )
-        path_img_name = 'schema_' + str(instance.order_number) + '.png'
-        path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'schemes/', path_img_name)
-        path_img_scheme_bd = "schemes/%s" % path_img_name
         current_site = Site.objects.get_current().domain
         # path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         doc = fitz.open(uploaded_pdf_url)
-        i = 0
-        for page in doc:                            # iterate through the pages
-            if i == 1:
+        # i = 0
+        for page in doc:
+            if page.number > 0:
+                path_img_name = str(page.number) + '_schema_' + str(instance.order_number) + '.png'
+                path_img_scheme = os.path.join(settings.MEDIA_ROOT, 'schemes/', path_img_name)
+                path_img_scheme_bd = "schemes/%s" % path_img_name
+
+                # path_img_name = str(page.number) + '_' + path_img_name
+                # path_img_scheme_bd
+                # print('ath_img_name--------------------**************')                    # iterate through the pages
+                # print(ath_img_name)                    # iterate through the pages
                 zoom = 2    # zoom factor
                 mat = fitz.Matrix(zoom, zoom)
                 pix = page.getPixmap(matrix = mat, alpha = False)     # render page to an image
@@ -151,12 +164,18 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 im = Image.open(path_img_scheme)
                 im = trim(im)
                 im.save(path_img_scheme)
-                order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
-                v, created = OrderImage.objects.update_or_create(
+                # order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
+                create_img = OrderImage(
                 order_fk=instance,
-                defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
+                order_image = path_img_scheme_bd,
+                fullpdf_url_staff = path_full_pdf
                 )
-            i+=1
+                create_img.save()
+                # v, created = OrderImage.objects.update_or_create(
+                # order_fk=instance,
+                # defaults={'order_image': path_img_scheme_bd, 'fullpdf_url_staff': path_full_pdf }
+                # )
+            # i+=1
 
         # doc.close()
         # if os.path.exists(uploaded_pdf_url):

@@ -3,6 +3,11 @@ from django import template
 
 register = template.Library()
 
+@register.filter('increment1')
+def increment1(value):
+    value = value + 1
+    return value
+
 @register.filter('multipliticy')
 def multipliticy(value):
     value = value - 16
