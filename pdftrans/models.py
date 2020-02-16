@@ -87,13 +87,13 @@ class Order(models.Model):
 
         ISBN = barcode.get_barcode_class('isbn10')
         ean = ISBN(uniq_random_time_number, writer=ImageWriter())
-        ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':2.5, 'module_height':4,'font_size':0})
+        ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':5.5, 'module_height':4,'font_size':0})
 
         ima = Image.open(barcode_full_path)
-        ima = ima.resize((200,60))
+        ima = ima.resize((160,25))
 
-        barcode_formated = Image.new('1', (550, 30,), color=1)
-        box = (0, 0, 200, 30)
+        barcode_formated = Image.new('1', (550, 25,), color=1)
+        box = (0, 0, 160, 25)
         region = ima.crop(box)
         barcode_formated.paste(region, (0,0))
 
@@ -108,9 +108,9 @@ class Order(models.Model):
             i+=1
 
         barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'Times_New_Roman.ttf')
-        fnt = ImageFont.truetype(barcode_text_font, 16)
+        fnt = ImageFont.truetype(barcode_text_font, 15)
         d = ImageDraw.Draw(barcode_formated)
-        d.text((440,10), barcode_text, font=fnt, fill=(0))
+        d.text((440,3), barcode_text, font=fnt, fill=(0))
         barcode_formated.save(barcode_full_path)
 
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number
@@ -123,8 +123,8 @@ class Order(models.Model):
         border=0,
         )
         domain = Site.objects.get_current().domain
-        data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
-        # data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        # data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
         qr.add_data(data_url)
         qr.make(fit=True)
         img = qr.make_image()
