@@ -1,12 +1,3 @@
-@media (max-width: 575.98px) {
-
-    html{
-        width: 500px;
-    }
-
-
-}
-
 html {
 	height: 100%;
 }
@@ -38,11 +29,14 @@ input[type=text], input[type=password], textarea, select {
 
 .RadioHorizontal .radioControl
 {
-	padding-right: 25px;
+	padding-right: 25px; 
 }
 .RadioHorizontal .radioControl input[type='radio']
 {
 	margin: 0 5px 0 0;
+}
+.spinControlContainer span .inc, .spinControlContainer span .dec {
+	height: 18px;
 }
 
 #GisMapContainer  {
@@ -77,22 +71,23 @@ input[type=text], input[type=password], textarea, select {
 }
 .btiPopupHeader {
 	background: #e0e0e0;
-	/*height: 33px;
 	line-height: 33px;
-	white-space: nowrap;*/
+	min-height: 33px;
 	text-align: center;
 	font-size: 12px;
+	padding: 0 25px;
 }
-.btiPopupClose {
-	float: right;
+.btiPopupClose 
+{
+	position: absolute; 
+	right: 0;
 	width: 18px;
 	height: 18px;
 	background: url('../img/close.png') 0 0 no-repeat;
 	margin: 7px 7px 0 0;
 	cursor: pointer;
-	position: relative; /* иначе крестик не работает в IE */
 }
-.popup
+.popup 
 {
 	padding: 20px;
 }
@@ -148,11 +143,10 @@ input[type=text], input[type=password], textarea, select {
 	text-shadow: 0 0 6px #4A79D1;
 }
 
-/*
+
 #snowheader {
 	background-image: url("../img/SnowOnHeader.png");
 }
-*/
 
 .siteHeader .logo {
 	position: absolute;
@@ -327,7 +321,11 @@ input[type=text], input[type=password], textarea, select {
 }
 */
 
-#header-feedback, #online-question-link {
+#header-feedback, #online-question-link , #protivodeistvie-corrupcii-link
+{
+	text-decoration: none;
+    padding-left: 30px;
+    white-space: nowrap;
 	position: absolute;
 	top: 8px;
 	left: 576px;
@@ -335,6 +333,11 @@ input[type=text], input[type=password], textarea, select {
 	height: 15px;
 	background: url("../img/feedback.png") 0 0 no-repeat;
 	cursor: pointer;
+}
+#protivodeistvie-corrupcii-link
+{
+	top: 28px;
+	background: url("../img/feedback-red.png") 0 0 no-repeat;
 }
 #header-feedbackForm {
 	left: 354px;
@@ -662,7 +665,7 @@ input[type=text], input[type=password], textarea, select {
 {
 	border-right-color: #A12226;
 }
-.arrow-link-flex:after
+.arrow-link-flex:after 
 {
 	background: #9c2024;
 	content: '';
@@ -677,7 +680,7 @@ input[type=text], input[type=password], textarea, select {
 {
 	background: #821B1F;
 }
-.indexLinks3
+.indexLinks3 
 {
 	text-align: center;
 	height: 117px;
@@ -950,9 +953,7 @@ input[type=text], input[type=password], textarea, select {
 
 .footer {
 	position: absolute;
-	bottom: 0px;
-    left: 0;
-     right: 0;
+	bottom: 0; left: 0; right: 0;
 	padding: 0 18px; /* = .pageContent padding */
 }
 .ny .footer {
@@ -979,9 +980,7 @@ input[type=text], input[type=password], textarea, select {
 	vertical-align: middle;
 	height: 6px;
 	width: 11px;
-	/* background: url('../img/updown.png'); */
-	background: url("/static/img/updown.png");
-
+	background: url('../img/updown.png');
 	background-position: 0 -6px;
 	margin-left: 4px;
 }
@@ -1009,10 +1008,10 @@ input[type=text], input[type=password], textarea, select {
 	cursor: pointer;
 }
 .footerBanners > .left {
-	background: url('/static/img/gallery-left_footer.png') 0 0 no-repeat;
+	background: url('../img/gallery-left_footer.png') 0 0 no-repeat;
 }
 .footerBanners > .right {
-	background: url('/static/img/gallery-right_footer.png') 0 0 no-repeat;
+	background: url('../img/gallery-right_footer.png') 0 0 no-repeat;
 }
 
 .footerBanners > .viewport {
@@ -1057,7 +1056,13 @@ input[type=text], input[type=password], textarea, select {
 .footer_links {
 	float: right;
 }
-
+.EmployeEntrance__anchor {
+    padding-right: 150px;
+    background-image: url(../img/type-card.png);
+    background-size: 140px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+}
 /*
 .footerText .orthoErrorsNotice {
 	position: absolute;
@@ -1421,7 +1426,7 @@ p {
 input[type=checkbox] {
 	vertical-align: middle;
 }
-input[type=text], input[type=password], select
+input[type=text], input[type=password], select 
 {
 	box-sizing: content-box;
 	border: 1px solid #c3c3c3;
@@ -1453,7 +1458,7 @@ input[type=text].disabled, input[type=password].disabled, select.disabled, texta
 	padding: 3px 5px;
 	vertical-align: middle;
 }
-.listTable th
+.listTable th 
 {
 	font-weight: normal;
 	font-size: 14px;
@@ -1484,7 +1489,7 @@ th.tableHeaderAct a {
 }
 .tableCell1, .tableCell2,.tableCell1Act, .tableCell2Act
 {
-	border-bottom: 1px solid #BDBDBD;
+	border-bottom: 1px solid #BDBDBD;	
 }
 .tableCell2,.tableCell1Act {
 	border-bottom: 1px solid #BDBDBD;
@@ -1718,6 +1723,14 @@ div.fakeFileInput input.fakeFileInput_input {
 .userRequestMessageEditor .arrayPropertyEditor .fileContainer {
 	width: 140px;
 }
+.price
+{
+	text-align: center;
+}
+#statusText
+{
+	font-weight: bold;
+}
 
 /* News
 -------------------------------------------------------------------------------- */
@@ -1788,6 +1801,18 @@ div.fakeFileInput input.fakeFileInput_input {
 	/* TODO: background */
 }
 
+/* подсказка */
+label.hint:after {
+	content: "?";
+	display: inline-block;
+	margin-left: 10px;
+	background-color: #1975A6;
+	padding: 2px 6px 2px 7px;
+	border-radius: 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
 .txtLink {
 	color: #167BB6;
 	text-decoration: underline;
@@ -1839,6 +1864,15 @@ div.fakeFileInput input.fakeFileInput_input {
 	font-weight: bold;
 	font-size: 10px;
 	color: #ffffff;
+}
+
+#addrWrapContainer label
+{
+	font-weight: bold;
+}
+#addrWrapContainer tr td
+{
+	padding-bottom: 0;
 }
 
 /* Подсказка улицы в веб сервисе
@@ -2124,7 +2158,7 @@ input#proceed
 {
 	position: relative;
 }
-.btiInfo p
+.btiInfo>*
 {
 	padding-left: 15px;
 }
@@ -2409,7 +2443,7 @@ ul.collapsible_content > li:last-child {
 {
 	display: none;
 }
-.userRequestEditor #TBTIName
+.userRequestEditor #TBTIName 
 {
 	width: 100%;
 }
@@ -2427,7 +2461,7 @@ div.fakeFileInput input.fakeFileInput_input {
 	top: 0px;
 }
 div.fakeFileInput .button input {
-	 margin-right: 2px;
+	 margin-right: 2px; 
 }
 
 
@@ -2497,7 +2531,7 @@ div.fakeFileInput .button input {
 	height: 100%;
 	background-color: #000;
 }
-.popup-window.search .animation
+.popup-window.search .animation 
 {
 	z-index: 100000;
 	top: 0;
@@ -2535,7 +2569,7 @@ div.fakeFileInput .button input {
 {
 	background-color: #EFEFEF;
 }
-.docNotReadyAlert
+#docsHeader
 {
 	font-weight: bold;
 	margin-top: 10px;
@@ -2669,7 +2703,7 @@ div.fakeFileInput .button input {
 .PriceRequestForm div.fakeFileInput
 {
 	width: auto;
-}
+} 
 .PriceRequestForm .messages
 {
 	margin-top: 10px;
@@ -2804,7 +2838,7 @@ div.fakeFileInput .button input {
 	margin-left: 25px;
 	float: left;
 }
-.ArchiveRequestForm label[for=acc1], .PriceRequestForm label[for=acc1]
+.ArchiveRequestForm label[for=acc1], .PriceRequestForm label[for=acc1], #acceptOferta label
 {
 	cursor: pointer;
 	text-decoration: underline;
@@ -2838,7 +2872,7 @@ div.fakeFileInput .button input {
 .ArchiveRequestForm div.fakeFileInput
 {
 	width: auto;
-}
+} 
 .ArchiveRequestForm .messages
 {
 	margin-top: 10px;
@@ -2884,7 +2918,6 @@ div.fakeFileInput .button input {
 }
 #registrationLegalSameAddressText
 {
-	margin-left: 165px;
 	margin-top: -7px;
 	display: block;
 	float: left;
@@ -2923,7 +2956,7 @@ div.fakeFileInput .button input {
 {
 	width: auto !important;
 }
-.reqForm .fakeFileInput_input
+.reqForm .fakeFileInput_input 
 {
 	width: 335px !important;
 }
@@ -2943,7 +2976,7 @@ div.fakeFileInput .button input {
 {
 	width: auto;
 }
-.reqForm label.selected
+.reqForm label.selected 
 {
 	color: #003d8f;
 	font-weight: bold;
@@ -2959,19 +2992,85 @@ div.fakeFileInput .button input {
 	width: 500px !important;
 }
 
-
-#header-registrationForm
+.page404 #contentHeader h1
 {
-	width: 180px;
+	margin-top: 160px;
+	font-size: 0px;
 }
-span#registration-form-legalContainer {
-	display: none;
-}
-span#registration-form2-legalContainer
+.page404 .pageContent
 {
-	display: none;
+	position: relative;
 }
-#getDocsByEmail, label[for='getDocsByEmail']
+.page404 #contentHeader h1:before
+{
+	content: '';
+	display: block;
+	width: 250px;
+	height: 142px;
+	background-image: url(../Img/404-search.png);
+	position: absolute;
+	right: 116px;
+	top: 0px;
+}
+.page404 #contentText .cntr
+{
+	font-weight: bold;
+	text-align:center;
+	font-size: 26px;
+	font-family: Tahoma;
+	color: #343434;
+}
+.page404 #contentText .cntr div
+{
+	display: inline-block;
+}
+.page404 #contentText .cntr .eng
+{
+	padding-bottom: 4px;
+	border-bottom: 2px solid #000;
+	width: 247px;
+}
+.page404 #contentText .cntr .num
+{
+	font-size: 70px;
+	width: 247px;
+	padding-top: 3px;
+	padding-bottom: 10px;
+    border-bottom: 2px solid #000;
+}
+.page404 #contentText .cntr .rus
+{
+	padding-top: 18px;
+	width: 100%;
+	font-size: 24px;
+	padding-bottom: 110px;
+}
+.page404 #contentText .cntr.serv
+{
+	font-weight: normal;
+	color: #b3b3b3;
+	font-size: 21px;
+}
+.page404 #contentText .cntr.serv img
+{
+	margin-top: 24px;
+	margin-bottom: 18px;
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 62px;
+	cursor: pointer;
+}
+/* повторное отправление СМС */
+table#resendWrapContainer td 
+{
+	padding: 0;
+}
+#trig-resendWrap td
+{
+	padding-bottom: 12px !important;
+}
+/* ПЕРЕОПРЕДЕЛЕНИЕ СТИЛЕЙ ДЛЯ БОЕВОГО САЙТА!!!! ВРЕМЕННОЕ!!!! */
+#getDocsByEmail, label[for='getDocsByEmail'] 
 {
 	display: none;
 }
