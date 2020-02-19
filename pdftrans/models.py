@@ -189,7 +189,7 @@ class OrderTech(models.Model):
 
 class Adress(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'статус заказа')
-    rayon = models.CharField(verbose_name="Район", max_length=64, blank=True, null=False, default = '')
+    rayon = models.CharField(verbose_name="Район", max_length=128, blank=True, null=False, default = '')
     mun_type = models.CharField(verbose_name="Муниципальное образование тип", max_length=64, blank=True, null=False, default = '')
     mun_name = models.CharField(verbose_name="Муниципальное образование наименование ", max_length=64, blank=True, null=False, default = '')
     city_type = models.CharField(verbose_name="Населенный пункт тип", max_length=64, default='')
