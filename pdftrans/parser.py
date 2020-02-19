@@ -27,7 +27,7 @@ def get_source_adress_func(arg_up_pdf_url,arg_coorditates_on_pages,arg_search_on
                 print(type(row))
                 for ro in row:
                     ro  = ro.replace('По адресу:','')
-                    ro  = ro.replace('№','')
+                    # ro  = ro.replace('№','')
                     full_adress_string += ro + ' '
 
             print('full_adress_string')
@@ -90,6 +90,9 @@ def adress_parser_func(arg_adress_string):
     'строение',
     # 'стр.',
     'Квартира',
+    'Помещение',
+    'комната',
+    'апартаменты',
     ]
     for item in adress_item_list:
         # print('item_in parsing')
@@ -103,26 +106,27 @@ def adress_parser_func(arg_adress_string):
             # print(str_item)
 
             if s:
-                # print('****key_string****')
+                print('****key_string****')
                 key_string = s.group()
-                # print('key_string')
-                # print(key_string)
-                # print('****value_string****')
+                print('key_string')
+                print(key_string)
+                print('****value_string****')
                 arg_string = regex.sub('', item)
-                # print('arg_string')
-                # print(arg_string)
-                arg_string = re.sub(r'\s+', ' ', arg_string).strip()
-                # print(arg_string)
-                # print('arg_string')
-                # print(arg_string)
+                print('arg_string')
+                print(arg_string)
+                arg_string = re.sub(r'\s+', ' ', arg_string).replace('№','').strip()          # ro  = ro.replace('№','')
+                # arg_string = re.sub(r'\s+', ' ', arg_string).strip()          # ro  = ro.replace('№','')
+                print(arg_string)
+                print('arg_string')
+                print(arg_string)
                 return_address_list = [key_string,arg_string]
-                # print('return_address_list')
-                # print(return_address_list)
+                print('return_address_list')
+                print(return_address_list)
                 after_parsing_dict.update({key_string: arg_string})
 
         print('after_parsing_dict')
         print(after_parsing_dict)
-    after_parsing_dict.update({'row_full_adress_string': arg_adress_string})
+    after_parsing_dict.update({'row_full_adress_string': arg_adress_string.strip()})
     print('*******parsing****end******')
     return after_parsing_dict
 
@@ -142,9 +146,14 @@ def pull_adress_db(arg_instance_order, arg_begin_dict):
                 'litera':'',
                 'build_number':'',
                 'full_adress':'',
-                'global_appartment':''
+                'global_appartment_type':'',
+                'global_appartment':'',
+                'sub_appartment_type':'',
+                'sub_appartment':'',
+                # 'string_appartment':''
                 }
     municipal_flag = 0
+    sub_appartment_flag = 0
     for key, value in arg_begin_dict.items():
         if key in (
             'город',
@@ -213,9 +222,21 @@ def pull_adress_db(arg_instance_order, arg_begin_dict):
             v = value
             total_dict.update({k: v})
 
-        elif key == 'Квартира':
+        elif key in ('Квартира','Помещение','Апартаменты'):
+            k = 'global_appartment_type'
+            v = key
+            total_dict.update({k: v})
             k = 'global_appartment'
             v = value
+            total_dict.update({k: v})
+
+        elif key in ('комната'):
+            sub_appartment_flag = 1
+            k = 'sub_appartment_type'
+            v = key
+            total_dict.update({k: v})
+            k = 'sub_appartment'
+            v = value.replace('-', ',')
             total_dict.update({k: v})
 
         elif key == 'row_full_adress_string':
@@ -223,20 +244,25 @@ def pull_adress_db(arg_instance_order, arg_begin_dict):
             v = value
             no_appart_adress_string = ''
             no_appart_adress_list = v.split(',')
-            del no_appart_adress_list[-1]
+            if sub_appartment_flag == 1:
+                del no_appart_adress_list[-1:-3:-1]
+            else:
+                del no_appart_adress_list[-1]
             for l in no_appart_adress_list:
                 no_appart_adress_string += l + ', '
-            print('no_appart_adress_list')
-            print(no_appart_adress_list)
-            print('no_appart_adress_string')
-            print(no_appart_adress_string)
             total_dict.update({k: no_appart_adress_string})
+            # print('string_appartment_number-------------*')
+            # print(string_appartment_number)
+            # print('no_appart_adress_list')
+            # print(no_appart_adress_list)
+            # print('no_appart_adress_string')
+            # print(no_appart_adress_string)
 
     print('--------------total_dict-------------------')
     print(total_dict)
+
     va, created = Adress.objects.update_or_create(
     order=arg_instance_order,
     defaults=total_dict,
     )
     return va
-    # pass

@@ -8,14 +8,17 @@
     <div class="pageCenter pageCenter__footerCollapsed">
         <div class="siteHeader">
             <div id="snowheader">
-            </div><a href="https://www.mosgorbti.ru/" title="На главную" class="logo">
-                <img src="{% static 'img/logo.png' %}"></a><div class="orgName">
+            </div>
+            <a href="https://www.mosgorbti.ru/" title="На главную" class="logo">
+                <img src="{% static 'img/logo.png' %}">
+            </a>
+            <div class="orgName">
 				Государственное бюджетное учреждение города Москвы <br>
 				Московское городское бюро технической инвентаризации
 			</div>
             <div class="orgPhone">+7 (495) 629-02-80</div>
-            <a id="online-question-link" href="https://www.mosgorbti.ru/online-question.aspx">Электронная приемная</a>
-            <a id="protivodeistvie-corrupcii-link" href="protivodeistvie-corrupcii">Противодействие коррупции</a>
+                <a id="online-question-link" href="https://www.mosgorbti.ru/online-question.aspx">Электронная приемная</a>
+                <a id="protivodeistvie-corrupcii-link" href="https://www.mosgorbti.ru/protivodeistvie-corrupcii">Противодействие коррупции</a>
             <!-- <div id="header-userBlock"></div> -->
             <div id="header-userBlock">
                 <div class="login"><ul class="links">
@@ -81,9 +84,7 @@
                 </td>
                 <td>
                     <span>
-                        {% if order.adress.global_appartment %}
-                            {{order.name_object}} № {{ order.adress.global_appartment }}
-                        {% endif %}
+                        {{ order.adress.get_second_part_full_adress }}
                     </span>
                 </td>
             </tr>

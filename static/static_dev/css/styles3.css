@@ -49,7 +49,6 @@
     position: absolute;
     bottom: 40px;
     right: 10px;
-
 }
 .table-page2 td{
     padding-top: 2px;
@@ -76,14 +75,11 @@
     width: 150px;
 }
 .legenda_tbl{
-
     position: absolute;
     left: 4%;
     bottom: 2%;
     width: 420px;
     font-weight: 500;
-    /* border: 1.5px solid; */
-
 }
 .legenda_tbl td:nth-child(2n){
     text-align: left;
@@ -122,13 +118,11 @@
 .explication-block{
     margin-top: 10%;
 }
-
 .bar-code{
     width: 100%;
 
     margin-top: 50px;
 }
-
 .order_number{
     font-family: monospace;
     position: absolute;

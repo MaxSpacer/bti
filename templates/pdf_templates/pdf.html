@@ -61,7 +61,8 @@
                   <tr style="line-height: 98%;">
                     <td class=""></td>
                     <td class="border-bottom border-dark uniqtabletd">
-                        <span class="">{{order.name_object}}
+                        <span class="">
+                            {{ order.adress.global_appartment_type }}
                         </span>
                     </td>
                     <td class="pl-5">&nbsp&nbsp</td>
@@ -177,55 +178,67 @@
                         <span class=" ">Номер дома</span>
                     </td>
                     <td colspan="2">
-                            <span class="font1">{{order.adress.house_number}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class=" ">Номер корпуса</span>
-                        </td>
-                        <td colspan="2">
-                            <span class="font1">{{order.adress.corpus_number}}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class=" ">Номер строения</span>
-                        </td>
-                        <td colspan="2">
-                            {{order.adress.build_number}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class=" ">Литера</span>
-                        </td>
-                        <td colspan="2">
-                            {{order.adress.litera}}
+                        <span class="font1">{{order.adress.house_number}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class=" ">Номер корпуса</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="font1">{{order.adress.corpus_number}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class=" ">Номер строения</span>
+                    </td>
+                    <td colspan="2">
+                        {{order.adress.build_number}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class=" ">Литера</span>
+                    </td>
+                    <td colspan="2">
+                        {{order.adress.litera}}
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class=" ">Номер помещения (квартиры)</span>
-                        </td>
-                        <td colspan="2">
-                            <span class="font1">
-                            {{order.adress.global_appartment}}
-                            {#% with order.explicationlistitem_set.all|first as appart %#}
-                            {#{ appart.apart_number }#}
-                            {#% endwith %#}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class=" ">Иное описание местоположения</span>
-                        </td>
-                        <td colspan="2">
-                            {{order.adress.another_places}}
-                        </td>
-                    </tr>
-                </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Номер {{ order.adress.global_appartment_type|possessive_case }}</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="font1">
+                            {% if order.adress.sub_appartment_type|length > 0 %}
+                                {{ order.adress.global_appartment }},
+                                {{ order.adress.sub_appartment_type }} {{ order.adress.sub_appartment }}
+                            {% else %}
+                                {{ order.adress.global_appartment }}
+                            {% endif %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class=" ">Иное описание местоположения</span>
+                    </td>
+                    <td colspan="2">
+                        {{order.adress.another_places}}
+                    </td>
+                </tr>
+            </table>
+            {% if order.kadastr_number %}
+            <table class="table-address w-100 mb-4 mt-0 text-left">
+                <tr>
+                    <td style="width: 321px">Кадастровый номер комнат</td>
+                    <td colspan="2">{{ order.kadastr_number }}</td>
+                </tr>
+            </table>
+            {% endif %}
+
             <div class="row justify-content-between px-3" style="margin-top:25%; font-weight: 500;">
                 <p class="mt-3"><span class=" ">Начальник отделения</span></p>
                 <table class="d-block">
@@ -263,7 +276,9 @@
 
             {% for ord_imag in order.orderimage_set.all %}
                 <style media="screen, print">
+                    /* increment1 less for no fullpdf */
                     @page :nth({{ forloop.counter }}){
+                    /* @page :nth({{ forloop.counter|increment1 }}){ */
                         margin: 9mm 9mm 9mm 9mm;
                         border: 3px solid;
                     }
@@ -290,22 +305,13 @@
                             <tr>
                                 <td></td>
                                 <td class="text-lowercase">
-                                        {% if order.adress.global_appartment %}
-                                        Квартира №
-                                        {{ order.adress.global_appartment }}
-                                        {% endif %}
-                                        {#% with order.explicationlistitem_set.all|first as appart %#}
-                                        {#{ appart.apart_number }#}
-                                        {#% endwith %#}
+                                    {{ order.adress.get_second_part_full_adress }}
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="text-uppercase p-3 mt-4" style="font-size:;">
                         {{ ord_imag.floor_for_image }}
-                        {#% with order.explicationlistitem_set.all|first as floor %#}
-                        {#{ floor.floor_number }#}
-                        {#% endwith %#}
                     </div>
                 </div>
                 <div class="schema_img" >
@@ -335,8 +341,12 @@
                   </tr>
                   <tr>
                       <td class="apart_number_legend">
-                          <!-- <img class="legenda_img" src="{% static 'img/legenda-3.png' %}" alt="Event QR code" /> -->
-                          кв.{{ order.adress.global_appartment }}&nbsp
+                          {% if order.type_object == 'Жилое' %}
+                              кв.
+                          {% else %}
+                              пом.
+                          {% endif %}
+                          {{ order.adress.global_appartment }}&nbsp
                       </td>
                     <td class="">номер помещения</td>
                   </tr>
@@ -373,10 +383,6 @@
             {% endfor %}
 
 
-
-
-
-
             <div class="page3 text-center" style="">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
@@ -399,11 +405,7 @@
                         <p class="font-weight-bold mb-2" style="width:101%">
                             {{ order.adress.full_adress }}
                         </p>
-                        <p class="">Квартира №
-                            {{ order.adress.global_appartment }}
-                            {#% with order.explicationlistitem_set.all|first as appart %#}
-                            {#{ appart.apart_number }#}
-                            {#% endwith %#}
+                        <p class="">{{ order.adress.get_second_part_full_adress }}
                         </p>
                     </div>
                 </div>
@@ -424,7 +426,12 @@
                         <td colspan="3">в т.ч.</td>
                       </tr>
                       <tr>
-                        <td>основная<br> (жилая)</td>
+                        <td>
+                            {% if order.type_object == 'Жилое' %}
+                                основная<br> (жилая)</td>
+                            {% else %}
+                                основная</td>
+                            {% endif %}
                         <td>вспом.</td>
                         <td>лоджий</td>
                         <td>балконов</td>
@@ -452,7 +459,7 @@
                         {% endif %}
                     {% endfor %}
                       <tr>
-                          <td colspan="3">Итого по квартире</td>
+                          <td colspan="3">Итого по {{ order.adress.global_appartment_type|objective_case }}</td>
                           <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_general_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
@@ -462,7 +469,12 @@
                           <td></td>
                       </tr>
                       <tr>
-                          <td colspan="3">Общая площадь ( с летними )</td>
+                          <td colspan="3">
+                              {% if order.type_object == 'Жилое' %}
+                                  Общая площадь ( с летними )</td>
+                              {% else %}
+                                  Общая площадь ( нежилые в т.ч )</td>
+                              {% endif %}
                           <td>{{order.explicationsquaretotal.square_total_summa_global|unlocalize}}</td>
                           <td colspan="6"></td>
                           <!-- <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>

@@ -45,9 +45,9 @@ def get_type_object_default():
     default = str(def_value)
     return default
 
-def get_name_object_choices():
-    NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
-    return NAME_OBJECT_CHOICES
+# def get_name_object_choices():
+#     NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
+#     return NAME_OBJECT_CHOICES
 
 def get_name_object_default():
     def_value = NameObject.objects.filter().first()
@@ -63,12 +63,13 @@ class Order(models.Model):
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
-    name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices(), default=get_name_object_default())
+    # name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices(), default=get_name_object_default())
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=30)
     engineer_name = models.CharField(verbose_name="имя инженера", default="Клименко М.В.", max_length=64, blank=False, null=True)
     customer_name = models.CharField(verbose_name="имя начальника отделения", default="Панин В.Э.", max_length=64, blank=False, null=True)
+    kadastr_number = models.CharField(verbose_name="кадастровый номер комнат", default="", max_length=64, blank=True, null=True)
     is_emailed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -110,7 +111,7 @@ class Order(models.Model):
         barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'Times_New_Roman.ttf')
         fnt = ImageFont.truetype(barcode_text_font, 15)
         d = ImageDraw.Draw(barcode_formated)
-        d.text((440,3), barcode_text, font=fnt, fill=(0))
+        d.text((460,3), barcode_text, font=fnt, fill=(0))
         barcode_formated.save(barcode_full_path)
 
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number
@@ -144,7 +145,7 @@ class Order(models.Model):
         self._meta.get_field('subj_type').default = SubjectType.objects.filter().first()
         self._meta.get_field('doc_type').default = DocType.objects.filter().first()
         self._meta.get_field('type_object').default = TypeObject.objects.filter().first()
-        self._meta.get_field('name_object').default = NameObject.objects.filter().first()
+        # self._meta.get_field('name_object').default = NameObject.objects.filter().first()
         super(Order, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
@@ -201,12 +202,22 @@ class Adress(models.Model):
     build_number = models.CharField(verbose_name="Номер строения", max_length=64, blank=True, null=False, default = '')
     another_places = models.CharField(verbose_name="Иное описание местоположения", max_length=64, blank=True, null=False, default = '')
     full_adress = models.CharField(verbose_name="полный адрес", max_length=256, blank=True, null=False, default = '')
+    global_appartment_type = models.CharField(verbose_name="тип помещения", max_length=64, blank=True, null=False, default = '')
     global_appartment = models.CharField(verbose_name="номер помещения", max_length=8, blank=True, null=False, default = '')
-
+    sub_appartment_type = models.CharField(verbose_name="тип подпомещения", max_length=64, blank=True, null=False, default = '')
+    sub_appartment = models.CharField(verbose_name="номер подпомещения", max_length=32, blank=True, null=False, default = '')
+    # string_appartment = models.CharField(verbose_name="Строка с номером помещения", max_length=8, blank=True, null=False, default = '')
 
     class Meta:
         verbose_name = 'Адрес'
         verbose_name_plural = 'Адреc'
+
+    def get_second_part_full_adress(self):
+        if self.sub_appartment_type:
+            ret_string = self.global_appartment_type +' № '+ self.global_appartment + ', ' + self.sub_appartment_type +' '+ self.sub_appartment
+        else:
+            ret_string = self.global_appartment_type +' № '+ self.global_appartment
+        return ret_string
 
 
 class ExplicationListItem(models.Model):
