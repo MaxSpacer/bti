@@ -1,0 +1,122 @@
+
+
+/* Start:/local/css/prover-document.css?1538754214269*/
+.code-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.form-control.form-control--col-5 {
+    width: 20%;
+}
+
+.form-label {
+    display: block;
+    color: rgb(197, 197, 197);
+}
+/* End */
+
+
+/* Start:/local/templates/main/components/bitrix/news.list/top.list/style.css?15808247601660*/
+.service-icons {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+    margin: 0 0 30px 0;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+    background: #fafafa;
+}
+
+.service-icons__list {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+    margin: -3px;
+}
+
+.service-icons__item {
+    flex-basis: 80px;
+    margin: 3px;
+}
+
+.service-icons__item_active {
+
+}
+
+.service-icons__link {
+    display: block;
+    position: relative;
+    max-width: 80px;
+}
+
+.service-icons__image {
+    display: block;
+    width: 80px;
+    max-width: 100%;
+}
+
+.service-icons__image.service-icons__image_colored {
+    display: none;
+}
+
+.service-icons__image.service-icons__image_monochrome {
+
+}
+
+.service-icons__item:hover .service-icons__image.service-icons__image_colored,
+.service-icons__item.service-icons__item_active .service-icons__image.service-icons__image_colored {
+    display: block;
+}
+
+.service-icons__item:hover .service-icons__image.service-icons__image_monochrome,
+.service-icons__item.service-icons__item_active .service-icons__image.service-icons__image_monochrome {
+    display: none;
+}
+
+@media (max-width: 1199px) {
+    .service-icons {
+        padding: 15px 10px;
+    }
+
+    .service-icons__list {
+        flex-wrap: wrap;
+        max-width: 940px;
+    }
+
+    .service-icons__item {
+        flex-basis: 70px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .service-icons__list {
+        max-width: 750px;
+    }
+
+    .service-icons__item {
+        flex-basis: 60px;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-icons {
+        display: none;
+    }
+}
+/* End */
+
+
+/* Start:/local/js/ext/jquery/powertip/css/jquery.powertip.min.css?15808247601888*/
+#powerTip{cursor:default;background-color:#333;background-color:rgba(0,0,0,.8);border-color:#333;border-color:rgba(0,0,0,.8);border-radius:6px;color:#fff;display:none;padding:10px;position:absolute;white-space:nowrap;z-index:2147483647}#powerTip:before{content:attr(class) " ";position:absolute;height:0;width:0;text-indent:100%;overflow:hidden}#powerTip.n:before,#powerTip.s:before{border-right:5px solid transparent;border-left:5px solid transparent;left:50%;margin-left:-5px}#powerTip.e:before,#powerTip.w:before{border-bottom:5px solid transparent;border-top:5px solid transparent;margin-top:-5px;top:50%}#powerTip.n:before,#powerTip.ne:before,#powerTip.nw:before{bottom:-10px}#powerTip.n:before,#powerTip.ne-alt:before,#powerTip.ne:before,#powerTip.nw-alt:before,#powerTip.nw:before{border-top-color:inherit;border-top-style:solid;border-top-width:10px}#powerTip.e:before{border-right-color:inherit;border-right-style:solid;border-right-width:10px;left:-10px}#powerTip.s:before,#powerTip.se:before,#powerTip.sw:before{top:-10px}#powerTip.s:before,#powerTip.se-alt:before,#powerTip.se:before,#powerTip.sw-alt:before,#powerTip.sw:before{border-bottom-color:inherit;border-bottom-style:solid;border-bottom-width:10px}#powerTip.w:before{border-left-color:inherit;border-left-style:solid;border-left-width:10px;right:-10px}#powerTip.ne:before,#powerTip.se:before{border-right:10px solid transparent;border-left:0;left:10px}#powerTip.nw:before,#powerTip.sw:before{border-left:10px solid transparent;border-right:0;right:10px}#powerTip.ne-alt:before,#powerTip.nw-alt:before,#powerTip.se-alt:before,#powerTip.sw-alt:before{bottom:-10px;border-left:5px solid transparent;border-right:5px solid transparent;left:10px}#powerTip.ne-alt:before{left:auto;right:10px}#powerTip.se-alt:before,#powerTip.sw-alt:before{border-top:none;bottom:auto;top:-10px}#powerTip.se-alt:before{left:auto;right:10px}
+/* End */
+/* /local/css/prover-document.css?1538754214269 */
+/* /local/templates/main/components/bitrix/news.list/top.list/style.css?15808247601660 */
+/* /local/js/ext/jquery/powertip/css/jquery.powertip.min.css?15808247601888 */

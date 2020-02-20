@@ -1,0 +1,210 @@
+.file__link_doc:before {
+    background: url(../img/icon-doc.png) no-repeat
+}
+.file__link_docx:before {
+    background: url(../img/icon-docx.png) no-repeat
+}
+.file__link_xls:before {
+    background: url(../img/icon-xls.png) no-repeat
+}
+.file__link_xlsx:before {
+    background: url(../img/icon-xlsx.png) no-repeat
+}
+.file__link_pdf:before {
+    background: url(../img/icon-pdf.png) no-repeat
+}
+.file__link_jpg:before {
+    background: url(../img/icon-jpg.png) no-repeat
+}
+.file__link_png:before {
+    background: url(../img/icon-png.png) no-repeat
+}
+.file__link_rar:before {
+    background: url(../img/icon-rar.png) no-repeat
+}
+.file__link_rtf:before {
+    background: url(../img/icon-rtf.png) no-repeat
+}
+.file__link_xml:before {
+    background: url(../img/icon-xml.png) no-repeat
+}
+.file__link_zip:before {
+    background: url(../img/icon-zip.png) no-repeat
+}
+.file__link_txt:before {
+    background: url(../img/icon-txt.png) no-repeat
+}
+
+.popup_services{
+    z-index: 91 !important;
+}
+
+.service-20, .service-30, .service-33, .service-35, .service-21, .service-31, .service-34, .service-36, .service-37, .service-29, .service-22, .service-32 {
+    width: 80px;
+    height: 80px;
+    background: url(../img/service-01_inactive.png) 0 0/cover no-repeat
+}
+
+.service-20.active, .service-20:hover {
+    background-image: url(../img/service-01.png)
+}
+
+.service-30 {
+    background-image: url(../img/service-02_inactive.png)
+}
+
+.service-30.active, .service-30:hover {
+    background-image: url(../img/service-02.png)
+}
+
+.service-33 {
+    background-image: url(../img/service-03_inactive.png)
+}
+
+.service-33.active, .service-33:hover {
+    background-image: url(../img/service-03.png)
+}
+
+.service-35 {
+    background-image: url(../img/service-04_inactive.png)
+}
+
+.service-35.active, .service-35:hover {
+    background-image: url(../img/service-04.png)
+}
+
+.service-21 {
+    background-image: url(../img/service-05_inactive.png)
+}
+
+.service-21.active, .service-21:hover {
+    background-image: url(../img/service-05.png)
+}
+
+.service-31 {
+    background-image: url(../img/service-06_inactive.png)
+}
+
+.service-31.active, .service-31:hover {
+    background-image: url(../img/service-06.png)
+}
+
+.service-34 {
+    background-image: url(../img/service-07_inactive.png)
+}
+
+.service-34.active, .service-34:hover {
+    background-image: url(../img/service-07.png)
+}
+
+.service-36 {
+    background-image: url(../img/service-08_inactive.png)
+}
+
+.service-36.active, .service-36:hover {
+    background-image: url(../img/service-08.png)
+}
+
+.service-22 {
+    background-image: url(../img/service-09_inactive.png)
+}
+
+.service-22.active, .service-22:hover {
+    background-image: url(../img/service-09.png)
+}
+
+.service-32 {
+    background-image: url(../img/service-10_inactive.png)
+}
+
+.service-32.active, .service-32:hover {
+    background-image: url(../img/service-10.png)
+}
+
+.service-29 {
+    background-image: url(../img/service-11_inactive.png)
+}
+
+.service-29.active, .service-29:hover {
+    background-image: url(../img/service-11.png)
+}
+
+.service-37 {
+    background-image: url(../img/service-12_inactive.png)
+}
+
+.service-37.active, .service-37:hover {
+    background-image: url(../img/service-12.png)
+}
+
+.btn_question{
+    z-index: 90 !important;
+}
+
+.services-tabs .ui-tabs-nav li.ui-tabs-active {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    color: #fff !important;
+    background: #405f8e !important;
+}
+.services-tabs .ui-state-default a{
+    color: gray; !important;
+    font-size: 20px;
+}
+.services-tabs .ui-state-active a{
+    color: #fff !important;
+    font-size: 20px;
+}
+.services-tabs .ui-tabs-nav li a{
+	padding: 0.5em !important;
+}
+
+/*.slider-main__item-text p{
+    font-size:56px !important;
+}*/
+
+
+.slider-main__item-text h2 span {
+    font-size: 22pt;
+}
+
+.slider-main__item-text h4 span {
+    font-size: 16pt;
+}
+
+.popup__wrapper .newsletters__video-title{
+	display:none;
+}
+.check_contract .select__selected {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.check_contract .select__selected span {
+    color: black;
+}
+
+.check_contract .select__selected .select__list {
+    border: 1px solid black;
+}
+
+.check_contract .select__selected .select__list li {
+    background: white;
+}
+
+.check_contract .select__selected .select__list li.active {
+    background: #f2f2f2;
+}
+.shema
+{
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+}

@@ -1,0 +1,16 @@
+.code-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.form-control.form-control--col-5 {
+    width: 20%;
+}
+
+.form-label {
+    display: block;
+    color: rgb(197, 197, 197);
+}

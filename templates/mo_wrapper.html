@@ -1,0 +1,123 @@
+<!doctype html>
+{% load static %}
+<html lang="ru" class="h-100">
+<head>
+    <meta name="template" content="main" />
+    <meta name="page" content="/uslugi/prover-document/" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Проверка документа в режиме онлайн." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <title>Проверь технический паспорт, поэтажный план и экспликацию</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://mobti.ru/favicon.ico"/>
+
+    <script>
+        var configSlider = false;
+        var configPartnerSlider = false;
+    </script>
+
+    <script type="text/javascript" data-skip-moving="true">(function(w, d) {var v = w.frameCacheVars = {'CACHE_MODE':'HTMLCACHE','storageBlocks':[],'dynamicBlocks':{'DQUxIW':'1d7c6cf478de'},'AUTO_UPDATE':true,'AUTO_UPDATE_TTL':'0'};var inv = false;if (v.AUTO_UPDATE === false){if (v.AUTO_UPDATE_TTL && v.AUTO_UPDATE_TTL > 0){var lm = Date.parse(d.lastModified);if (!isNaN(lm)){var td = new Date().getTime();if ((lm + v.AUTO_UPDATE_TTL * 1000) >= td){w.frameRequestStart = false;w.preventAutoUpdate = true;return;}inv = true;}}else{w.frameRequestStart = false;w.preventAutoUpdate = true;return;}}var r = w.XMLHttpRequest ? new XMLHttpRequest() : (w.ActiveXObject ? new w.ActiveXObject("Microsoft.XMLHTTP") : null);if (!r) { return; }w.frameRequestStart = true;var m = v.CACHE_MODE; var l = w.location; var x = new Date().getTime();var q = "?bxrand=" + x + (l.search.length > 0 ? "&" + l.search.substring(1) : "");var u = l.protocol + "//" + l.host + l.pathname + q;r.open("GET", u, true);r.setRequestHeader("BX-ACTION-TYPE", "get_dynamic");r.setRequestHeader("BX-CACHE-MODE", m);r.setRequestHeader("BX-CACHE-BLOCKS", v.dynamicBlocks ? JSON.stringify(v.dynamicBlocks) : "");if (inv){r.setRequestHeader("BX-INVALIDATE-CACHE", "Y");}try { r.setRequestHeader("BX-REF", d.referrer || "");} catch(e) {}if (m === "APPCACHE"){r.setRequestHeader("BX-APPCACHE-PARAMS", JSON.stringify(v.PARAMS));r.setRequestHeader("BX-APPCACHE-URL", v.PAGE_URL ? v.PAGE_URL : "");}r.onreadystatechange = function() {if (r.readyState != 4) { return; }var a = r.getResponseHeader("BX-RAND");var b = w.BX && w.BX.frameCache ? w.BX.frameCache : false;if (a != x || !((r.status >= 200 && r.status < 300) || r.status === 304 || r.status === 1223 || r.status === 0)){var f = {error:true, reason:a!=x?"bad_rand":"bad_status", url:u, xhr:r, status:r.status};if (w.BX && w.BX.ready){BX.ready(function() {setTimeout(function(){BX.onCustomEvent("onFrameDataRequestFail", [f]);}, 0);});}else{w.frameRequestFail = f;}return;}if (b){b.onFrameDataReceived(r.responseText);if (!w.frameUpdateInvoked){b.update(false);}w.frameUpdateInvoked = true;}else{w.frameDataString = r.responseText;}};r.send();})(window, document);</script>
+
+
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/messages_ru.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery.mousewheel.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/select2.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/mjpeg.js' %}"></script>
+
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery.suggestions.min.js' %}"></script>
+
+    <script src="{% static 'mo_bti_static/local/templates/main/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/jquery.powertip.min.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/script.js' %}"></script>
+    <script src="{% static 'mo_bti_static/local/templates/main/js/main.js' %}"></script>
+    <script src="{% static 'mo_bti_static/bitrix/components/bitrix/player/mediaplayer/jwplayer.js' %}"></script>
+
+
+
+
+
+
+    <link href="{% static 'mo_bti_static/bitrix/cache/css/s1/main/kernel_main/kernel_main.css' %}" type="text/css"  rel="stylesheet" />
+    <link href="{% static 'mo_bti_static/bitrix/cache/css/s1/main/page_5299ccecfe0ef6c44030fadbb2b322b1/page_5299ccecfe0ef6c44030fadbb2b322b1_v1.css' %}" type="text/css"  rel="stylesheet" />
+    <link href="{% static 'mo_bti_static/bitrix/cache/css/s1/main/default_4dc949805de442dc6db02e2ec2a7d06c/default_4dc949805de442dc6db02e2ec2a7d06c_v1.css' %}" type="text/css"  rel="stylesheet" />
+    <link href="{% static 'mo_bti_static/bitrix/cache/css/s1/main/template_d37e1324e682dfdac557048526f3bbfb/template_d37e1324e682dfdac557048526f3bbfb_v1.css' %}" type="text/css"  data-template-style="true" rel="stylesheet" />
+
+
+
+
+    <script type="text/javascript">if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess=='object') for(var i in mess) BX.message[i]=mess[i]; return true;};</script>
+    <script type="text/javascript">(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
+    <script type="text/javascript">(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/'});</script>
+
+
+    <script type="text/javascript"  src="{% static 'mo_bti_static/bitrix/cache/js/s1/main/kernel_main/kernel_main_v1.js'%}"></script>
+    <script type="text/javascript"  src="{% static 'mo_bti_static/bitrix/cache/js/s1/main/kernel_main_polyfill_promise/kernel_main_polyfill_promise_v1.js'%}"></script>
+    <script type="text/javascript" src="{% static 'mo_bti_static/bitrix/js/main/loadext/loadext.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'mo_bti_static/bitrix/js/main/loadext/extension.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'mo_bti_static/bitrix/js/main/core/core_db.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'mo_bti_static/bitrix/js/main/core/core_frame_cache.min.js'%}"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+
+    <script type="text/javascript"  src="{% static 'mo_bti_static/bitrix/cache/js/s1/main/template_91903bbdbe15b7ac496c85e88ab32a93/template_91903bbdbe15b7ac496c85e88ab32a93_v1.js'%}"></script>
+    <script type="text/javascript"  src="{% static 'mo_bti_static/bitrix/cache/js/s1/main/page_01388813ba18e77afecfdcfd1c3ec867/page_01388813ba18e77afecfdcfd1c3ec867_v1.js'%}"></script>
+    <script type="text/javascript"  src="{% static 'mo_bti_static/bitrix/cache/js/s1/main/default_da5abe27035558e2538d9b73d0103698/default_da5abe27035558e2538d9b73d0103698_v1.js'%}"></script>
+    <!-- <script type="text/javascript">var _ba = _ba || []; _ba.push(["aid", "70c4bbfbaf03ec09a5059bdfdf1038e2"]); _ba.push(["host", "mobti.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script> -->
+
+
+    <script type="text/javascript">if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess=='object') for(var i in mess) BX.message[i]=mess[i]; return true;};</script>
+    <script type="text/javascript">(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
+    <script type="text/javascript">(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'s1','SITE_DIR':'/'});</script>
+    <script type="text/javascript">
+                        (function () {
+                            "use strict";
+
+                            var counter = function ()
+                            {
+                                var cookie = (function (name) {
+                                    var parts = ("; " + document.cookie).split("; " + name + "=");
+                                    if (parts.length == 2) {
+                                        try {return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));}
+                                        catch (e) {}
+                                    }
+                                })("BITRIX_CONVERSION_CONTEXT_s1");
+
+                                if (cookie && cookie.EXPIRE >= BX.message("SERVER_TIME"))
+                                    return;
+
+                                var request = new XMLHttpRequest();
+                                request.open("POST", "/mo_bti_static/bitrix/tools/conversion/ajax_counter.php", true);
+                                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                request.send(
+                                    "SITE_ID="+encodeURIComponent("s1")+
+                                    "&sessid="+encodeURIComponent(BX.bitrix_sessid())+
+                                    "&HTTP_REFERER="+encodeURIComponent(document.referrer)
+                                );
+                            };
+
+                            if (window.frameRequestStart === true)
+                                BX.addCustomEvent("onFrameDataReceived", counter);
+                            else
+                                BX.ready(counter);
+                        })();
+                    </script>
+
+
+
+</head>
+
+  <body>
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block extrascripts %}
+    {% endblock extrascripts %}
+  </body>
+
+</html>

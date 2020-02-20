@@ -1,0 +1,129 @@
+nav.main ul.nav.header_menu > li {
+    position: static;
+}
+
+nav.main {
+    position: relative;
+}
+
+nav.main nav.sub-main {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 89;
+    transform-origin: 0 0;
+    transition: opacity 300ms ease-out;
+    transform: scaleY(0);
+    opacity: 0;
+    margin-top: 1px;
+}
+
+nav.main ul.header_menu > li:hover > nav.sub-main {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+nav.sub-main {
+    background: #fafafa;
+}
+
+nav.sub-main ul > li, nav.sub-main ul > li:last-child {
+    border: none;
+}
+
+nav.sub-main ul > li > a {
+    padding: 15px 20px;
+    font-size: 12px;
+    font-weight: 400;
+    color: grey;
+    text-transform: uppercase;
+    background: none;
+}
+
+nav.sub-main ul > li.active > a {
+    background: none;
+    color: #3f4349;
+}
+
+nav.sub-main ul > li > a:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+nav.sub-main ul > li > a:after {
+    content: '|';
+    position: absolute;
+    right: 0;
+    color: grey;
+    top: 50%;
+    height: calc(50% - 2px);
+    transform: translateY(-50%);
+}
+
+nav.sub-main ul > li:last-child > a:after {
+    content: none;
+}
+
+@media screen and (max-width: 1199px), (max-device-width: 1199px) {
+    nav.sub-main ul > li > a {
+        padding: 13px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 1023px), (max-device-width: 1023px) {
+    nav.sub-main ul > li > a {
+        padding: 10px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 767px), (max-device-width: 767px) {
+    nav.main nav.sub-main {
+        display: none;
+    }
+
+    nav.sub-main ul > li {
+        width: calc(100% / 3);
+        height: 50px;
+        vertical-align: middle;
+    }
+
+    nav.sub-main ul > li, nav.sub-main ul > li:last-child {
+        border-right: 1px solid #e6e6e6;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    nav.sub-main ul > li > a {
+        position: relative;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 11px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    nav.sub-main ul > li > a:after {
+        width: 1px;
+        height: unset;
+    }
+
+    nav.sub-main ul > li > a > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-right: -50%;
+    }
+
+}
+
+@media screen and (max-width: 374px), (max-device-width: 374px) {
+    nav.sub-main ul > li > a {
+        font-size: 10px;
+    }
+}
+
+
+

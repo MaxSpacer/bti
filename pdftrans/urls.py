@@ -20,6 +20,7 @@ from .models import Order
 app_name = 'pdftrans'
 
 urlpatterns = [
+    path('prover-document/<int:pk>/', DetailView.as_view(model=Order,template_name = 'pdftrans/mo_order_detail.html'), name='mo_order_detail_n'),
     path('<int:pk>/', DetailView.as_view(model=Order,template_name = 'pdftrans/order_detail.html'), name='order_detail_n'),
     path('pdf/<int:pk>/', views.OrderPrintView.as_view(), name='order_pdf_view_n'),
     # path('fullpdf/<int:pk>/', views.OrderPrintFullView.as_view(), name='order_full_pdf_view_n'),

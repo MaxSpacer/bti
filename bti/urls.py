@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('get-order-info/', include('pdftrans.urls')),
-]
+    path('uslugi/', include('pdftrans.urls')),
+    ]
 if settings.DEBUG:
     urlpatterns += static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT)

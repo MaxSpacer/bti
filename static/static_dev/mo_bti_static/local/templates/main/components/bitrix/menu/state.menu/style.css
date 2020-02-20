@@ -1,0 +1,26 @@
+.rosreestr {
+    background: url("../../../../img/topnav-rosreestr.png") no-repeat center center;
+}
+
+.oms {
+    background: url("../../../../img/topnav-oms.png") no-repeat center center;
+}
+
+.ciogv {
+    background: url("../../../../img/topnav-ciogv.png") no-repeat center center;
+}
+
+.state-menu {
+    height: 80px;
+}
+
+.rosreestr .state-menu:hover, .oms .state-menu:hover, .ciogv .state-menu:hover {
+    background-color: transparent;
+}
+
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+    .rosreestr, .oms, .ciogv {
+        background-size: 90%;
+    }
+}

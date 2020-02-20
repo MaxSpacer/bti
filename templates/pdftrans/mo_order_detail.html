@@ -1,0 +1,695 @@
+{% extends "mo_wrapper.html" %}
+{% block content %}
+{% load static %}
+{% load format_filters %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-30 col-md-28 col-sm-27 col-xs-60 logos">
+                <div class="col-lg-40 col-md-34 col-sm-34 col-xs-28 col-lg-offset-0 col-md-offset-0 col-sm-offset-0 col-xs-offset-10">
+                    <a href="https://mobti.ru/" class="logo logo_main">
+                        <img src="{% static 'mo_bti_static/local/templates/main/img/logo.png' %}" alt="">
+                    </a>
+                </div>
+                <div class="col-lg-20 col-md-26 col-sm-26 col-xs-22">
+                    <a href="https://mobti.ru/" class="logo logo_gup">
+                        <img src="{% static 'mo_bti_static/local/templates/main/img/logo-gbu.png' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-30 col-md-32 col-sm-33 col-xs-60 contacts">
+                <div class="row">
+                    <div class="col-lg-27 col-md-25 col-sm-25 col-xs-32">
+                        <div class="phone">
+                            <b><span style="color: #ff0000;">Телефон горячей линии:</span></b>
+                            <br> +7 (498) 568-88-88 </div>
+                        <div class="email"><a href="mailto:mobti@mobti.ru" target="_blank">mobti@mobti.ru</a></div>
+                    </div>
+                    <!--'start_frame_cache_DQUxIW'-->
+                    <div class="callback-block js-callback-block">
+                        <div class="callback-block__button js-callback-block__button callback-block__button--ringing" data-callback_disabled="false"></div>
+                        <div class="callback-block-form js-callback-block-form">
+                            <div class="callback-block-form__content js-callback-block-form__content">
+                                <form class="callback-block-form__form" data-ajax-path="/local/components/maximaster/widget.callback/ajax.php" method="POST">
+                                    <input type="hidden" name="action" value="submit_callback_form">
+
+                                    <div class="callback-block-form__title">
+                                        Задать вопрос или получить консультацию
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="hidden" class="js-office-country-code" value="" name="country_code">
+                                        <input type="hidden" class="js-office-country-flag" value="" name="country_flag">
+                                        <div>
+                                            <div class="phone-wrapper">
+                                                <div class="phone-wrapper__county-flag js-phone-wrapper__county-flag">
+                                                    <img class="js-flag-county" src="{% static 'mo_bti_static/upload/iblock/262/russia.png' %}">
+                                                </div>
+
+                                                <input id="inp_phone" class="form-control" type="text" name="phone" data-code="7" value="7" autocomplete="off" placeholder="Укажите номер телефона" data-can-empty="true">
+
+                                                <ul class="countriesList js-countriesList form-control" style="display: none;">
+                                                    <li>
+                                                        <div class="js-code-county" data-code="7" data-name="Россия" data-img-src="{% static 'mo_bti_static/upload/iblock/262/russia.png' %}">
+                                                            <img style="display: inline-block;" src="{% static 'mo_bti_static/upload/iblock/262/russia.png' %}"> Россия &nbsp;&nbsp;+7 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="91" data-name="Индия" data-img-src="{% static 'mo_bti_static/upload/iblock/7af/india.png' %}">
+                                                            <img style="display: inline-block;" src="/upload/iblock/7af/india.png"> Индия &nbsp;&nbsp;+91 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="994" data-name="Азербайджан" data-img-src="{% static 'mo_bti_static/upload/iblock/5ea/azerbaijan.png' %}">
+                                                            <img style="display: inline-block;" src="/upload/iblock/5ea/azerbaijan.png"> Азербайджан &nbsp;&nbsp;+994 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="82" data-name="Южная Корея" data-img-src="/upload/iblock/7ae/southkorea.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/7ae/southkorea.png"> Южная Корея &nbsp;&nbsp;+82 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="372" data-name="Эстония" data-img-src="/upload/iblock/5f5/estonia.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/5f5/estonia.png"> Эстония &nbsp;&nbsp;+372 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="375" data-name="Беларусь" data-img-src="/upload/iblock/f0c/belarus.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/f0c/belarus.png"> Беларусь &nbsp;&nbsp;+375 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="40" data-name="Румыния" data-img-src="/upload/iblock/2f4/romania.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/2f4/romania.png"> Румыния &nbsp;&nbsp;+40 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="374" data-name="Армения" data-img-src="/upload/iblock/271/armenia.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/271/armenia.png"> Армения &nbsp;&nbsp;+374 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="44" data-name="Великобритания" data-img-src="/upload/iblock/434/unitedkingdom.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/434/unitedkingdom.png"> Великобритания &nbsp;&nbsp;+44 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="998" data-name="Узбекистан" data-img-src="/upload/iblock/881/uzbekistan.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/881/uzbekistan.png"> Узбекистан &nbsp;&nbsp;+998 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="972" data-name="Израиль" data-img-src="/upload/iblock/868/israel.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/868/israel.png"> Израиль &nbsp;&nbsp;+972 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="66" data-name="Таиланд" data-img-src="/upload/iblock/3af/thailand.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/3af/thailand.png"> Таиланд &nbsp;&nbsp;+66 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="90" data-name="Турция" data-img-src="/upload/iblock/55b/turkey.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/55b/turkey.png"> Турция &nbsp;&nbsp;+90 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="81" data-name="Япония" data-img-src="/upload/iblock/819/japan.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/819/japan.png"> Япония &nbsp;&nbsp;+81 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="1" data-name="США" data-img-src="/upload/iblock/a0e/usa.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/a0e/usa.png"> США &nbsp;&nbsp;+1 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="507" data-name="Панама" data-img-src="/upload/iblock/027/panama.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/027/panama.png"> Панама &nbsp;&nbsp;+507 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="77" data-name="Казахстан" data-img-src="/upload/iblock/1e4/kazakhstan.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/1e4/kazakhstan.png"> Казахстан &nbsp;&nbsp;+77 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="380" data-name="Украина" data-img-src="/upload/iblock/d54/ukraine.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/d54/ukraine.png"> Украина &nbsp;&nbsp;+380 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="371" data-name="Латвия" data-img-src="/upload/iblock/20d/latvia.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/20d/latvia.png"> Латвия &nbsp;&nbsp;+371 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="370" data-name="Литва" data-img-src="/upload/iblock/750/lithuania.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/750/lithuania.png"> Литва &nbsp;&nbsp;+370 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="996" data-name="Кыргызстан" data-img-src="/upload/iblock/113/kyrgyzstan.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/113/kyrgyzstan.png"> Кыргызстан &nbsp;&nbsp;+996 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="9955" data-name="Грузия" data-img-src="/upload/iblock/c99/georgia.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/c99/georgia.png"> Грузия &nbsp;&nbsp;+9955 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="992" data-name="Таджикистан" data-img-src="/upload/iblock/114/tajikistan.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/114/tajikistan.png"> Таджикистан &nbsp;&nbsp;+992 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="373" data-name="Молдавия" data-img-src="/upload/iblock/924/moldova.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/924/moldova.png"> Молдавия &nbsp;&nbsp;+373 </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="js-code-county" data-code="84" data-name="Вьетнам" data-img-src="/upload/iblock/a8c/vietnam.png">
+                                                            <img style="display: inline-block;" src="/upload/iblock/a8c/vietnam.png"> Вьетнам &nbsp;&nbsp;+84 </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control callback-block-form__email" type="email" name="email" placeholder="или адрес электронной почты">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <textarea class="form-control callback-block-form__text" name="message" placeholder="Опишите суть проблемы (необязательно для заполнения)"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary callback-block-form__submit">
+                                            Отправить
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="callback-block-form__status">
+                                    Мы перезвоним Вам cегодня c 09:00 до 18:00 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--'end_frame_cache_DQUxIW'-->
+                    <div class="col-lg-25 col-md-25 col-sm-24 hidden-xs">
+                        <div class="search">
+                            <form action="https://mobti.ru/search/" method="GET">
+                                <input type="text" name='q' placeholder="Поиск">
+                                <button class="icon-search"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="main">
+    <div class="container">
+        <div class="row">
+            <ul class="nav nav-justified header_menu">
+                <li class="">
+                    <a href="https://mobti.ru/o-predpriyatii/">О компании</a>
+                    <nav class="sub-main">
+                        <div class="container">
+                            <div class="row">
+                                <ul class="nav about">
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/istoriya-bti/">История</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/nagradi/">Награды</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/svidetelstva/">Свидетельства и сертификаты</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/obraztsy-dokumentov/">Документы</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/normativnaya-baza/">Нормативная база</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/zakupki/">Отдел торгов</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/vakansii/">Карьера</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/o-predpriyatii/rekvizity/">Реквизиты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </li>
+                <li class="active">
+                    <a href="https://mobti.ru/uslugi/">Услуги</a>
+                </li>
+                <li class="">
+                    <a href="https://mobti.ru/online-uslugi/">ONLINE услуги</a>
+                    <nav class="sub-main">
+                        <div class="container">
+                            <div class="row">
+                                <ul class="nav about">
+                                    <li class="">
+                                        <a href="https://mobti.ru/uslugi/prover-dogovor/">Проверь договор</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="/uslugi/prover-document/">Проверь техпаспорт, поэтажку, экспликацию</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/uslugi/prover-vozmozhnost-osporit-stoimost-obekta/">Проверь возможность оспорить стоимость объекта</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/portal/legal-entity/">Online услуги для юридических лиц</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/portal/">Online услуги для физических лиц</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/uslugi/legkiy-platezh/">Легкий платеж</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="https://mobti.ru/ca/">Удостоверяющий центр МОБТИ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </li>
+                <li class="">
+                    <a href="https://mobti.ru/filialy/">Филиалы</a>
+                </li>
+                <li class="">
+                    <a href="https://mobti.ru/voprosi/">Частые вопросы</a>
+                </li>
+                <li class="">
+                    <a href="https://mobti.ru/press-tsentr/">Пресс-центр</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <ul class="nav nav-justified header_menu state">
+                <li class="rosreestr" title="Росреестр">
+                    <a href="https://mobti.ru/portal/rosreestr/" class="state-menu"></a>
+                </li>
+                <li class="oms" title="ОМС">
+                    <a href="https://mobti.ru/portal/oms/" class="state-menu"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<nav class="service-icons">
+    <div class="service-icons__list">
+        <div id="bx_3218110189_19325" class="service-icons__item js-service-icons__item" title="Кадастровые работы">
+            <a class="service-icons__link" href="/uslugi/kadastrovye-raboty/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/25e/09aeb4f4e8db0994084dd395b82c8efa.png' %}" alt="Кадастровые работы">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/b93/99a6b1578325bef4ea74d165a8e2bbbb.png' %}" alt="Кадастровые работы">
+            </a>
+        </div>
+        <div id="bx_3218110189_19326" class="service-icons__item js-service-icons__item" title="Техническая инвентаризация">
+            <a class="service-icons__link" href="/uslugi/tekhnicheskaya-inventarizatsiya/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/2d2/c079522a9aa7759ee3ca57448c1f4789.png' %}" alt="Техническая инвентаризация">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/e25/0709904d1050bebc082f32d2b8af261f.png' %}" alt="Техническая инвентаризация">
+            </a>
+        </div>
+        <div id="bx_3218110189_19327" class="service-icons__item js-service-icons__item" title="СТП МОБТИ">
+            <a class="service-icons__link" href="/uslugi/stp-mobti/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/9b6/4b52ce08546f86c62dea479aa6cecdb7.png' %}" alt="СТП МОБТИ">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/03f/653246fe2878fe32f638a583db37d027.png' %}" alt="СТП МОБТИ">
+            </a>
+        </div>
+        <div id="bx_3218110189_19339" class="service-icons__item js-service-icons__item" title="Регистрация прав собственности">
+            <a class="service-icons__link" href="/uslugi/registratsiya-prav-sobstvennosti/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/479/a788f2ee1f8195fbc47ffce9d8691a73.png' %}" alt="Регистрация прав собственности">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/77c/3ec1752a1c841575a79b7c003650176a.png' %}" alt="Регистрация прав собственности">
+            </a>
+        </div>
+        <div id="bx_3218110189_19328" class="service-icons__item js-service-icons__item" title="Геодезия и картография">
+            <a class="service-icons__link" href="/uslugi/geodeziya-i-kartografiya/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/656/4171db52926c8fc1e629b642bfa1eb34.png' %}" alt="Геодезия и картография">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/b48/22b374cf29b7de7ddb9fb35fc35525c4.png' %}" alt="Геодезия и картография">
+            </a>
+        </div>
+        <div id="bx_3218110189_107129" class="service-icons__item js-service-icons__item" title="Маркшейдерские работы">
+            <a class="service-icons__link" href="/uslugi/marksheyderskie-raboty/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/fe5/surveying.png' %}" alt="Маркшейдерские работы">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/1fd/mark-bw.png' %}" alt="Маркшейдерские работы">
+            </a>
+        </div>
+        <div id="bx_3218110189_107127" class="service-icons__item js-service-icons__item" title="Представление интересов в суде">
+            <a class="service-icons__link" href="/uslugi/predostavlenie-interesov-v-sude/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/5ce/legal.png' %}" alt="Представление интересов в суде">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/741/mark-bw.png' %}" alt="Представление интересов в суде">
+            </a>
+        </div>
+        <div id="bx_3218110189_43401" class="service-icons__item js-service-icons__item" title="Установление зон с особыми условиями">
+            <a class="service-icons__link" href="/uslugi/ustanovlenie-zon-s-osobymi-usloviyami-ispolzovaniya-territoriy/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/ef5/zouit.png' %}" alt="Установление зон с особыми условиями">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/e85/zouit_grey.png' %}" alt="Установление зон с особыми условиями">
+            </a>
+        </div>
+        <div id="bx_3218110189_19333" class="service-icons__item js-service-icons__item" title="Оценка">
+            <a class="service-icons__link" href="/uslugi/otsenka/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/f6d/a89c3dbac4837e8125fec5212bd7bbb5.png' %}" alt="Оценка">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/f89/f72d23f420f1636c275d58d622bce423.png' %}" alt="Оценка">
+            </a>
+        </div>
+        <div id="bx_3218110189_19330" class="service-icons__item js-service-icons__item" title="Предоставление сведений">
+            <a class="service-icons__link" href="/uslugi/predostavlenie-svedeniy/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/83a/ba94f49cf8956896c9cabb9f7b03ab1c.png' %}" alt="Предоставление сведений">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/fba/1112fad62b3debe608a6477040ab0e80.png' %}" alt="Предоставление сведений">
+            </a>
+        </div>
+        <div id="bx_3218110189_60529" class="service-icons__item js-service-icons__item" title="Техническое заключение">
+            <a class="service-icons__link" href="/uslugi/tekhnicheskoe-zaklyuchenie/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/3a5/TZ_color.png' %}" alt="Техническое заключение">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/38b/TZ_gray.png' %}" alt="Техническое заключение">
+            </a>
+        </div>
+        <div id="bx_3218110189_19331" class="service-icons__item js-service-icons__item" title="Энергоаудит">
+            <a class="service-icons__link" href="/uslugi/energoaudit/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/5a6/951243ff0ea6b023aa9e04a3054b20d2.png' %}" alt="Энергоаудит">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/346/44fccb869f06b41a668e42b7b1b00d72.png' %}" alt="Энергоаудит">
+            </a>
+        </div>
+        <div id="bx_3218110189_19337" class="service-icons__item js-service-icons__item" title="Лесное проектирование">
+            <a class="service-icons__link" href="/uslugi/lesnoe-proektirovanie-i-planirovanie/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/b17/6d2d50dd35cb3b1786711f84aad32d94.png' %}" alt="Лесное проектирование">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/012/8be8bdd63aee528d894708e6b4d04b97.png' %}" alt="Лесное проектирование">
+            </a>
+        </div>
+        <div id="bx_3218110189_19340" class="service-icons__item js-service-icons__item" title="Экспертизы">
+            <a class="service-icons__link" href="/uslugi/ekspertizy/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/704/3e394394d19af9500cc448d2e5d41d09.png' %}" alt="Экспертизы">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/888/eab42e10a958ab12da1deced92b0d26b.png' %}" alt="Экспертизы">
+            </a>
+        </div>
+        <div id="bx_3218110189_19341" class="service-icons__item js-service-icons__item" title="Сертификация судебных экспертов">
+            <a class="service-icons__link" href="/uslugi/sertifikatsiya-sudebnykh-ekspertov/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/8fc/7ea639f22d85f0d6d1d5ab21a338c152.png' %}" alt="Сертификация судебных экспертов">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/e94/e0970014bfaf25e792deba1b3d99841a.png' %}" alt="Сертификация судебных экспертов">
+            </a>
+        </div>
+        <div id="bx_3218110189_19335" class="service-icons__item js-service-icons__item" title="Перепланировки">
+            <a class="service-icons__link" href="/uslugi/pereplanirovki/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/df1/e9dedd3c233b3c966430f6af2300d68a.png' %}" alt="Перепланировки">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/d21/414444d86d92745923f16d60592f509a.png' %}" alt="Перепланировки">
+            </a>
+        </div>
+        <div id="bx_3218110189_19329" class="service-icons__item js-service-icons__item" title="Раздел имущества">
+            <a class="service-icons__link" href="/uslugi/razdel-imushchestva/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/080/fd96d0da6b898d058ac667e17da9021e.png' %}" alt="Раздел имущества">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/f8e/f90d00001a26510bf72b3bd7d67f67fc.png' %}" alt="Раздел имущества">
+            </a>
+        </div>
+        <div id="bx_3218110189_19338" class="service-icons__item js-service-icons__item" title="Прочие услуги">
+            <a class="service-icons__link" href="/uslugi/prochie-uslugi/">
+                <img class="service-icons__image service-icons__image_colored" src="{% static 'mo_bti_static/upload/iblock/c29/089072198587f69c4454baba4706038a.png' %}" alt="Прочие услуги">
+                <img class="service-icons__image service-icons__image_monochrome" src="{% static 'mo_bti_static/upload/iblock/567/63dd7edb862a0e406461044609b683c7.png' %}" alt="Прочие услуги">
+            </a>
+        </div>
+    </div>
+</nav>
+
+<section class="container block-margin-bottom block-padding-none">
+    <h1 class="title__margin-bottom">Проверь технический паспорт, поэтажный план и экспликацию</h1>
+    <div class="row">
+        <div class="col-xs-60">
+            <div class="section-shadow">
+                <div class="row">
+                    <div class="col-lg-60 col-md-40 col-sm-60">
+                        <div class="service service_sub" style="overflow: inherit">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-15">
+                                    <a href="#" class="img-wrap service__icon">
+                                        <img src="{% static 'mo_bti_static/img/prover-tehpassport-logo.png' %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-lg-45 col-md-45 col-sm-45 col-xs-40">
+                                    <div class="service__text">
+                                        <p>
+                                            <b>Вы можете быть уверены в Московском областном БТИ!</b>
+                                        </p>
+                                        <p>
+                                        </p>
+                                        <p>
+                                            Здесь Вы можете проверить подлинность технического паспорта, поэтажного плана и экспликации.
+                                        </p>
+                                        <p>
+                                            После выдачи в любом филиале Московского областного БТИ технические паспорта, поэтажные планы&nbsp;и экспликации автоматически попадает в единую электронную базу.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="services-block container">
+    <div class="row">
+        <div class="col-xs-60">
+            <div class="section-shadow">
+                <div class="row">
+                    <div class="col-lg-60">
+                        <div class="block-padding block-border-bottom">
+                            <h2 class="title__margin-bottom">Проверь технический паспорт, поэтажный план и экспликацию</h2>
+                            <div class="contact_number">
+                                <span class="form-label">Проверочный код</span>
+                                <div class="code-input-wrapper">
+                                    <input type="text" name="part1" class="form-control form-control--col-5 js-code-input" maxlength="3"> -
+                                    <input type="text" name="part2" class="form-control form-control--col-5 js-code-input" maxlength="3"> -
+                                    <input type="text" name="part3" class="form-control form-control--col-5 js-code-input" maxlength="3"> -
+                                    <input type="text" name="part4" class="form-control form-control--col-5 js-code-input" maxlength="3">
+                                </div>
+                            </div>
+                            <button class="btn btn_online js-check-document-submit">Проверить</button>
+                        </div>
+                        <div class="col-lg-60 easy_paydata">
+                            <div class="block-padding block-border-bottom">
+                                <div id="contract_data">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container block-margin-bottom block-padding-none">
+    <div class="row">
+        <div class="col-xs-60">
+            <div class="section-shadow">
+                <div class="row">
+                    <div class="col-lg-60">
+                        <div class="block-padding block-border-bottom payment_table">
+                            <p>
+                                «<span style="color: #00a650;">Документ выдавался на объект недвижимости, расположенный по адресу: <b>{адрес}</b></span>»&nbsp;- это значит, что проверяемый Вами документ, подлинный.&nbsp;
+                            </p>
+                            «<span style="color: #ee1d24;">Документ не выдавался</span>» - это значит, что проверяемый Вами документ отсутствует в единой базе Московского областного БТИ.&nbsp;
+                            <br> В этом случае необходимо направить скан (или фото) Вашего документа на адрес электронный почты:&nbsp;<a href="mailto:dogovor@mobti.ru">dogovor@mobti.ru</a>&nbsp;. Наш консультант проверит все параметры договора и свяжется с Вами.&nbsp;
+                            <p>
+                                <br> По всем возникающим вопросам вы можете обратиться по телефону горячей линии:&nbsp;<b>+7 (498) 568-88-88</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-60">
+                <nav class="footer">
+                    <ul class="nav">
+                        <li><a href="https://mobti.ru/o-predpriyatii/">О компании</a></li>
+                        <li><a href="https://mobti.ru/uslugi/">Услуги</a></li>
+                        <li><a href="https://mobti.ru/online-uslugi/">ONLINE услуги</a></li>
+                        <li><a href="https://mobti.ru/filialy/">Филиалы</a></li>
+                        <li><a href="https://mobti.ru/voprosi/">Частые вопросы</a></li>
+                        <li><a href="https://mobti.ru/press-tsentr/">Пресс-центр</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-15 col-xs-60">
+                <div class="footer-text footer-text_copy">
+                    © 2012-2020
+                    <br> ГБУ Московской области&nbsp;«МОБТИ»
+                    <br> </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-45 col-xs-60">
+                <div class="footer-text">
+                    <a href="https://mobti.ru/upload/politika-persdannye.pdf" style="color: #337ab7;" target="_blank"><span style="background-color: #f3f3f3;">Политика ГБУ Московской области </span>«МОБТИ» в отношении обработки персональных данных и сведения о реализуемых требованиях к защите персональных данных</a> </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-25 col-xs-35 col-ss-60 col-lg-push-0 col-md-push-0 col-sm-push-20">
+                <div class="social-buttons">
+                    <div class="social-buttons__list">
+                        <a class="social-buttons__item" data-social="telegram" href="https://t-do.ru/mobti">
+                            <svg version="1.1" viewBox="0 0 100 82.4" xmlns="http://www.w3.org/2000/svg">
+                                <title>Telegram</title>
+                                <path d="m41.27 53.75-0.7504 20.41c-0.05863 2.559 2.875 1.995 3.936 0.3707l10.49-10.5 22.3 17.06c3.936 2.625 6.559 1.312 7.871-3.937l14.43-69.56c1.312-6.562-0.06613-9.249-6.559-6.562l-87.89 34.12c-6.559 2.625-6.559 5.25-1.312 6.562l22.3 6.562 52.47-32.81c2.561-2.124 5.247-1.312 2.624 1.312z" />
+                            </svg>
+                        </a>
+                        <a class="social-buttons__item" data-social="youtube" href="https://www.youtube.com/channel/UC0SAK7RR5WMujxMtmEtVH7g">
+                            <svg version="1.1" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+                                <title>Youtube</title>
+                                <path d="m50 0c-11.04 0-21.7 0.5465-31.73 1.564-9.665 1.042-17.18 8.932-17.8 18.7-0.305 4.814-0.4688 9.737-0.4688 14.73s0.1638 9.918 0.4688 14.73c0.625 9.773 8.138 17.67 17.8 18.7 10.02 1.022 20.68 1.564 31.73 1.564s21.7-0.5465 31.73-1.564c9.665-1.042 17.18-8.932 17.8-18.7 0.305-4.814 0.4688-9.737 0.4688-14.73s-0.1638-9.918-0.4688-14.73c-0.625-9.773-8.138-17.67-17.8-18.7-10.02-1.022-20.68-1.564-31.73-1.564zm-9.268 19.92 24.54 15.08-24.54 15.08z" />
+                            </svg>
+                        </a>
+                        <a class="social-buttons__item" data-social="facebook" href="https://www.facebook.com/gbu.mo.mobti">
+                            <svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <title>Facebook</title>
+                                <path d="m10 0c-2.65 0-5.195 1.055-7.07 2.93s-2.93 4.42-2.93 7.07v80c0 2.65 1.055 5.195 2.93 7.07s4.42 2.93 7.07 2.93h43.32v-38.74h-13.28v-15.23h13.28v-10.4c0-5.305 2.109-10.39 5.859-14.14 3.75-3.755 8.836-5.859 14.14-5.859h11.25v15.23h-11.01c-2.765 0-5.01 2.245-5.01 5.01v10.16h16.02l-3.906 15.23h-12.11v38.74h21.45c2.65 0 5.195-1.055 7.07-2.93s2.93-4.42 2.93-7.07v-80c0-2.65-1.055-5.195-2.93-7.07s-4.42-2.93-7.07-2.93z" />
+                            </svg>
+                        </a>
+                        <a class="social-buttons__item" data-social="vk" href="http://vk.com/mobti">
+                            <svg version="1.1" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
+                                <title>vk</title>
+                                <path d="m54.5 57.97c2.537 0 3.918-1.694 3.889-3.819-0.1292-8.001 2.975-12.31 8.579-6.694 6.2 6.21 7.483 10.51 15.01 10.51h13.33c3.367 0 4.691-1.085 4.691-2.788 0-3.602-5.921-9.958-10.94-14.62-7.025-6.532-7.354-6.686-1.304-14.55 7.504-9.762 17.32-22.7 8.637-22.7h-16.59c-3.217 0-3.45 1.815-4.596 4.52-4.146 9.795-12.02 22.91-15.02 20.97-3.129-2.024-1.696-9.612-1.458-21.53 0.0625-3.147 0.04583-5.304-4.754-6.423-2.621-0.6052-5.171-0.8556-7.537-0.8556-9.47 0-14.55 2.689-12.29 4.67 6.546 1.223 5.916 14.98 4.391 21.11-2.658 10.67-12.65-8.877-16.81-18.4-1.004-2.287-1.312-4.065-4.896-4.065h-13.56c-2.05 0-3.279 0.6678-3.279 2.154 0 2.512 12.33 28.48 24.11 41.2 11.48 12.42 22.49 11.3 30.39 11.3z" />
+                            </svg>
+                        </a>
+                        <a class="social-buttons__item" data-social="twitter" href="https://twitter.com/GUP_MO_MOBTI">
+                            <svg version="1.1" viewBox="0 0 100 82.5" xmlns="http://www.w3.org/2000/svg">
+                                <title>Twitter</title>
+                                <path d="m6.415 3.805c12.02 13.96 26.24 21.08 42.56 21.75-2.025-13.35 5.15-20.38 11.08-23.51 5.925-3.135 17.64-3.36 24.2 4.41 5.095-0.72 9.295-2.61 13.12-4.995-0.87 4.205-4.98 9.36-8.745 11.46 3.605-0.44 8.295-1.715 11.37-3.235-1.68 3.465-5.12 7.095-10.2 10.88 1.885 48.64-49.82 78.02-89.8 52.6 11.34 0.82 21.5-1.71 30.03-8.815-8.765-0.205-16.34-5.535-19.24-14.4 2.565 0.74 6.635 0.56 9.33-0.295-5.67-0.795-15.86-6.795-16.62-20.57 3.645 1.56 6.605 2.28 9.035 2.35-7.18-4.63-12.33-16.44-6.12-27.62z" />
+                            </svg>
+                        </a>
+                        <a class="social-buttons__item" data-social="instagram" href="https://www.instagram.com/mobti/">
+                            <svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <title>Instagram</title>
+                                <path d="m12.84 0h74.33c7.061 0 12.83 5.775 12.83 12.84v74.33c0 7.06-5.773 12.83-12.83 12.83h-74.33c-7.061 0-12.84-5.771-12.84-12.83v-74.33c0-7.062 5.779-12.84 12.84-12.84zm60.01 11.11c-2.479 0-4.502 2.03-4.502 4.509v10.77c0 2.479 2.022 4.505 4.502 4.505h11.3c2.475 0 4.502-2.026 4.502-4.505v-10.77c0-2.478-2.027-4.509-4.502-4.509zm15.85 31.18h-8.799c0.8343 2.725 1.287 5.599 1.287 8.587 0 16.63-13.92 30.12-31.09 30.12-17.16 0-31.08-13.49-31.08-30.12 0-2.988 0.4567-5.862 1.287-8.587h-9.18v42.25c0 2.188 1.786 3.968 3.972 3.968h69.64c2.188 0 3.97-1.78 3.97-3.968zm-38.6-11.96c-11.09 0-20.08 8.71-20.08 19.46 0 10.74 8.993 19.46 20.08 19.46 11.09 0 20.09-8.717 20.09-19.46 0-10.75-8.994-19.46-20.09-19.46z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-15 col-xs-25 col-ss-60 col-lg-pull-0 col-md-pull-0 col-sm-pull-20">
+                <div class="phone phone_footer">
+                    +7 (498) 568-88-88 </div>
+                <div class="phone phone_footer">
+                    &nbsp; </div>
+                <div class="email email_footer">Email: <a href="mailto:mobti@mobti.ru" target="_blank">mobti@mobti.ru</a></div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-20 col-xs-60">
+                <a href="http://extyl-pro.ru/" target="_blank" class="createby">
+                    <img src="{% static 'mo_bti_static/local/images/extyl.png' %}" class="createby__logo" alt="Extyl-pro">
+                    <div class="createby__text">
+                        Техподдержка сайта
+                        <br />Extyl-pro
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--<button class="btn btn_question question">Задать вопрос</button> -->
+<div class="popup popup_question question" style="z-index: 91;">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <div class="popup__btn_close"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<button class="btn btn_question payment">
+    Способы оплаты</button>
+<div class="popup popup_question payment" style="z-index: 91;">
+    <div class="popup__body payment">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <div class="mobti__wrap">
+                    <div class="mobti__text">
+                        <div>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                Оплатить услуги Московского областного БТИ можно:
+                            </p>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                - через сервис <a target="_blank" href="/uslugi/legkiy-platezh/">"Легкий платеж"</a>
+                            </p>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                -&nbsp;<a href="http://www.sberbank.ru/moscowoblast/ru/about/today/oib/" target="_blank">в отделениях Сбербанка России</a>;
+                            </p>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                -&nbsp;<a href="http://www.vbank.ru/about/offices/" target="_blank">в отделениях банка «Возрождение»</a>;
+                            </p>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                - путем перечисления денежных средств с банковского счета клиента;
+                            </p>
+                            <p class="rtejustify" style="margin: 10px 0px;">
+                                -&nbsp;<a href="http://mobti.ru/kontakty/oplata-cherez-platezhnye-terminaly-gup-mo-mobti.php?bitrix_include_areas=N&amp;clear_cache=Y">путем оплаты наличными средствами через платежные терминалы самообслуживания, установленные в подразделениях Московского областного БТИ (только для физических лиц)</a>.
+                            </p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="popup__btn_close"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup popup_media">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <div class="popup__btn_close"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup popup_awards">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <div class="popup__more">
+                    <button class="btn">Распечатать</button>
+                </div>
+                <div class="popup__btn_close"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup popup_ok">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <h2>Спасибо за обращение</h2>
+                <p>Заявка принята.</p>
+                <div class="popup__btn_close"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup popup_overview">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content" style="overflow: auto;overflow-x: hidden; height: 400px;">
+                <div class="html-content">
+
+                </div>
+                <a href="#" class="btn bx-ok">Ок</a>
+                <a href="#" class="btn bx-can">Отмена</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup popup_news-inner">
+    <div class="popup__body">
+        <div class="popup__wrapper">
+            <div class="popup__content">
+                <div class="popup__more"></div>
+                <div class="popup__btn_close"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
