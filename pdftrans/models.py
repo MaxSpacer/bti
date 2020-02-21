@@ -217,7 +217,12 @@ class Adress(models.Model):
             ret_string = self.global_appartment_type +' № '+ self.global_appartment + ', ' + self.sub_appartment_type +' '+ self.sub_appartment
         else:
             ret_string = self.global_appartment_type +' № '+ self.global_appartment
-        return ret_string
+            return ret_string
+
+    def get_full_adress(self):
+        if self.full_adress:
+            return_address_string = self.full_adress + self.get_second_part_full_adress()
+        return return_address_string
 
 
 class ExplicationListItem(models.Model):

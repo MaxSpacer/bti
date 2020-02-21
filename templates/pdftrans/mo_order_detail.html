@@ -32,7 +32,7 @@
                         <div class="callback-block__button js-callback-block__button callback-block__button--ringing" data-callback_disabled="false"></div>
                         <div class="callback-block-form js-callback-block-form">
                             <div class="callback-block-form__content js-callback-block-form__content">
-                                <form class="callback-block-form__form" data-ajax-path="/local/components/maximaster/widget.callback/ajax.php" method="POST">
+                                <form class="callback-block-form__form" data-ajax-path="/local/components/maximaster/widget.callback/ajax.php" method="POST">{% csrf_token %}
                                     <input type="hidden" name="action" value="submit_callback_form">
 
                                     <div class="callback-block-form__title">
@@ -452,6 +452,8 @@
                     <div class="col-lg-60">
                         <div class="block-padding block-border-bottom">
                             <h2 class="title__margin-bottom">Проверь технический паспорт, поэтажный план и экспликацию</h2>
+                            <form class="formsfor" action="" method="">{% csrf_token %}
+                            </form>
                             <div class="contact_number">
                                 <span class="form-label">Проверочный код</span>
                                 <div class="code-input-wrapper">

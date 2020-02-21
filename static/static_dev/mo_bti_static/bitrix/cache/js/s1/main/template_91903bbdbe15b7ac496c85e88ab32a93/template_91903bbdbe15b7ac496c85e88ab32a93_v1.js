@@ -67,7 +67,7 @@ $(document).on('submit', '.js-callback-block-form form', function(e) {
     var $content = $popup.find('.js-callback-block-form__content');
     var $block = $popup.closest('.js-callback-block');
     var $button = $block.find('.js-callback-block__button');
-    
+
     // Инпут ввода номера телефона
     var $phoneInput = $('#inp_phone', $form);
     var $phoneGroup = $phoneInput.parents('.form-group');
@@ -146,35 +146,47 @@ let documentChecker = {
     checkCode : function () {
         var code = this.concat();
         var context = this;
-        $.ajax({
-            url: '/payment/captcha.php',
-            method: 'post',
-            data: 'code=' + code,
-            success: function (response) {
-                if (response == '1') {
-                    context.dbCheck(code);
-                } else {
-                    context.showError('Проверка &laquo;Я не робот&raquo; не пройдена.');
-                }
-            }
-        })
+        console.log('asdasdasd');
+        console.log(code);
+        console.log(context);
+        context.dbCheck(code);
+        // $.ajax({
+        //     url: '/payment/captcha.php',
+        //     method: 'post',
+        //     data: 'code=' + code,
+        //     success: function (response) {
+        //         if (response == '1') {
+                    // context.dbCheck(code);
+        //         } else {
+        //             context.showError('Проверка &laquo;Я не робот&raquo; не пройдена.');
+        //         }
+        //     }
+        // })
     },
 
 
     dbCheck: function (code) {
         this.showLoading();
+        var cont = this;
+        var data = {}
+        data.code = code;
+        var csrf_token = $('.formsfor [name="csrfmiddlewaretoken"]').val();
+        data.csrfmiddlewaretoken = csrf_token;
+        console.log('this2');
+        console.log(this);
         $.ajax({
-            url: '/payment/checkDocument.php',
+            url: '/uslugi/prover-document/order_checking/',
             method: 'post',
-            data: {'code' : code},
+            data: data,
             dataType: 'json',
-            success: this.showResponse.bind(this)
+            success: cont.showResponse.bind(cont)
         });
     },
 
     showResponse : function(response) {
-
         if (response['STATUS']) {
+            console.log('this-----');
+            console.log(this);
             this.showSuccess(response['ObjectAdress']);
         } else {
             switch (response['ERROR_MESSAGE_CODE']) {
@@ -202,7 +214,7 @@ let documentChecker = {
 
     showSuccess : function(adress)
     {
-        this.$answerContainer.html('<div style="color: #00a650;">Документ выдавался на объект недвижимости, расположенный по адресу: <strong>' + adress + '</strong></div>');
+        this.$answerContainer.html('<div style="color: #00a650;">Документ выдавался на объект недвижимости, расположенный по адресу:<br> <strong>' + adress + '</strong></div>');
         $('.easy_paydata').show("slow");
     },
 
