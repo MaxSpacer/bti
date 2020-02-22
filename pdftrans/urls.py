@@ -18,7 +18,7 @@ from . import views
 from django.views.generic import DetailView, TemplateView
 from .models import Order
 
-app_name = 'pdftrans'
+# app_name = 'pdftrans'
 
 
 urlpatterns = [

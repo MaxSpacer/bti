@@ -45,26 +45,17 @@ class OrderFullView(DetailView):
 
 def document_bti_pdf(request, pk):
     order = get_object_or_404(Order, pk=pk)
-    print('order')
-    print(order)
     print(order.id)
-    # print(order.adress)
-    # print(order.adress.street)
     explication_list_items = ExplicationListItem.objects.filter(order_list=order.id).first()
     try:
         str_for_traslit = unidecode(order.adress.city_name + '_' + order.adress.street + '_d_' + order.adress.house_number +'_k_'+ explication_list_items.apart_number)
         str_for_traslit = slugify(str_for_traslit)  + '.pdf'
-        # str_for_traslit = str_for_traslit
     except Exception as e:
         str_for_traslit = str(order.order_number) + '.pdf'
     # filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
     response = HttpResponse(content_type="application/pdf")
     response['Content-Disposition'] = "inline; filename={date}-{address}".format(
         date=order.created.strftime('%Y-%m-%d'),
-        # name=slugify(order.order_number),
-        # print('order')
-        # print(order.id)
-        # print(order.adress)
         address=str_for_traslit,
     )
     html_string = render_to_string("pdf_templates/pdf_full.html", {

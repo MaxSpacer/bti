@@ -15,7 +15,7 @@ from settings_pdftrans.models import *
 from barcode.writer import ImageWriter
 from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator
-
+from django.shortcuts import get_object_or_404
 
 def get_subject_type_choices():
     SUBJECT_TYPE_CHOICES = [(str(e.subject_type), e.subject_type) for e in SubjectType.objects.all()]
@@ -58,12 +58,10 @@ def get_name_object_default():
 class Order(models.Model):
     order_number = models.PositiveSmallIntegerField(blank=True, null=True, default = 0)
     uploaded_pdf = models.FileField(verbose_name="Исходный документ(pdf)", upload_to='uploaded_pdf/', blank=True, null=True, max_length=250)
-    # old_source = models.BooleanField(verbose_name="если исходник старого образца, то поставьте галку", default=False)
     customer_data = models.DateTimeField(verbose_name="дата документа", auto_now_add=False, auto_now=False, default=timezone.now)
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
-    # name_object = models.CharField(verbose_name="наименование объекта учета", max_length=64, choices=get_name_object_choices(), default=get_name_object_default())
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=30)
@@ -80,7 +78,7 @@ class Order(models.Model):
         # v = str(random.randint(1000000000, 2147483645))
         uniq_random_time_number = datetime.datetime.now().strftime('%f%S%M')
         print(uniq_random_time_number)
-
+        ### barcode generating
         barcode_file_name = "bar_%s" % uniq_random_time_number
         barcode_full_path = os.path.join(settings.MEDIA_ROOT, 'barcode', str(barcode_file_name + '.png'))
         barcode_path = os.path.join(settings.MEDIA_ROOT, 'barcode', barcode_file_name)
@@ -114,6 +112,7 @@ class Order(models.Model):
         d.text((460,3), barcode_text, font=fnt, fill=(0))
         barcode_formated.save(barcode_full_path)
 
+        ### qrcode generating
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number
         qrcode_full_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_file_name)
         qrcode_path_for_bd = "qrcode/%s" % qrcode_file_name
@@ -124,8 +123,10 @@ class Order(models.Model):
         border=0,
         )
         domain = Site.objects.get_current().domain
-        # data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
-        data_url = 'http://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        domain_MO = get_object_or_404(Site, pk = 2)
+        data_url = 'https://{domain}/get-order-info/qr/{name}'.format(domain=domain, name=uniq_random_time_number)
+        if self.subj_type == 'Московская область':
+            data_url = 'https://{domain}/uslugi/prover-document/'.format(domain=domain_MO)
         qr.add_data(data_url)
         qr.make(fit=True)
         img = qr.make_image()
