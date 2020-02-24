@@ -25,7 +25,30 @@ class ExplicationSquareTotalInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.fields]
-    readonly_fields = ('barcode','qrcode','order_number')
+    # def full_pdf_url(self, obj):
+    #     return format_html("<a href='{url}'>{url}</a>", url=obj.fullpdf_url_staff)
+    # readonly_fields = ['full_pdf_url', 'fullpdf_url_staff', 'order_image',]
+    # readonly_fields = ['fullpdf_url_staff', 'order_image']
+    readonly_fields = ('barcode','qrcode','order_number','is_emailed')
+    # readonly_fields = ('my_clickable_link',)
+
+    # def full_pdf_url(self, instance):
+    #     print('instance---------=------------=---------=')
+    #     print(instance.subj_type)
+    #     if instance.subj_type == 'Москва':
+    #
+    #
+    #     return format_html(
+    #         '<a href="{0}" target="_blank">{0}</a>',
+    #         instance.id,
+    #         # instance.<link-field>,
+    #     )
+        # return format_html(
+        #     '<a href="{0}" target="_blank">{1}</a>',
+        #     instance.<link-field>,
+        #     instance.<link-field>,
+        # )
+    # full_pdf_url.short_description = "Click Me"
     inlines = [OrderImageInline, AdressInline, ExplicationSquareTotalInline, ExplicationListItemInline]
 admin.site.register(Order, OrderAdmin)
 

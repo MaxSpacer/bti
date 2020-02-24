@@ -18,7 +18,7 @@ from . import views
 from django.views.generic import DetailView, TemplateView
 from .models import Order
 
-# app_name = 'pdftrans'
+app_name = 'pdftrans'
 
 
 urlpatterns = [
@@ -27,5 +27,6 @@ urlpatterns = [
     path('<int:pk>/', DetailView.as_view(model=Order,template_name = 'pdftrans/order_detail.html'), name='order_detail_n'),
     path('pdf/<int:pk>/', views.OrderPrintView.as_view(), name='order_pdf_view_n'),
     path('fullpdf/<int:pk>/', views.document_bti_pdf, name='order_full_pdf_view_n'),
+    path('mofullpdf/<int:pk>/', views.document_mo_bti_pdf, name='order_mo_full_pdf_view_n'),
     path('qr/<int:referer_id>/', views.OrderRedirectView, name='order_redirect_view_n'),
 ]

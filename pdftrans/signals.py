@@ -28,10 +28,10 @@ from .parser import adress_parser_func, get_source_adress_func, pull_adress_db
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
     uploaded_pdf_url = instance.uploaded_pdf.path
-    explication_adress_areas=['50,720,400,665']
+    explication_adress_areas=['50,720,555,665']
     tech_pasports_adress_areas=['30,675,600,615']
     # tech_pasports_adress_areas=['10,820,450,600']
-    if instance.doc_type == 'Экспликация на помещение':
+    if instance.doc_type == 'План и экспликация':
     #     if instance.old_source:
     #         explication_adress_areas=['50,680,780,100']
         # table_areas  =
@@ -72,7 +72,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     if i > 2 and x['9'] != '':
                         if x['0'] != '':
                             if x['0'].isdigit():
-                                floor_str = 'ЭТАЖ ' + x['0']
+                                floor_str = x['0']
                                 floor_list.append(floor_str)
                             else:
                                 floor_list.append(x['0'])
@@ -93,8 +93,8 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     i += 1
                 explication_list_items = ExplicationListItem.objects.filter(order_list=instance)
                 def string_to_correct_decimal(string):
-                    print('string')
-                    print(string)
+                    # print('string')
+                    # print(string)
                     result = Decimal(string.strip(" '").replace(',', '.'))
                     return result
                 square_total_sum = Decimal("0.0")
@@ -108,28 +108,28 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 for items in explication_list_items:
                     if items.square_total_item:
                         square_total_sum += string_to_correct_decimal(items.square_total_item)
-                        print('square_total_sum')
-                        print(square_total_sum)
+                        # print('square_total_sum')
+                        # print(square_total_sum)
                     if items.square_general_item:
                         square_general_sum += string_to_correct_decimal(items.square_general_item)
-                        print('square_general_sum')
-                        print(square_general_sum)
+                        # print('square_general_sum')
+                        # print(square_general_sum)
                     if items.square_advanced_item:
                         square_advanced_sum += string_to_correct_decimal(items.square_advanced_item)
-                        print('square_advanced_sum')
-                        print(square_advanced_sum)
+                        # print('square_advanced_sum')
+                        # print(square_advanced_sum)
                     if items.square_logdi_item:
                         square_logdi_sum += string_to_correct_decimal(items.square_logdi_item)
-                        print('square_logdi_sum')
-                        print(square_logdi_sum)
+                        # print('square_logdi_sum')
+                        # print(square_logdi_sum)
                     if items.square_balkon_item:
                         square_balkon_sum += string_to_correct_decimal(items.square_balkon_item)
-                        print('square_balkon_su')
-                        print(square_balkon_sum)
+                        # print('square_balkon_su')
+                        # print(square_balkon_sum)
                     if items.square_another_item:
                         square_another_sum += string_to_correct_decimal(items.square_another_item)
-                        print('square_another_sum')
-                        print(square_another_sum)
+                        # print('square_another_sum')
+                        # print(square_another_sum)
                     v, created = ExplicationSquareTotal.objects.update_or_create(
                     order=instance,
                     defaults={
@@ -144,9 +144,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     )
         print('floor_list')
         print(floor_list)
-        current_site = Site.objects.get_current().domain
-        # path_full_pdf = "https://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
-        path_full_pdf = "http://%s%s" % (current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
         doc = fitz.open(uploaded_pdf_url)
         # for floor_item in floor_list:
         for page in doc:
@@ -176,14 +173,13 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 im = trim(im)
                 im.save(path_img_scheme)
                 # order_img_clear = OrderImage.objects.filter(order_fk=instance).delete()
-
                 floor_item = floor_list.pop(0)
-                print('floor_list------------2')
+                print('floor_list2')
                 print(floor_list)
                 create_img = OrderImage(
                 order_fk=instance,
                 order_image = path_img_scheme_bd,
-                fullpdf_url_staff = path_full_pdf,
+                # fullpdf_url_staff = path_full_pdf,
                 floor_for_image = floor_item
                 )
                 create_img.save()
@@ -243,7 +239,7 @@ def export_data_pdf(sender, instance, created, **kwargs):
         order_tech_fk=instance,
         defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
         )
-
+    instance.get_itog_url()
 
     # sending email method -=send_mail=-
     # path_full_pdf_for_email = str(path_full_pdf)

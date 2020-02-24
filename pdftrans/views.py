@@ -16,6 +16,15 @@ from unidecode import unidecode
 from django.core.exceptions import ObjectDoesNotExist
 
 
+def get_name_file_output(arg_order):
+    try:
+        str_for_traslit = unidecode(arg_order.adress.city_name + '_' + arg_order.adress.street + '_d_' + arg_order.adress.house_number +'_k_'+ arg_order.adress.global_appartment)
+        str_for_traslit = slugify(str_for_traslit)  + '.pdf'
+    except Exception as e:
+        str_for_traslit = str(arg_order.order_number) + '.pdf'
+    return str_for_traslit
+
+
 class OrderView(DetailView):
     model = Order
     template_name = 'pdf_templates/pdf.html'
@@ -26,42 +35,61 @@ class OrderPrintView(WeasyTemplateResponseMixin, OrderView):
         settings.STATIC_ROOT + '/css/styles1.css',
     ]
     pdf_attachment = False
+    # w = get_name_file_output(self.kwargs.get(self.slug_url_kwarg, None))
     pdf_filename = 'doc.pdf'
 
 
-class OrderFullView(DetailView):
-    model = Order
-    template_name = 'pdf_templates/pdf_full.html'
+def response_draft(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    print(order.id)
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = "inline; filename={date}-draft-{address}".format(
+        date=order.created.strftime('%Y-%m-%d'),
+        address=get_name_file_output(order),
+    )
+    html_string = render_to_string("pdf_templates/draft.html", {
+        'order': order,
+    })
+    font_config = FontConfiguration()
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
+    html.write_pdf(response, stylesheets=[
+    CSS(os.path.join(settings.STATIC_ROOT, 'css', 'bootstrap.min.css')),
+    CSS(os.path.join(settings.STATIC_ROOT, 'css', 'styles_draft.css'))
+    ], font_config=font_config)
+    return response
 
-# class OrderPrintFullView(WeasyTemplateResponseMixin, OrderFullView):
-#     pdf_stylesheets = [
-#         settings.STATIC_ROOT + '/css/bootstrap.min.css',
-#         settings.STATIC_ROOT + '/css/styles3.css',
-#     ]
-#     pdf_attachment = False
-#     pdf_filename = 'documents.pdf'
 
+def document_mo_bti_pdf(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    print(order.id)
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = "inline; filename={date}-{address}".format(
+        date=order.created.strftime('%Y-%m-%d'),
+        address=get_name_file_output(order),
+    )
+    html_string = render_to_string("pdf_templates/mo_pdf_full.html", {
+        'order': order,
+    })
+    font_config = FontConfiguration()
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
+    html.write_pdf(response, stylesheets=[
+    CSS(os.path.join(settings.STATIC_ROOT, 'css', 'bootstrap.min.css')),
+    CSS(os.path.join(settings.STATIC_ROOT, 'css', 'styles_mo.css'))
+    ], font_config=font_config)
+    return response
 
 
 def document_bti_pdf(request, pk):
     order = get_object_or_404(Order, pk=pk)
     print(order.id)
-    explication_list_items = ExplicationListItem.objects.filter(order_list=order.id).first()
-    try:
-        str_for_traslit = unidecode(order.adress.city_name + '_' + order.adress.street + '_d_' + order.adress.house_number +'_k_'+ explication_list_items.apart_number)
-        str_for_traslit = slugify(str_for_traslit)  + '.pdf'
-    except Exception as e:
-        str_for_traslit = str(order.order_number) + '.pdf'
-    # filename = os.path.join(settings.MEDIA_ROOT, 'temp', str_for_traslit)
     response = HttpResponse(content_type="application/pdf")
     response['Content-Disposition'] = "inline; filename={date}-{address}".format(
         date=order.created.strftime('%Y-%m-%d'),
-        address=str_for_traslit,
+        address=get_name_file_output(order),
     )
     html_string = render_to_string("pdf_templates/pdf_full.html", {
         'order': order,
     })
-
     font_config = FontConfiguration()
     html = HTML(string=html_string, base_url=request.build_absolute_uri())
     html.write_pdf(response, stylesheets=[

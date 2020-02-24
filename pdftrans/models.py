@@ -16,6 +16,7 @@ from barcode.writer import ImageWriter
 from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 
 def get_subject_type_choices():
     SUBJECT_TYPE_CHOICES = [(str(e.subject_type), e.subject_type) for e in SubjectType.objects.all()]
@@ -72,6 +73,18 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
+    def get_itog_url(self):
+        current_site = Site.objects.get_current().domain
+        prefix = settings.WEB_PROTOCOL_STRING
+        if self.subj_type == 'Москва':
+            path_full_pdf = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': self.pk}))
+        elif self.subj_type == 'Московская область':
+            path_full_pdf = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_mo_full_pdf_view_n', kwargs={'pk': self.pk}))
+        return path_full_pdf
 
     def generate_qr_bar_code(self):
         print(self.doc_type)
@@ -135,9 +148,6 @@ class Order(models.Model):
         self.barcode = (barcode_path_for_bd)
         self.order_number = uniq_random_time_number
 
-    class Meta:
-        verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
 
     def __str__(self):
         return "Ордер № %s %s" % (self.id, self.order_number)
@@ -150,6 +160,7 @@ class Order(models.Model):
         super(Order, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+
         if self.order_number:
             pass
         else:
@@ -160,7 +171,7 @@ class Order(models.Model):
 class OrderImage(models.Model):
     order_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Ордер')
     order_image = models.ImageField('схема помещения', blank=True, null=True, max_length=250)
-    fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
+    # fullpdf_url_staff = models.URLField(max_length=250, blank=True, null=False)
     floor_for_image = models.CharField(verbose_name="план этажа", max_length=32, blank=True, null=True, default='')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -207,7 +218,7 @@ class Adress(models.Model):
     global_appartment = models.CharField(verbose_name="номер помещения", max_length=8, blank=True, null=False, default = '')
     sub_appartment_type = models.CharField(verbose_name="тип подпомещения", max_length=64, blank=True, null=False, default = '')
     sub_appartment = models.CharField(verbose_name="номер подпомещения", max_length=32, blank=True, null=False, default = '')
-    # string_appartment = models.CharField(verbose_name="Строка с номером помещения", max_length=8, blank=True, null=False, default = '')
+    qtyroom = models.CharField(verbose_name="кол-во комнат для МО", max_length=16, blank=True, null=False, default = '')
 
     class Meta:
         verbose_name = 'Адрес'
@@ -218,7 +229,7 @@ class Adress(models.Model):
             ret_string = self.global_appartment_type +' № '+ self.global_appartment + ', ' + self.sub_appartment_type +' '+ self.sub_appartment
         else:
             ret_string = self.global_appartment_type +' № '+ self.global_appartment
-            return ret_string
+        return ret_string
 
     def get_full_adress(self):
         if self.full_adress:
@@ -263,3 +274,19 @@ class ExplicationSquareTotal(models.Model):
 
     def __str__(self):
         return "Итоговые площади к %s" % self.order
+
+
+# class OrderItog(models.Model):
+#     order_output_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Основной ордер')
+#     order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
+#     order_output = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'Итоги заказа')
+#     order_itog_pdf_url = models.CharField(max_length=250, blank=True, null=True)
+#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+#
+#     def __str__(self):
+#         return "Итоги по %s" % self.order_output_fk
+#
+#     class Meta:
+#         verbose_name = 'Итог заказа'
+#         verbose_name_plural = 'Итоги заказа'

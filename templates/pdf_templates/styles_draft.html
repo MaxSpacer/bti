@@ -277,8 +277,8 @@
             {% for ord_imag in order.orderimage_set.all %}
                 <style media="screen, print">
                     /* increment1 less for no fullpdf */
-                    @page :nth({{ forloop.counter }}){
-                    /* @page :nth({{ forloop.counter|increment1 }}){ */
+                    /* @page :nth({{ forloop.counter }}){ */
+                    @page :nth({{ forloop.counter|increment1 }}){
                         margin: 9mm 9mm 9mm 9mm;
                         border: 3px solid;
                     }
@@ -311,7 +311,7 @@
                         </table>
                     </div>
                     <div class="text-uppercase p-3 mt-4" style="font-size:;">
-                        ЭТАЖ {{ ord_imag.floor_for_image }}
+                        {{ ord_imag.floor_for_image }}
                     </div>
                 </div>
                 <div class="schema_img" >
