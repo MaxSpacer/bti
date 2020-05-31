@@ -63,10 +63,8 @@ def document_mo_bti_pdf(request, pk):
     order = get_object_or_404(Order, pk=pk)
     print(order.id)
     response = HttpResponse(content_type="application/pdf")
-    response['Content-Disposition'] = "inline; filename={date}-{address}".format(
-        date=order.created.strftime('%Y-%m-%d'),
-        address=get_name_file_output(order),
-    )
+    response['Content-Disposition'] = "inline; filename={date}-{address}".format(date=order.created.strftime('%Y-%m-%d'),
+                                                                                address=get_name_file_output(order),)
     html_string = render_to_string("pdf_templates/mo_pdf_full.html", {
         'order': order,
     })

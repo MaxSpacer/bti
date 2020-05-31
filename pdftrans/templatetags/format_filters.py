@@ -57,32 +57,21 @@ def intspace(value):
         i+=1
     return l
 
-# @register.filter('absolute_address')
-# def absolute_address(value):
-#     s = str(value)
-#     list = [
-#         'улица',
-#         'ул.',
-#         'переулок',
-#         'пер.',
-#         'проспект',
-#         'пр-т.',
-#         'просп.',
-#         'проезд',
-#         'пр-д.',
-#         'пр.',
-#         'шоссе',
-#         'ш.',
-#         'площадь',
-#         'пл.',
-#         'набережная',
-#         'наб.',
-#         'бульвар',
-#         'б-р.',
-#         'бул.',
-#         ]
-#     for x in list:
-#         if x in s:
-#             s = s.replace(x, "")
-#             s = s.replace('  ', " ")
-#     return s
+
+@register.filter('threedigit')
+def threedigit(value):
+    ret_str = ''
+    line = '00' + str(value)
+    n=3
+    l = [line[i:i+n] for i in range(0, len(line), n)]
+    for j in l:
+        ret_str = ret_str + '-' + j
+    return ret_str.strip('-')
+
+
+@register.filter('advanced')
+def advanced(value):
+    if "жилая" in value :
+        return 'жилая'
+    else:
+        return value

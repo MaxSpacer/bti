@@ -71,6 +71,7 @@ def adress_parser_func(arg_adress_string):
     'переулок',
     # 'пер.',
     'проспект',
+    'аллея',
     # 'пр-т.',
     # 'просп.',
     'проезд',
@@ -162,6 +163,7 @@ def pull_adress_db(arg_instance_order, arg_begin_dict):
     municipal_flag = 0
     sub_appartment_flag = 0
     for key, value in arg_begin_dict.items():
+
         if key == 'район':
             k = 'rayon'
             v = value
@@ -206,6 +208,7 @@ def pull_adress_db(arg_instance_order, arg_begin_dict):
             'набережная',
             'бульвар',
             'улица',
+            'аллея',
             ):
             k = 'street_type'
             v = key

@@ -1,24 +1,24 @@
-{% load static %}
-{% load format_filters %}
-{% load l10n %}
+{% load static %} {% load format_filters %} {% load l10n %}
 
 <!DOCTYPE html>
+
 <head>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <style type="text/css" media="screen, print">
         @font-face {
-                font-family: "Ascon";
-                src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
-                /* font-family: "Times New Roman";
+            font-family: "Ascon";
+            src: url({% static '/fonts/ascon.ttf' %}) format('truetype');
+            /* font-family: "Times New Roman";
                 src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype'); */
         }
+
         @font-face {
-                font-family: "Times New Roman";
-                src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
+            font-family: "Times New Roman";
+            src: url({% static '/fonts/Times_New_Roman.ttf' %}) format('truetype');
         }
 
         body {
-            font-size: 1.4rem !important;
+            /* font-size: 1.4rem !important; */
         }
         /* .page2{
             font-stretch: ultra-condensed;
@@ -29,261 +29,292 @@
             letter-spacing: 0.4px;
         } */
 
-        .page, .page2, .page3{
+        .page,
+        .page2,
+        .page3 {
             font-family: "Times New Roman";
             /* font-size: 12em; */
             letter-spacing: auto;
         }
-        h4{font-weight: 800;}
+
+        h4 {
+            font-weight: 800;
+        }
     </style>
 </head>
+
 <body>
-            {% for ord_imag in order.orderimage_set.all %}
-                <style media="screen, print">
-                    /* increment1 less for no fullpdf */
-                    /* @page :nth({{ forloop.counter }}){ */
-                    @page :nth({{ forloop.counter }}){
-                        margin: 18mm 18mm 18mm 18mm;
-                        border: 2px solid;
-                    }
-                </style>
-            <div class="page2 text-center">
-                <div class="top-block">
-                    <div class="myborder p-1">
-                        <table class="w-100">
-                            <tr">
-                                <td>
-                                    <h4 class="mb-1">
+    {% for ord_imag in order.orderimage_set.all %}
+    <style media="screen, print">
+        /* increment1 less for no fullpdf */
+        /* @page :nth({{ forloop.counter }}){ */
+
+        @page :nth({{forloop.counter}}) {
+            margin: 18mm 18mm 55mm 18mm;
+            border: 2px solid;
+        }
+    </style>
+    <div class="page2 text-center">
+        <div class="top-block">
+            <div class="myborder p-1">
+                <table class="w-100">
+                    <tr>
+                        <td>
+                            <h4 class="mb-1">
                                         Поэтажный план {{ order.adress.qtyroom }}-комнатной {{ order.adress.global_appartment_type|possessive_case }} № {{ order.adress.global_appartment }}
                                     </h4>
-                                </td>
-                                <!-- <td> -->
-                                    <!-- <h3 class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</h3> -->
-                                    <!-- <div class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div> -->
-                                <!-- </td> -->
-                            </tr>
-                            <tr>
-                                <td style="line-height: 70%;">
-                                    (выкопировка из поэтажного плана дома) литера А
-                                </td>
-                            </tr>
-                            <!-- <tr>&nbsp<td></td></tr> -->
-                            <tr>
-                                <td class="p-3 font-italic" style="line-height: 99%;">{{order.adress.full_adress}} {{ order.adress.get_second_part_full_adress }}</td>
-                            </tr>
-                            <!-- <tr>&nbsp<td></td></tr> -->
-                            <tr style="line-height: 98%;">
-                                <td class="text-center">
-                                    <div class="d-block mx-auto" style="width: 60%; border-bottom: 1px solid black;">
-                                        Масштаб 1:200
-                                    </div>
-                                    <div class="pt-1">
-                                        Этаж: {{ ord_imag.floor_for_image }}
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="schema_img" >
-                    <img class=" " src="{{ ord_imag.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%"/>
-                </div>
-                <table class="legenda_tbl">
-                  <tr>
-                    <td class="pb-2" colspan="2">Условные обозначения:</td>
-                  </tr>
-                  <tr>
-                    <td class="">
-                        <img class="legenda_img" src="{% static 'img/legenda-1.png' %}" alt="Event QR code" />
-                    </td>
-                    <td class="">стена с окном и дверью</td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <img class="legenda_img" src="{% static 'img/legenda-2.png' %}" alt="Event QR code" />
-                      </td>
-                    <td class="">линейный размер</td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <img class="legenda_img" src="{% static 'img/legenda-4.png' %}" alt="Event QR code" />
-                      </td>
-                    <td class="">номер комнаты/площадь</td>
-                  </tr>
-                  <tr>
-                      <td class="apart_number_legend">
-                          {% if order.type_object == 'Жилое' %}
-                              кв.
-                          {% else %}
-                              пом.
-                          {% endif %}
-                          {{ order.adress.global_appartment }}&nbsp
-                      </td>
-                    <td class="">номер помещения</td>
-                  </tr>
-                </table>
-                <table class="table-page2 text-center">
-                  <tr style="border: 1px solid black;">
-                    <td class="px-5 py-2" colspan="4">Поэтажный план составлен по состоянию на<br> {{ order.customer_data|date:"d.m.Y" }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="3"></td>
-                    <td>1:100</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left pl-2">Исполнил</td>
-                    <td>{{ order.engineer_name }}</td>
-                    <td><span class=""></span></td>
-                    <td>{{ order.customer_data|date:"d.m.Y" }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left pl-2">Проверил</td>
-                    <td>{{order.customer_name}}</td>
-                    <td><span class="px-1"></span></td>
-                    <td>{{ order.customer_data|date:"d.m.Y" }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left pl-2">Принял</td>
-                    <td>{{order.customer_name}}</td>
-                    <td><span class="px-3"></span></td>
-                    <td>{{ order.customer_data|date:"d.m.Y" }}</td>
-                  </tr>
+                        </td>
+                        <!-- <td> -->
+                        <!-- <h3 class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</h3> -->
+                        <!-- <div class="plan-size-font my-2">ПЛАН ПОМЕЩЕНИЯ</div> -->
+                        <!-- </td> -->
+                    </tr>
+                    <tr>
+                        <td style="line-height: 70%;">
+                            (выкопировка из поэтажного плана дома) литера А
+                        </td>
+                    </tr>
+                    <!-- <tr>&nbsp<td></td></tr> -->
+                    <tr>
+                        <td class="p-3 font-italic" style="line-height: 99%;">{{order.adress.full_adress}} {{ order.adress.get_second_part_full_adress }}</td>
+                    </tr>
+                    <!-- <tr>&nbsp<td></td></tr> -->
+                    <tr style="line-height: 98%;">
+                        <td class="text-center">
+                            <div class="d-block mx-auto" style="width: 60%; border-bottom: 1px solid black;">
+                                Масштаб 1:200
+                            </div>
+                            <div class="pt-1">
+                                Этаж: {{ ord_imag.floor_for_image }}
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
-<p style="page-break-after: always"></p>
-            {% endfor %}
+        </div>
+        <div class="schema_img">
+            <img class=" " src="{{ ord_imag.order_image.url }}" alt="schema_img" style="width:{{ order.width_image_schema }}%" />
+        </div>
+        <div class="legenda_tbl">
+            <div class="row">
 
-
-            <div class="page3 text-center" style="">
-                <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
-                    <div class="ml-5 d-flex flex-column justify-content-center page3-top">
-                        <div>ГБУ Московское городское бюро технической инвентаризации</div>
-                        <div>Адрес:  125009, г. Москва, Малый Гнездниковский пер.,  9, стр.7</div>
-                        <div>Телефон:  (495) 629-02-80, (495) 629-44-33</div>
-                    </div>
-                    <div class="">
-                        <img class="qr-code" src="{{ order.qrcode.url }}" alt="">
-                    </div>
-                </div>
-                <div class="explication-block">
-                    <h3 class="text-uppercase mb-3" style="font-weight:bold;">
-                      ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ ПЛАНУ ПОМЕЩЕНИЯ
-                    </h3>
-                    <div class="text-left ml-2">
-                        <p class="mb-2">
-                            Адрес (иное описание местоположения):
-                        </p>
-                        <p class="font-weight-bold mb-2" style="width:101%">
-                            {{ order.adress.full_adress }}
-                        </p>
-                        <p class="">{{ order.adress.get_second_part_full_adress }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="explications-list-block">
-                    <table class="table-explicate-bordered table-counter w-100 mt-0 pt-0" style="font-size: 1.2rem;"
-                      <tr>
-                        <td rowspan="3">Этаж</td>
-                        <td rowspan="3">№№ комнат</td>
-                        <td rowspan="3">Характеристики комнат<br> и помещений</td>
-                        <td colspan="3">Площадь общая, кв.м.</td>
-                        <td colspan="3">Площадь помещений <br> вспомогательного<br> использования ( с коэф.),<br> кв.м</td>
-                        <td rowspan="3">Высота,<br> см</td>
-                      </tr>
-                      <tr>
-                        <td rowspan="2">Всего</td>
-                        <td colspan="2">в том числе</td>
-                        <td colspan="3">в т.ч.</td>
-                      </tr>
-                      <tr>
-                        <td>
-                            {% if order.type_object == 'Жилое' %}
-                                основная<br> (жилая)</td>
-                            {% else %}
-                                основная</td>
-                            {% endif %}
-                        <td>вспом.</td>
-                        <td>лоджий</td>
-                        <td>балконов</td>
-                        <td>прочих</td>
-                      </tr>
-
-                      {#% for items in order.explicationlistitem_set.all|dictsort:"floor_number"%#}
-                    {% for items in order.explicationlistitem_set.all %}
+            <!-- <div class="d-inline col-6"> -->
+                <table class="left_tbl d-inline">
                     <tr>
-                        <td>{{ items.floor_number }}</td>
-                        <td>{{ items.appart_number_item }}</td>
-                        <td class="text-nowrap">{{ items.appart_name_item }}</td>
-                        <td>{{ items.square_total_item|default_if_none:"" }}</td>
-                        <td>{{ items.square_general_item|default_if_none:"" }}</td>
-                        <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
-                        <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
-                        <td>{{ items.square_balkon_item|default_if_none:"" }}</td>
-                        <td>{{ items.square_another_item|default_if_none:"" }}</td>
-                        <td>{{ items.height_item|default_if_none:"" }}</td>
+                        <td class="text-left font-weight-bold pt-3 pb-3" colspan="2">Экспликация</td>
                     </tr>
-                        {% if forloop.counter == 16 or forloop.counter|multipliticy %}
-                            </table>
-<p style="page-break-after: always"></p>
-                            <table class="table-explicate-bordered table-counter w-100 mt-0 pt-0" style="font-size: 1.2rem;">
-                        {% endif %}
-                    {% endfor %}
-                      <tr>
-                          <td colspan="3">Итого по {{ order.adress.global_appartment_type|objective_case }}</td>
-                          <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_general_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
-                          <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td>
-                          <td></td>
-                      </tr>
-                      <tr>
-                          <td colspan="3">
-                              {% if order.type_object == 'Жилое' %}
-                                  Общая площадь ( с летними )</td>
-                              {% else %}
-                                  Общая площадь ( нежилые в т.ч )</td>
-                              {% endif %}
-                          <td>{{order.explicationsquaretotal.square_total_summa_global|unlocalize}}</td>
-                          <td colspan="6"></td>
-                          <!-- <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
+                    <tr>
+                        <td>Площадь всех частей здания (комнат и<br> помещений вспомогательного использования)<br> в том числе:</td>
+                        <td>51.2 кв.м</td>
+                    </tr>
+                    <tr>
+                        <td>1) помещений вспомогательного использования</td>
+                        <td class=""></td>
+                    </tr>
+                    <tr>
+                        <td>2) Общая площадь жилого пом-ния</td>
+                        <td>51.2 кв.м.</td>
+                    </tr>
+                    <tr>
+                        <td>из неё жилая</td>
+                        <td>22.4 кв.м.</td>
+                    </tr>
+                    <tr>
+                        <td>подсобная</td>
+                        <td>22.4 кв.м.</td>
+                    </tr>
+                </table>
+            <!-- </div> -->
+            <!-- <div class="d-inline col-6"> -->
+                <table class="table-page2 d-inline ml-auto">
+                    <tr>
+                        <td class="pt-3 pb-3 pl-1" colspan="3">Балашихинский филиал ГУП МО «МОБТИ»</td>
+                    </tr>
+                    <tr>
+                        <td>Изготовлено</td>
+                        <td></td>
+                        <td>{{ order.customer_data|date:"d.m.Y" }}</td>
+                    </tr>
+                    <tr>
+                        <td class="">По состоянию</td>
+                        <td>на</td>
+                        <td>{{ order.customer_data|date:"d.m.Y" }}</td>
+                    </tr>
+                    <tr>
+                        <td  class="">Изготовил</td>
+                        <td style="border-bottom: 1px solid;"></td>
+                        <td>{{ order.engineer_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="">Проверил</td>
+                        <td  style="border-bottom: 1px solid;"></td>
+                        <td>{{ order.customer_name }}</td>
+                    </tr>
+                </table>
+            <!-- </div> -->
+                <table class="end-legend ml-4 mt-3">
+                    <tr>
+                        <td class="pl-1 pr-2">Руководитель комплексной производственной группы</td>
+                        <td></td>
+                        <td  class="pl-2">{{ order.customer_name }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="vertical-align: top; border-top: 1px solid; width:150px;">подпись</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <!-- <p class="ml-4">Руководитель комплексной производственной группы ______________________ Беляева О.В.</p>
+                <span >подпись</span> -->
+        </div>
+        </div>
+        <div class="qr-code-block">
+            <div class="d-block">
+                <img class="qr-code" src="{{ order.qrcode.url }}" alt="">
+            </div>
+            <div class="d-block">
+                <span style="font-size:0.8rem;">
+                    {{ order.order_number|threedigit }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <p style="page-break-after: always"></p>
+    {% endfor %}
+
+    <div class="page3 text-center" style="">
+        <h3 style="font-weight:bold;">Экспликация к поэтажному плану</h3>
+        <table class="page3-title">
+            <tr>
+                <td style="border-bottom: 2px solid;">
+                    {{ order.adress.global_appartment_type }} № {{ order.adress.global_appartment }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    наименование объекта
+                </td>
+            </tr>
+        </table>
+        <div class="explication-block">
+            <div class="text-left ml-2">
+                <p class="mb-2">
+                    Адрес (местоположение) здания:
+                </p>
+                <span class="font-weight-bold" style="width:101%">
+                    {{ order.adress.full_adress }}
+                </span>
+            </div>
+        </div>
+
+        <!-- <div class="explications-list-block p-0 m-0"> -->
+            <table class="table-explicate-bordered table-counter" style="font-size: 0.7rem;">
+                    <tr class="table-tr-height">
+                        <td rowspan="3" class="vertical-mode">Литера</td>
+                        <td rowspan="3" class="vertical-mode">Этаж</td>
+                        <td rowspan="3" class="vertical-mode text-nowrap">Номер помещения</td>
+                        <td rowspan="3" class="vertical-mode text-nowrap">Номер по плану</td>
+                        <td rowspan="3">Назначение<br> помещений: <br>жилая комната,<br> кухня и т.д.</td>
+                        <td rowspan="3" class="vertical-mode">Площадь всех<br> частей здания<br>(комнат и помещений<br> вспомогательного<br> использования)</td>
+                        <td colspan="4">в том числе</td>
+                        <td rowspan="3" class="vertical-mode">Высота</td>
+                        <td rowspan="3" class="vertical-mode">Площадь помещений<br> общего пользования</td>
+                        <td rowspan="3" class="vertical-mode">Самовольно переустроенная<br> или перепланированная<br> площадь</td>
+                    </tr>
+                    <tr class="table-tr-height">
+                        <td rowspan="2" class="vertical-mode">Общая площадь<br> жилых помещений</td>
+                        <td colspan="2">из нее</td>
+                        <td rowspan="2" class="vertical-mode">Площадь помещений<br> вспомогательного<br> использования с коэф.</td>
+                    </tr>
+                    <tr class="table-tr-height">
+                        <td class="vertical-mode">жилая</td>
+                        <td class="vertical-mode">подсобная</td>
+                    </tr>
+                    <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+                {% for items in order.explicationlistitem_set.all %}
+                <tr>
+                    <td>{{ items.litera }}</td>
+                    <td>{{ items.floor_number }}</td>
+                    <td>{{ items.apart_number }}</td>
+                    <td>{{ items.appart_number_item }}</td>
+                    <td class="text-nowrap">{{ items.appart_name_item|advanced }}</td>
+                    <td>{{ items.square_total_item|default_if_none:"" }}</td>
+                    <td>{{ items.square_general_item|default_if_none:"" }}</td>
+                    <td>{{ items.square_general_item|default_if_none:"" }}</td>
+                    <td>{{ items.square_advanced_item|default_if_none:"" }}</td>
+                    <td>{{ items.square_logdi_item|default_if_none:"" }}</td>
+                    <td>{{ items.height_item|default_if_none:"" }}</td>
+                    <td>{#{ items.square_balkon_item|default_if_none:"" }#}</td>
+                    <td>{#{ items.square_another_item|default_if_none:"" }#}</td>
+                </tr>
+                {% if forloop.counter == 16 or forloop.counter|multipliticy %}
+            </table>
+            <p style="page-break-after: always"></p>
+            <table class="table-explicate-bordered table-counter w-100 mt-0 pt-0" style="font-size: 1.2rem;">
+                {% endif %} {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right">Итого:</td>
+                    <td>{{order.explicationsquaretotal.square_total_summa|unlocalize}}</td>
+                    <td>{{order.explicationsquaretotal.square_general_summa|unlocalize}}</td>
+                    <td>{{order.explicationsquaretotal.square_general_summa|unlocalize}}</td>
+                    <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
+                    <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
+                    <td>{#{order.explicationsquaretotal.square_balkon_summa|unlocalize}#}</td>
+                    <td>{#{order.explicationsquaretotal.square_another_summa|unlocalize}#}</td>
+                    <td></td>
+                    <!-- <td></td> -->
+                </tr>
+                {% comment %}<!-- <tr> -->
+                    <td colspan="3">
+                        {% if order.type_object == 'Жилое' %} Общая площадь ( с летними ) {% else %} Общая площадь ( нежилые в т.ч ) {% endif %}
+                    </td>
+                    <td>{{order.explicationsquaretotal.square_total_summa_global|unlocalize}}</td>
+                    <td colspan="6"></td>
+                    <!-- <td>{{order.explicationsquaretotal.square_advanced_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_logdi_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_balkon_summa|unlocalize}}</td>
                           <td>{{order.explicationsquaretotal.square_another_summa|unlocalize}}</td> -->
-                      </tr>
-                    </table>
+                {% endcomment %}<!-- </tr> -->
+            </table>
+        <span class="mt-5">&nbsp</span>
+        <table class="mx-auto w-100 mt-5">
+            <tr>
+                <td class="text-right">Исполнил</td>
+                <td class="font-italic text-left px-4"><u>{{ order.engineer_name }}</u></td>
+                <td class="text-right">Проверил</td>
+                <td class="text-left px-4"><u>{{ order.customer_name }}</u></td>
+            </tr>
+            <tr>
+                <td colspan="2"  class="text-right">Руководитель комплексной производственной <br></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-right">группы</td><td>&nbsp</td>
+                <td class="text-left px-4"><u>{{ order.customer_name }}</u></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td style="vertical-align: top; border-top: 1.5px solid; min-width:100px; line-height:0.5">подпись</td>
+            </tr>
+        </table>
+    </div>
 
-                </div>
-                    <!-- <img class="  w-100 p-0 m-0" src="{{ order.image_2.url }}" alt=""> -->
-                    <p class="font-weight-bold text-left ml-3">
-                        Общая площадь определена в соответствии со Ст. 15 Жилищного кодекса РФ
-                    </p>
-                <!-- <span class="display-block" style="min-height:30px;"></span> -->
-                <!-- <span class="display-block" style="min-height:200px;"></span> -->
-            </div>
+    <div class="py-3 page3-footer">
+    <!-- <div class="py-3 page3-footer"> -->
 
-            <div class="py-3 page3-footer text-center">
-                <table class="mx-auto">
-                    <tr>
-                        <td colspan="2">
-                            Экспликация на <span class="output-counter"></span> стр.
-                        </td>
-                        <td class="text-right">
-                            {{ order.customer_data|date:"d.m.Y" }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Исполнитель
-                        </td>
-                        <td class="border-bottom-1">  ______________________  </td>
-                        <td class="text-right">
-                            {{ order.engineer_name }}
-                        </td>
-                    </tr>
-                </table>
-                <img class="bar-code" src="{{ order.barcode.url }}" alt="">
+        <div class="">
+            <div class="d-block">
+                <img class="qr-code" src="{{ order.qrcode.url }}" alt="">
             </div>
+            <div class="d-block">
+                <span style="font-size:0.8rem;">
+                    {{ order.order_number|threedigit }}
+                </span>
+            </div>
+        </div>
+    </div>
 </body>
