@@ -386,9 +386,8 @@
             <div class="page3 text-center" style="">
                 <div class="border border-dark p-4 d-flex flex-row justify-content-between mb-5">
                     <div class="ml-5 d-flex flex-column justify-content-center page3-top">
-                        <div>ГБУ Московское городское бюро технической инвентаризации</div>
-                        <div>Адрес:  125009, г. Москва, Малый Гнездниковский пер.,  9, стр.7</div>
-                        <div>Телефон:  (495) 629-02-80, (495) 629-44-33</div>
+
+                        {{ order.header_object.text_header|safe }}
                     </div>
                     <div class="">
                         <img class="qr-code" src="{{ order.qrcode.url }}" alt="">

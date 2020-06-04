@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('get-order-info/', include('pdftrans.urls')),
     path('uslugi/', include('pdftrans.urls')),
+    path('tinymce/', include('tinymce.urls')),
     ]
 if settings.DEBUG:
     urlpatterns += static(

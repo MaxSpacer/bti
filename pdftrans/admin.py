@@ -3,6 +3,10 @@ from .models import *
 from django.utils.html import format_html
 
 
+class HeaderExplicationAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in HeaderExplication._meta.fields]
+admin.site.register(HeaderExplication, HeaderExplicationAdmin)
+
 class OrderImageInline(admin.TabularInline):
     model = OrderImage# Register your models here.
     # def full_pdf_url(self, obj):

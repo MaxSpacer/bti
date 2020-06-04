@@ -2,6 +2,22 @@
 
 from django.db import models
 from django.contrib.sites.models import Site
+from tinymce.models import HTMLField
+
+
+class HeaderExplication(models.Model):
+    name_template = models.CharField(verbose_name="Имя шаблона шапки", max_length=128, blank=True, null=False)
+    text_header = HTMLField('текст шапки')
+    created = models.DateTimeField(auto_now_add=True , auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False , auto_now=True)
+
+    class Meta:
+        # app_label = 'settings_pdftrans'
+        verbose_name = 'шаблон шапки'
+        verbose_name_plural = 'шаблоны шапки'
+
+    def __str__(self):
+        return "%s" % self.name_template
 
 
 class SubjectType(models.Model):

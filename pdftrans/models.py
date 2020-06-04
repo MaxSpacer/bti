@@ -18,6 +18,7 @@ from django.core.validators import MaxValueValidator
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 
+
 def get_subject_type_choices():
     SUBJECT_TYPE_CHOICES = [(str(e.subject_type), e.subject_type) for e in SubjectType.objects.all()]
     return SUBJECT_TYPE_CHOICES
@@ -46,10 +47,6 @@ def get_type_object_default():
     default = str(def_value)
     return default
 
-# def get_name_object_choices():
-#     NAME_OBJECT_CHOICES = [(str(e.objects_name), e.objects_name) for e in NameObject.objects.all()]
-#     return NAME_OBJECT_CHOICES
-
 def get_name_object_default():
     def_value = NameObject.objects.filter().first()
     default = str(def_value)
@@ -63,6 +60,7 @@ class Order(models.Model):
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
+    header_object = models.ForeignKey(HeaderExplication, on_delete=models.SET_NULL, blank=True, null=True,default=1)
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=30)
@@ -85,6 +83,7 @@ class Order(models.Model):
         elif self.subj_type == 'Московская область':
             path_full_pdf = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_mo_full_pdf_view_n', kwargs={'pk': self.pk}))
         return path_full_pdf
+
 
     def generate_qr_bar_code(self):
         print(self.doc_type)

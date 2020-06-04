@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ['*']
 WEB_PROTOCOL_STRING = 'http://'
 SITE_ID = 1
 INSTALLED_APPS = [
+    'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -140,8 +141,36 @@ EMAIL_HOST_PASSWORD = "Xx12345678"
 EMAIL_USE_SSL = True
 
 
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 460,
+    'width': 700,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    # 'selector': 'textarea',
+    # 'theme': 'modern',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2': '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+    }
 # uncomment for deploy
-# try:
-#     from .settings_prod import *
-# except:
-#     pass
+try:
+    from .settings_prod import *
+except:
+    pass
