@@ -10,6 +10,7 @@ cssselect2==0.2.1
 defusedxml==0.6.0
 Django==2.2.2
 django-qr-code==1.0.0
+django-tinymce==3.0.2
 django-weasyprint==0.5.4
 et-xmlfile==1.0.1
 html5lib==1.0.1
@@ -34,6 +35,7 @@ requests==2.22.0
 six==1.12.0
 sortedcontainers==2.1.0
 sqlparse==0.3.0
+termcolor==1.1.0
 tinycss2==1.0.2
 Unidecode==1.1.1
 urllib3==1.25.3

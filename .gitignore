@@ -3,7 +3,7 @@
 __pycache__
 # myvenv
 .DS_Store
-# /migrations
+migrations/
 db2.sqlite3
 # settings_prod.py
 # settings.py
