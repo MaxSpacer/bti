@@ -6,6 +6,11 @@ class SubjectTypeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in SubjectType._meta.fields]
 admin.site.register(SubjectType, SubjectTypeAdmin)
 
+
+class PriceItemAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in PriceItem._meta.fields]
+admin.site.register(PriceItem, PriceItemAdmin)
+
 class DocTypeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in DocType._meta.fields]
 admin.site.register(DocType, DocTypeAdmin)

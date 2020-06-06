@@ -24,6 +24,10 @@ from django_weasyprint.utils import django_url_fetcher
 from django.core.mail import EmailMultiAlternatives
 from PIL import Image, ImageChops
 from .parser import adress_parser_func, get_source_adress_func, pull_adress_db
+from django.contrib.sites.models import Site
+
+
+
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
@@ -234,13 +238,24 @@ def export_data_pdf(sender, instance, created, **kwargs):
         pdf_document.close()
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
         # file_handle.save(os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name))
-
         v, created = OrderTech.objects.update_or_create(
         order_tech_fk=instance,
         defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
         )
+    # считаем итоги
     instance.get_itog_url()
+    # создем чек
+    prefix = settings.WEB_PROTOCOL_STRING
+    current_site = Site.objects.get_current().domain
+    cash_url = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:response_draft_view_n', kwargs={'pk': instance.pk}))
 
+    obj, created = CashItog.objects.get_or_create(
+        order_otof__exact=instance,
+        # order_otof__exact=instance,
+        defaults={'order_otof': instance,
+                    'cash_url': cash_url,
+                    },
+    )
     # sending email method -=send_mail=-
     # path_full_pdf_for_email = str(path_full_pdf)
     # path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
@@ -269,3 +284,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
     #     else:
     #         return print('Make sure all fields are entered and valid %s' % instance.pk)
     # pass
+
+
+# def creating_cashitog(sender, instance, created, **kwargs):

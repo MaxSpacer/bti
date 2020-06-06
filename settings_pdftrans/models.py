@@ -5,6 +5,20 @@ from django.contrib.sites.models import Site
 from tinymce.models import HTMLField
 
 
+class PriceItem(models.Model):
+    name_price_item = models.CharField(max_length=128, blank=True, null=True)
+    cost_price_item = models.PositiveSmallIntegerField(blank=True, null=True, default = 0, verbose_name="стоимость услуги, в руб.")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return self.name_price_item
+
+    class Meta:
+        verbose_name = 'Услуга'
+        verbose_name_plural = 'Услуги'
+
+
 class HeaderExplication(models.Model):
     name_template = models.CharField(verbose_name="Имя шаблона шапки", max_length=128, blank=True, null=False)
     text_header = HTMLField('текст шапки')

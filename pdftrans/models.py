@@ -60,7 +60,7 @@ class Order(models.Model):
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
-    header_object = models.ForeignKey(HeaderExplication, on_delete=models.SET_NULL, blank=True, null=True,default=1)
+    header_object = models.ForeignKey(HeaderExplication, on_delete=models.SET_DEFAULT, blank=True, null=True,default=1)
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=30)
@@ -74,6 +74,9 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+     # def get_draft(self):
+     #    return self.cashitog_set.filter(type="3")
 
     def get_itog_url(self):
         current_site = Site.objects.get_current().domain
@@ -275,17 +278,23 @@ class ExplicationSquareTotal(models.Model):
         return "Итоговые площади к %s" % self.order
 
 
-# class OrderItog(models.Model):
-#     order_output_fk = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Основной ордер')
-#     order_tech_pasp_pdf = models.FileField('Тех.паспорт', blank=True, null=True, max_length=250)
-#     order_output = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, default=None, verbose_name = 'Итоги заказа')
-#     order_itog_pdf_url = models.CharField(max_length=250, blank=True, null=True)
-#     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-#     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-#
-#     def __str__(self):
-#         return "Итоги по %s" % self.order_output_fk
-#
-#     class Meta:
-#         verbose_name = 'Итог заказа'
-#         verbose_name_plural = 'Итоги заказа'
+class CashItog(models.Model):
+    order_otof = models.OneToOneField(Order, on_delete=models.CASCADE, blank=True, null=True, default=None, verbose_name='Чек')
+    order_price = models.ForeignKey(PriceItem, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    cash_url = models.CharField(max_length=250 ,blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.order_price
+
+    def get_cost_on_price(self):
+        cost = self.order_price.cost_price_item
+        return cost
+
+    def __init__(self,  *args, **kwargs):
+        super(CashItog, self).__init__(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Чек'
+        verbose_name_plural = 'Чеки'

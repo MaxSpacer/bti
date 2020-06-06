@@ -28,5 +28,6 @@ urlpatterns = [
     path('pdf/<int:pk>/', views.OrderPrintView.as_view(), name='order_pdf_view_n'),
     path('fullpdf/<int:pk>/', views.document_bti_pdf, name='order_full_pdf_view_n'),
     path('mofullpdf/<int:pk>/', views.document_mo_bti_pdf, name='order_mo_full_pdf_view_n'),
+    path('get_draft/<int:pk>/', views.response_draft, name='response_draft_view_n'),
     path('qr/<int:referer_id>/', views.OrderRedirectView, name='order_redirect_view_n'),
 ]

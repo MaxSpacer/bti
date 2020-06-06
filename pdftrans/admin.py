@@ -7,6 +7,20 @@ class HeaderExplicationAdmin(admin.ModelAdmin):
     list_display = [field.name for field in HeaderExplication._meta.fields]
 admin.site.register(HeaderExplication, HeaderExplicationAdmin)
 
+class CashItogAdmin(admin.ModelAdmin):
+    list_display = ['order_otof',
+                    'order_price',
+                    'show_firm_url',
+                    'created',
+                    'updated',]
+    readonly_fields = ['cash_url',]
+    def show_firm_url(self, obj):
+        return format_html("<a class='button' href='{cash_url}'>{url}</a>", url="Получить чек", cash_url=obj.cash_url)
+
+    show_firm_url.short_description = "Получиь чек"
+    # list_display = [field.name for field in CashItog._meta.fields]
+admin.site.register(CashItog, CashItogAdmin)
+
 class OrderImageInline(admin.TabularInline):
     model = OrderImage# Register your models here.
     # def full_pdf_url(self, obj):
