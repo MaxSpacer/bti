@@ -121,7 +121,7 @@ class Order(models.Model):
             barcode_text = barcode_text + uniq_random_time_number[i]
             i+=1
 
-        barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'Times_New_Roman.ttf')
+        barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'times.ttf')
         fnt = ImageFont.truetype(barcode_text_font, 15)
         d = ImageDraw.Draw(barcode_formated)
         d.text((460,3), barcode_text, font=fnt, fill=(0))
