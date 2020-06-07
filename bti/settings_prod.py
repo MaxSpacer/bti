@@ -1,4 +1,4 @@
-# DEBUG = False
+DEBUG = False
 # ALLOWED_HOSTS = ['167.172.162.28', 'localhost', '127.0.0.1','mosgorbti.com','www.mosgorbti.com']
 ALLOWED_HOSTS = ['localhost', '127.0.0.1','mosgorbti.com','www.mosgorbti.com']
 
