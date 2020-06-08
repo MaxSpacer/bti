@@ -1,0 +1,90 @@
+.service-icons {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+    margin: 0 0 30px 0;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+    background: #fafafa;
+}
+
+.service-icons__list {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+    margin: -3px;
+}
+
+.service-icons__item {
+    flex-basis: 80px;
+    margin: 3px;
+}
+
+.service-icons__item_active {
+
+}
+
+.service-icons__link {
+    display: block;
+    position: relative;
+    max-width: 80px;
+}
+
+.service-icons__image {
+    display: block;
+    width: 80px;
+    max-width: 100%;
+}
+
+.service-icons__image.service-icons__image_colored {
+    display: none;
+}
+
+.service-icons__image.service-icons__image_monochrome {
+
+}
+
+.service-icons__item:hover .service-icons__image.service-icons__image_colored,
+.service-icons__item.service-icons__item_active .service-icons__image.service-icons__image_colored {
+    display: block;
+}
+
+.service-icons__item:hover .service-icons__image.service-icons__image_monochrome,
+.service-icons__item.service-icons__item_active .service-icons__image.service-icons__image_monochrome {
+    display: none;
+}
+
+@media (max-width: 1199px) {
+    .service-icons {
+        padding: 15px 10px;
+    }
+
+    .service-icons__list {
+        flex-wrap: wrap;
+        max-width: 940px;
+    }
+
+    .service-icons__item {
+        flex-basis: 70px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .service-icons__list {
+        max-width: 750px;
+    }
+
+    .service-icons__item {
+        flex-basis: 60px;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-icons {
+        display: none;
+    }
+}

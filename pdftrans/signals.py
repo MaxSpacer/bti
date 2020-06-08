@@ -31,11 +31,16 @@ from django.contrib.sites.models import Site
 
 @receiver(post_save, sender=Order)
 def export_data_pdf(sender, instance, created, **kwargs):
+    prefix = settings.WEB_PROTOCOL_STRING
+    current_site = Site.objects.get_current().domain
+    on = 'on'
     uploaded_pdf_url = instance.uploaded_pdf.path
     explication_adress_areas=['50,720,555,665']
     tech_pasports_adress_areas=['30,675,600,615']
+    path_full_link_site = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_full_pdf_view_n', kwargs={'pk': instance.pk}))
+    # path_full_link_site = "%s%s%s%s" % (prefix, current_site, '/get-order-info/fullpdf/', str(instance.pk))
     # tech_pasports_adress_areas=['10,820,450,600']
-    if instance.doc_type == 'План и экспликация':
+    if instance.doc_type == 'План и экспликация' and on == 'on':
     #     if instance.old_source:
     #         explication_adress_areas=['50,680,780,100']
         # table_areas  =
@@ -44,7 +49,6 @@ def export_data_pdf(sender, instance, created, **kwargs):
         # else:
             # tables = camelot.read_pdf(uploaded_pdf_url, flavor='stream', row_tol=9, table_areas=['50,680,780,100'])
         # table_areas  =
-
         full_adress_string = get_source_adress_func(uploaded_pdf_url, explication_adress_areas, '1')
         begin_dict = adress_parser_func(full_adress_string)
         print('***********begin_dict********')
@@ -188,12 +192,16 @@ def export_data_pdf(sender, instance, created, **kwargs):
                 )
                 create_img.save()
         doc.close()
+        if instance.subj_type != "Москва":
+            path_full_link_site = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_mo_full_pdf_view_n', kwargs={'pk': instance.pk}))
+            # cash_url = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:response_draft_view_n', kwargs={'pk': instance.pk}))
+
         # if os.path.exists(uploaded_pdf_url):
         #      os.remove(uploaded_pdf_url)
         # else:
         #       print("The file does not exist")
 
-    elif instance.doc_type == 'Технический паспорт':
+    elif instance.doc_type == 'Технический паспорт' and on == 'on':
         tech_pasp_input_file = instance.uploaded_pdf.path
         tech_pasp_path_name = 'tech_' + str(instance.order_number) + '.pdf'
         tech_pasp_path_file = os.path.join(settings.MEDIA_ROOT, 'tech_pasports/', tech_pasp_path_name)
@@ -242,13 +250,12 @@ def export_data_pdf(sender, instance, created, **kwargs):
         order_tech_fk=instance,
         defaults={'order_tech_pasp_pdf': tech_pasp_path_bd}
         )
+        # path_full_link_site = "%s%s%s%s" % (prefix, current_site, '/get-order-info/mofullpdf/', str(instance.pk))
+
     # считаем итоги
     instance.get_itog_url()
-    # создем чек
-    prefix = settings.WEB_PROTOCOL_STRING
-    current_site = Site.objects.get_current().domain
+    # создaем чек
     cash_url = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:response_draft_view_n', kwargs={'pk': instance.pk}))
-
     obj, created = CashItog.objects.get_or_create(
         order_otof__exact=instance,
         # order_otof__exact=instance,
@@ -256,34 +263,34 @@ def export_data_pdf(sender, instance, created, **kwargs):
                     'cash_url': cash_url,
                     },
     )
-    # sending email method -=send_mail=-
-    # path_full_pdf_for_email = str(path_full_pdf)
-    # path_full_link_site = 'https://' + str(current_site) + '/get-order-info/' + str(instance.pk)
-    # context = {
-    # 'order_number': instance.order_number,
-    # 'link_doc': path_full_pdf,
-    # 'link_site': path_full_link_site,
-    # }
-    # str_for_traslit = unidecode(str(instance.adress))
-    # subject = str_for_traslit + ' - Док №: ' + str(instance.order_number)
-    # from_email = 'btireestrexpress@yandex.ru'
-    # to = 'btireestrexpress@yandex.ru'
-    # html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
-    # text_content = strip_tags(html_content)
-    # msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    # msg.attach_alternative(html_content, "text/html")
-    # if instance.is_emailed == False:
-    #     if subject and html_content and from_email:
-    #         try:
-    #             if msg.send():
-    #                 Order.objects.filter(pk=instance.pk).update(is_emailed=True)
-    #                 instance.is_emailed = True
-    #         except BadHeaderError:
-    #             return print('Invalid header found in email %s' % instance.pk)
-    #         return print('email is sended %s' % instance.pk)
-    #     else:
-    #         return print('Make sure all fields are entered and valid %s' % instance.pk)
-    # pass
+    ## sending email method -=send_mail=-
+    path_full_pdf_for_email = str(instance.uploaded_pdf.path)
+    str_for_traslit = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_detail_n', kwargs={'pk': instance.pk}))
+
+    context = {
+    'order_number': instance.order_number,
+    'link_doc': path_full_link_site,
+    'link_site': str_for_traslit,
+    }
+    subject = str(instance.get_order_adress().get_full_adress()) + ' - ' + str(instance.order_number)
+    from_email = 'btireestrexpress@yandex.ru'
+    to = 'btireestrexpress@yandex.ru'
+    html_content = render_to_string('mail_templates/mail_template_btiorder.html', context)
+    text_content = strip_tags(html_content)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    if instance.is_emailed == False:
+        if subject and html_content and from_email:
+            try:
+                if msg.send():
+                    Order.objects.filter(pk=instance.pk).update(is_emailed=True)
+                    instance.is_emailed = True
+            except BadHeaderError:
+                return print('Invalid header found in email %s' % instance.pk)
+            return print('email is sended %s' % instance.pk)
+        else:
+            return print('Make sure all fields are entered and valid %s' % instance.pk)
+    pass
 
 
 # def creating_cashitog(sender, instance, created, **kwargs):

@@ -1,0 +1,43 @@
+
+
+/* Start:/local/components/maximaster/select.country.codes/templates/callback/style.css?1513939031586*/
+.phone-wrapper {
+    position: relative;
+}
+
+.phone-wrapper__county-flag {
+    position: absolute;
+    width: 15px;
+    height: 13px;
+    top: 10px;
+    left: 15px;
+    cursor: pointer;
+}
+
+.phone-wrapper input {
+    padding-left: 40px;
+}
+
+.countriesList {
+    display: none;
+    overflow: auto;
+    position: absolute;
+    z-index: 1000;
+    list-style: none;
+    padding: 0 0 0 10px;
+    height: 40vh;
+    color: black;
+    text-align: left;
+}
+
+.countriesList li {
+    margin: 0 10px 0 0;
+    padding: 5px 0 5px 0;
+    cursor: pointer;
+}
+
+.countriesList li div:hover {
+    color: red;
+}
+/* End */
+/* /local/components/maximaster/select.country.codes/templates/callback/style.css?1513939031586 */

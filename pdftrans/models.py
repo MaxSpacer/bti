@@ -87,7 +87,10 @@ class Order(models.Model):
             path_full_pdf = "%s%s%s" % (prefix, current_site, reverse_lazy('pdftrans:order_mo_full_pdf_view_n', kwargs={'pk': self.pk}))
         return path_full_pdf
 
-
+    def get_order_adress(self):
+        f = Adress.objects.get(order = self)
+        return f
+        # pass
     def generate_qr_bar_code(self):
         print(self.doc_type)
         # v = str(random.randint(1000000000, 2147483645))
@@ -102,30 +105,30 @@ class Order(models.Model):
         ISBN = barcode.get_barcode_class('isbn10')
         ean = ISBN(uniq_random_time_number, writer=ImageWriter())
         ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':5.5, 'module_height':4,'font_size':0})
-
-        ima = Image.open(barcode_full_path)
-        ima = ima.resize((160,25))
-
-        barcode_formated = Image.new('1', (550, 25,), color=1)
-        box = (0, 0, 160, 25)
-        region = ima.crop(box)
-        barcode_formated.paste(region, (0,0))
-
-        i = 0
-        space = " "
-        barcode_text = str()
-        for x in uniq_random_time_number:
-            if (i == 2 or i == 4):
-                barcode_text = barcode_text + ' '
-                print(barcode_text)
-            barcode_text = barcode_text + uniq_random_time_number[i]
-            i+=1
-
-        barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'times.ttf')
-        fnt = ImageFont.truetype(barcode_text_font, 15)
-        d = ImageDraw.Draw(barcode_formated)
-        d.text((460,3), barcode_text, font=fnt, fill=(0))
-        barcode_formated.save(barcode_full_path)
+        #
+        # ima = Image.open(barcode_full_path)
+        # ima = ima.resize((160,25))
+        # ima.save(barcode_full_path)
+        # barcode_formated = Image.new('1', (550, 25,), color=1)
+        # box = (0, 0, 160, 25)
+        # region = ima.crop(box)
+        # barcode_formated.paste(region, (0,0))
+        #
+        # i = 0
+        # space = " "
+        # barcode_text = str()
+        # for x in uniq_random_time_number:
+        #     if (i == 2 or i == 4):
+        #         barcode_text = barcode_text + ' '
+        #         print(barcode_text)
+        #     barcode_text = barcode_text + uniq_random_time_number[i]
+        #     i+=1
+        #
+        # barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'times.ttf')
+        # fnt = ImageFont.truetype(barcode_text_font, 15)
+        # d = ImageDraw.Draw(barcode_formated)
+        # d.text((460,3), barcode_text, font=fnt, fill=(0))
+        # barcode_formated.save(barcode_full_path)
 
         ### qrcode generating
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number

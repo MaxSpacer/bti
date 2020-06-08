@@ -512,6 +512,14 @@
                         </td>
                     </tr>
                 </table>
-                <img class="bar-code" src="{{ order.barcode.url }}" alt="">
+                <div>
+                    <img class="bar-code" src="{{ order.barcode.url }}" alt="">
+                    <div style="width:45%; display:inline-block;">
+                        &nbsp
+                    </div>
+                    <div class="order_number">
+                        {{ order.order_number }}
+                    </div>
+                </div>
             </div>
 </body>

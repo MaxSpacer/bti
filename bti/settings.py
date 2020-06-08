@@ -170,7 +170,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
     }
 # uncomment for deploy
-try:
-    from .settings_prod import *
-except:
-    pass
+# try:
+#     from .settings_prod import *
+# except:
+#     pass

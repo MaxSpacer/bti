@@ -8,5 +8,6 @@ db2.sqlite3
 # settings_prod.py
 # settings.py
 activate*
-static_prod/
+migrations/
 static/media/
+static_prod/
