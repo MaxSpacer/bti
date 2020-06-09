@@ -124,7 +124,7 @@
     margin-top: 10%;
 }
 .bar-code{
-    width: 30%;
+    width: 40%;
     display: inline-block;
     /* border: 1px solid; */
 }
@@ -132,9 +132,9 @@
     width: 180px;
     /* border: 1px solid; */
     display: inline-block;
-    letter-spacing: 3px;
-    font-size: 1.2rem;
-    font-weight: 800;
+    letter-spacing: 9px;
+    font-size: 1.7rem;
+    font-weight: 400;
 }
 /* uniqtabletd */
 .uniqtabletd {

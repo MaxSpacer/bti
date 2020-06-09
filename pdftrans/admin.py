@@ -45,11 +45,11 @@ class ExplicationSquareTotalInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ('barcode','qrcode','order_number','is_emailed')
     inlines = [OrderImageInline, AdressInline, ExplicationSquareTotalInline, ExplicationListItemInline]
-    list_display = ['order_number', 'show_adress_on_admin', 
+    list_display = ['order_number', 'show_adress_on_admin',
                     'customer_data', 'subj_type',
                     'doc_type', 'type_object',
                     'header_object', 'show_url_on_pdf',
-                    'is_emailed',]
+                    'is_emailed', 'id',]
     def show_url_on_pdf(self, instance):
         prefix = settings.WEB_PROTOCOL_STRING
         current_site = Site.objects.get_current().domain
