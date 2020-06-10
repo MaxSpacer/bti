@@ -60,7 +60,7 @@ class Order(models.Model):
     subj_type = models.CharField(verbose_name="субъект РФ", max_length=64, choices=get_subject_type_choices(), default=get_subject_type_default())
     doc_type = models.CharField(verbose_name="Тип документа", max_length=64, choices=get_doc_type_choices(), default=get_doc_type_default())
     type_object = models.CharField(verbose_name="вид объекта учета", max_length=64, choices=get_type_object_choices(), default=get_type_object_default())
-    header_object = models.ForeignKey(HeaderExplication, on_delete=models.SET_DEFAULT, blank=True, null=True,default=1)
+    header_object = models.ForeignKey(HeaderExplication, on_delete=models.SET_DEFAULT, blank=True, null=True,default=1, verbose_name="Шапка")
     barcode = models.ImageField(blank=True, null=True, upload_to='barcode/')
     qrcode = models.ImageField(blank=True, null=True, upload_to='qrcode/')
     width_image_schema = models.IntegerField('Размер схемы %', blank=True, null=True,validators=[MaxValueValidator(100)], default=30)
@@ -105,31 +105,15 @@ class Order(models.Model):
         ISBN = barcode.get_barcode_class('isbn10')
         ean = ISBN(uniq_random_time_number, writer=ImageWriter())
         ean.save(barcode_path, options = {'text_distance':3, 'quiet_zone':5.5, 'module_height':4,'font_size':0})
-        #
+        # ean.save(barcode_path, options = {'text_distance':6, 'quiet_zone':6, 'module_height':6,'font_size':16})
+
         # ima = Image.open(barcode_full_path)
         # ima = ima.resize((160,25))
         # ima.save(barcode_full_path)
-        # barcode_formated = Image.new('1', (550, 25,), color=1)
         # box = (0, 0, 160, 25)
         # region = ima.crop(box)
         # barcode_formated.paste(region, (0,0))
-        #
-        # i = 0
-        # space = " "
-        # barcode_text = str()
-        # for x in uniq_random_time_number:
-        #     if (i == 2 or i == 4):
-        #         barcode_text = barcode_text + ' '
-        #         print(barcode_text)
-        #     barcode_text = barcode_text + uniq_random_time_number[i]
-        #     i+=1
-        #
-        # barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'times.ttf')
-        # fnt = ImageFont.truetype(barcode_text_font, 15)
-        # d = ImageDraw.Draw(barcode_formated)
-        # d.text((460,3), barcode_text, font=fnt, fill=(0))
-        # barcode_formated.save(barcode_full_path)
-
+        
         ### qrcode generating
         qrcode_file_name = "qr_%s.png" % uniq_random_time_number
         qrcode_full_path = os.path.join(settings.MEDIA_ROOT, 'qrcode', qrcode_file_name)

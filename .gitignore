@@ -11,3 +11,4 @@ activate*
 migrations/
 static/media/
 static_prod/
+media/

@@ -231,13 +231,18 @@ def export_data_pdf(sender, instance, created, **kwargs):
             tech_pasp_path_bd = "tech_pasports/%s" % tech_pasp_path_name
             tech_pasp_qrcode_file = instance.qrcode.path
             tech_pasp_barcode_file = instance.barcode.path
-
+            print(tech_pasp_path_file)
+            print(tech_pasp_path_bd)
+            print(tech_pasp_qrcode_file)
+            print(tech_pasp_barcode_file)
             image_rectangle = fitz.Rect(470,45,530,105)
-            tech_pasp_barcode_image_rectangle = fitz.Rect(15,790,600,820)
-
+            tech_pasp_barcode_image_rectangle = fitz.Rect(1,790,240,820)
+            tech_pasports_order_number_image_rectangle = fitz.Rect(300,790,700,820)
             search_term = "ЭКСПЛИКАЦИЯ К ПОЭТАЖНОМУ"
             search_term2 = "Экспликация на"
             pdf_document = fitz.open(tech_pasp_input_file)
+            print('pdf_document')
+            print(pdf_document)
             pages_list = []
             qr_code_page = 0
             qr_code_page_for_adress_parsing = ''
@@ -254,15 +259,33 @@ def export_data_pdf(sender, instance, created, **kwargs):
             begin_dict = adress_parser_func(full_adress_string)
             adress_db = pull_adress_db(instance, begin_dict)
             file_handle = fitz.open(tech_pasp_input_file)
-            first_page = file_handle[qr_code_page]
-            first_page.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
-            # print('ssssssssssssssssssss')
-            # print(first_page)
-            # print('sssss---pages_list-----sssssss')
-            # print(pages_list)
+            qrcode_img = file_handle[qr_code_page]
+            qrcode_img.insertImage(image_rectangle, filename = tech_pasp_qrcode_file)
+
+            #bar code + order code png to pdf
+            order_png_path = os.path.join(settings.MEDIA_ROOT, 'temp', 'temp_order_png.png')
+            tech_pasports_order_number_areas=['30,675,600,615']
+            i = 0
+            space = " "
+            barcode_text = str()
+            uniq_order_number = str(instance.order_number)
+            for x in uniq_order_number:
+                if (i == 2 or i == 4):
+                    barcode_text = barcode_text + ' '
+                    print(barcode_text)
+                barcode_text = barcode_text + uniq_order_number[i]
+                i+=1
+            #
+            barcode_text_font = os.path.join(settings.STATIC_ROOT, 'fonts', 'times.ttf')
+            fnt = ImageFont.truetype(barcode_text_font, 40)
+            barcode_formated = Image.new('1', (418, 70,), color=1)
+            d = ImageDraw.Draw(barcode_formated)
+            d.text((90,10), barcode_text, font=fnt, fill=(0))
+            barcode_formated.save(order_png_path)
             for x in pages_list:
                 tech_pasp_barcode_page = file_handle[x]
                 tech_pasp_barcode_page.insertImage(tech_pasp_barcode_image_rectangle, filename = tech_pasp_barcode_file)
+                tech_pasp_barcode_page.insertImage(tech_pasports_order_number_image_rectangle, filename = order_png_path)
                 # print('sssssss---x---ssssssssss')
                 # print(x)
             file_handle.save(tech_pasp_path_file)
