@@ -8,7 +8,7 @@ Click==7.0
 colorama==0.4.1
 cssselect2==0.2.1
 defusedxml==0.6.0
-Django==2.2.2
+Django==2.2.18
 django-qr-code==1.0.0
 django-weasyprint==0.5.4
 et-xmlfile==1.0.1
