@@ -36,6 +36,6 @@ sortedcontainers==2.1.0
 sqlparse==0.3.0
 tinycss2==1.0.2
 Unidecode==1.1.1
-urllib3==1.25.3
+urllib3==1.25.8
 WeasyPrint==47
 webencodings==0.5.1
